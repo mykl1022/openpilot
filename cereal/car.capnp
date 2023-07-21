@@ -123,6 +123,8 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     turningLeft @121;
     turningRight @122;
 
+    pedalInterceptorNoBrake @123;
+
     radarCanErrorDEPRECATED @15;
     communityFeatureDisallowedDEPRECATED @62;
     radarCommIssueDEPRECATED @67;
