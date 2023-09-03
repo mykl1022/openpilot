@@ -192,7 +192,7 @@ protected:
   void drawLead(QPainter &painter, const cereal::RadarState::LeadData::Reader &lead_data, const QPointF &vd);
   void drawHud(QPainter &p);
   void drawDriverState(QPainter &painter, const UIState *s);
-  inline QColor redColor(int alpha = 255) { return QColor(82, 0, 153, alpha); }
+  inline QColor redColor(int alpha = 255) { return QColor(67, 0, 59, alpha); }
   inline QColor whiteColor(int alpha = 255) { return QColor(0, 255, 255, alpha); }
   inline QColor blackColor(int alpha = 255) { return QColor(25, 0, 25, alpha); }
 
