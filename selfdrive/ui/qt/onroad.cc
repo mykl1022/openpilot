@@ -781,9 +781,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     }
 
   } else {
-    bg.setColorAt(0.0, QColor::fromHslF(266 / 360., 0.94, 0.18, 0.4));
-    bg.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.0, 0.35, 0.35));
-    bg.setColorAt(1.0, QColor::fromHslF(260 / 360., 1.0, 0.35, 0.15));
+    bg.setColorAt(0.0, QColor::fromHslF(266 / 360., 0.94, 0.18, 0.80));
+    bg.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.0, 0.35, 0.70));
+    bg.setColorAt(1.0, QColor::fromHslF(260 / 360., 1.0, 0.35, 0.30));
   }
 
   painter.setBrush(bg);
@@ -832,9 +832,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint blindspot path
   QLinearGradient bs(0, height(), 0, 0);
   if ((blindSpotLeft || blindSpotRight) && speedCheck && isNotTurning && is_cruise_set) {
-    bs.setColorAt(0.0, QColor::fromHslF(235 / 360., 1.00, 0.36, 0.6));
-    bs.setColorAt(0.5, QColor::fromHslF(235 / 360., 1.00, 0.36, 0.4));
-    bs.setColorAt(1.0, QColor::fromHslF(235 / 360., 1.00, 0.36, 0.2));
+    bs.setColorAt(0.0, QColor::fromHslF(235 / 360., 1.00, 0.36, 0.8));
+    bs.setColorAt(0.5, QColor::fromHslF(235 / 360., 1.00, 0.36, 0.6));
+    bs.setColorAt(1.0, QColor::fromHslF(235 / 360., 1.00, 0.36, 0.4));
   }
 
   painter.setBrush(bs);
