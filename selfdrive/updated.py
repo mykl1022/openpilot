@@ -13,7 +13,6 @@ from collections import defaultdict
 from pathlib import Path
 from typing import List, Union, Optional
 from markdown_it import MarkdownIt
-from zoneinfo import ZoneInfo
 
 from openpilot.common.basedir import BASEDIR
 from openpilot.common.params import Params
@@ -193,7 +192,6 @@ def finalize_update() -> None:
 
   # FrogPilot update functions
   params = Params()
-  params.put("Updated", datetime.datetime.now().astimezone(ZoneInfo('America/Phoenix')).strftime("%B %d, %Y - %I:%M%p"));
   params.put_bool("DefaultParamsSet", False);       # Check the params again upon boot just in case of new toggles
   params.put_bool("DisableInternetCheck", False);   # Reset the param since the user has internet connection again
   if os.path.exists("/data/openpilot/prebuilt"):
@@ -427,17 +425,9 @@ def main() -> None:
   if Path(os.path.join(STAGING_ROOT, "old_openpilot")).is_dir():
     cloudlog.event("update installed")
 
-  # Format InstallDate to Phoenix time zone with full date-time
-  date_format = "%B %d, %Y - %I:%M%p"
-  install_date = params.get("InstallDate")
-  if install_date is None:
-    install_date = datetime.datetime.now().astimezone(ZoneInfo('America/Phoenix')).strftime(date_format)
-  if isinstance(install_date, bytes):
-    install_date = install_date.decode('utf-8')
-  try:
-    datetime.datetime.strptime(install_date, date_format)
-  except ValueError:
-    params.put("InstallDate", datetime.datetime.now().astimezone(ZoneInfo('America/Phoenix')).strftime(date_format))
+  if not params.get("InstallDate"):
+    t = datetime.datetime.utcnow().isoformat()
+    params.put("InstallDate", t.encode('utf8'))
 
   updater = Updater()
   update_failed_count = 0 # TODO: Load from param?
