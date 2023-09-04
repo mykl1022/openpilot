@@ -101,7 +101,7 @@ class LongitudinalPlanner:
         self.acceleration_profile = self.params.get_int("AccelerationProfile")
         self.increased_stopping_distance = self.params.get_int("IncreasedStoppingDistance")
     try:
-      self.personality = int(self.params.get('LongitudinalPersonality'))
+      self.personality = max(0, int(self.params.get('LongitudinalPersonality')))
     except (ValueError, TypeError):
       self.personality = log.LongitudinalPersonality.standard
 

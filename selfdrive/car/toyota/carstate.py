@@ -48,6 +48,12 @@ class CarState(CarStateBase):
     # FrogPilot variables
     self.params = Params()
     self.params_memory = Params("/dev/shm/params")
+    self.driving_personalities_via_wheel = self.CP.drivingPersonalitiesUIWheel
+    self.distance_button_previously_pressed = False
+    self.profile_restored = False
+    self.distance_button = 0
+    self.previous_distance_lines = 0
+    self.restore_counter = self.params.get_int("LongitudinalPersonalityPrevious")
 
   def update(self, cp, cp_cam):
     ret = car.CarState.new_message()
@@ -167,6 +173,31 @@ class CarState(CarStateBase):
 
     if self.CP.carFingerprint != CAR.PRIUS_V:
       self.lkas_hud = copy.copy(cp_cam.vl["LKAS_HUD"])
+
+    # Driving personalities function
+    if self.driving_personalities_via_wheel and ret.cruiseState.available:
+      distance_lines = cp.vl["PCM_CRUISE_SM"]["DISTANCE_LINES"]
+      if distance_lines == self.restore_counter:
+        self.profile_restored = True
+      if not self.profile_restored:
+        self.distance_button_previously_pressed = not self.distance_button_previously_pressed
+        # Set personality to previously set personality
+        self.distance_button = not self.distance_button_previously_pressed
+      else:
+        if self.CP.carFingerprint in (TSS2_CAR - RADAR_ACC_CAR):
+          # KRKeegan - Add support for toyota distance button
+          self.distance_button = cp_cam.vl["ACC_CONTROL"]["DISTANCE"]
+
+        if self.CP.carFingerprint in RADAR_ACC_CAR:
+          # These cars have the acc_control on car can
+          self.distance_button = cp.vl["ACC_CONTROL"]["DISTANCE"]
+
+        if distance_lines != self.previous_distance_lines:
+          # Need to subtract by 1 to comply with the personality profiles of "0", "1", and "2"
+          put_int_nonblocking("LongitudinalPersonality", distance_lines - 1)
+          self.params.put_int("LongitudinalPersonalityPrevious", distance_lines)
+          self.params_memory.put_bool("FrogPilotTogglesUpdated", True)
+          self.previous_distance_lines = distance_lines
 
     # For configuring onroad statuses
     ret.toyotaCar = True
