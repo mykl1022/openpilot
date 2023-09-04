@@ -117,7 +117,19 @@ void OnroadWindow::mousePressEvent(QMouseEvent* e) {
   const int x_offset = 250;
   bool rightHandDM = sm["driverMonitoringState"].getDriverMonitoringState().getIsRHD();
 
-  const bool clickedOnWidget = false;
+  // Hide speed button
+  const QRect speedRect(rect().center().x() - 175, 50, 350, 350);
+  const bool isSpeedClicked = speedRect.contains(e->pos());
+
+  // Check if the click was within the speed text area
+  if (isSpeedClicked) {
+    const bool currentVisibility = params.getBool("HideSpeed");
+    speedHidden = !currentVisibility;
+    params.putBool("HideSpeed", speedHidden);
+    propagateEvent = false;
+  }
+
+  const bool clickedOnWidget = isSpeedClicked;
 
 #ifdef ENABLE_MAPS
   if (map != nullptr) {
@@ -322,6 +334,9 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   // FrogPilot variable checks
   const auto &scene = uiState()->scene;
   static auto params = Params();
+  if (params.getBool("HideSpeed")) {
+    speedHidden = true;
+  }
 
   main_layout = new QVBoxLayout(this);
   main_layout->setMargin(UI_BORDER_SIZE);
@@ -503,10 +518,12 @@ void AnnotatedCameraWidget::drawHud(QPainter &p, const UIState *s) {
   }
 
   // current speed
-  p.setFont(InterFont(176, QFont::Bold));
-  drawText(p, rect().center().x(), 210, speedStr);
-  p.setFont(InterFont(66));
-  drawText(p, rect().center().x(), 290, speedUnit, 200);
+  if (!speedHidden) {
+    p.setFont(InterFont(176, QFont::Bold));
+    drawText(p, rect().center().x(), 210, speedStr);
+    p.setFont(InterFont(66));
+    drawText(p, rect().center().x(), 290, speedUnit, 200);
+  }
 
   p.restore();
 
