@@ -773,7 +773,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
       float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
       float lightness = util::map_val(saturation, 0.1f, 0.1f, 0.10f, 0.42f);  // lighter when grey
-      float alpha = util::map_val(lin_grad_point, 0.2f / 2.f, 0.75f, 0.2f, 0.0f);  // matches previous alpha fade
+      float alpha = util::map_val(lin_grad_point, 0.2f / 2.f, 0.75f, 0.4f, 0.0f);  // matches previous alpha fade
       bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
       // Skip a point, unless next is last
