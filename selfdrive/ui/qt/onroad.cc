@@ -747,34 +747,28 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     // and the indices match the positions of accel from uiPlan
     const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
     const int max_len = std::min<int>(scene.track_vertices.length() / 2, acceleration_const.size());
-
     // Copy of the acceleration vector for the "frogColors" path
     std::vector<float> acceleration;
     for (int i = 0; i < acceleration_const.size(); i++) {
-      acceleration.push_back(acceleration_const[i]);
+        acceleration.push_back(acceleration_const[i]);
     }
-
     for (int i = 0; i < max_len; ++i) {
       // Some points are out of frame
       if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
-
       // Flip so 0 is bottom of frame
       float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
-
       // If acceleration is between -0.25 and 0.25 and frogColors is True, set acceleration to 2 to give it a consistent green color
       if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
         acceleration[i] = 2;
       }
-
        // speed up: 120, slow down: 0
-      float path_hue = fmax(fmin(60 + acceleration[i] * 10), 360., 0);
+      float path_hue = fmax(fmin(260 + acceleration[i] * 35, 300), 0); // Change hue values to get new colors
       // FIXME: painter.drawPolygon can be slow if hue is not rounded
       path_hue = int(path_hue * 222 + 0.5) / 100;
-     
-      float saturation = fmin(fabs(acceleration[i] * 35, 0), 120);
-      float lightness = util::map_val(saturation, 0.0f, 1.0f, 0.95f, 0.62f);  // lighter when grey
-      float alpha = util::map_val(lin_grad_point, 0.2f / 2.f, 0.75f, 0.4f, 0.0f);  // matches previous alpha fade
-      bg.setColorAt(lin_grad_point, QColor::fromHslF(0.0, 0.0, saturation, lightness));
+        float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
+        float lightness = util::map_val(saturation, 0.0f, 1.0f, 0.80f, 1.00f); // lighter when grey
+        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.75f, 1.0f); // matches previous alpha fade
+        bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
       // Skip a point, unless next is last
       i += (i + 2) < max_len ? 1 : 0;
