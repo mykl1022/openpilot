@@ -761,15 +761,18 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
         if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
             acceleration[i] = 2;
         }
-        // speed up: 120, slow down: 0
-        float path_hue = fmax(fmin(260 + acceleration[i] * 35, 300), 0); // Change hue values to get blue and purple shades
-        // FIXME: painter.drawPolygon can be slow if hue is not rounded
-        path_hue = int(path_hue * 222 + 0.5) / 100;
-        float path_hue = 0.0;
-        float lightness = util::map_val(lin_grad_point, 0.0f, 1.0f, 0.0f, 0.8f); // lighter when grey
-        float alpha = util::map_val(lin_grad_point, 0.0f / 2.f, 1.0f, 0.0f, 0.2f); // matches previous alpha fade
+         // Create a smoke-like hue transition (e.g., from gray to gray with a slight shift)
+        float path_hue = fmax(fmin(120 + acceleration[i] * 35, 180), 0); // Adjust values as needed
+        // Normalize hue to the range [0, 1]
+        path_hue = (path_hue / 360.0f);
+        // Control lightness for the fading effect
+        float lightness = util::map_val(lin_grad_point, 0.0f, 1.0f, 0.0f, 0.8f); // Adjust the range and values as needed
+        // Control alpha for transparency
+        float alpha = util::map_val(lin_grad_point, 0.0f, 1.0f, 0.0f, 0.2f); // Adjust the range and values as needed
         bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue, 0.0, lightness, alpha));
 
+        // Skip a point, unless the next is the last
+        i += (i + 2) < max_len ? 1 : 0;
       // Skip a point, unless next is last
       i += (i + 2) < max_len ? 1 : 0;
     }
