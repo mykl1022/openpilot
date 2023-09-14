@@ -762,7 +762,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
             acceleration[i] = 2;
         }
          // Create a smoke-like hue transition (e.g., from gray to gray with a slight shift)
-        float path_hue = fmax(fmin(0 + acceleration[i] * 35, 180), 0); // Adjust values as needed
+        float path_hue = fmax(fmin(120 + acceleration[i] * 35, 180), 0); // Adjust values as needed
         // Normalize hue to the range [0, 1]
         path_hue = (0 / 360.0f);
         // Control lightness for the fading effect
