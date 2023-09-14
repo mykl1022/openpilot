@@ -757,14 +757,14 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
         if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
         // Flip so 0 is bottom of frame
         float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
-        // If acceleration is between -0.25 and 0.25 and frogColors is True, set acceleration to 2 to give it a consistent green color
-        if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
-            acceleration[i] = 2;
-        }
+        // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
+      if (frogColors && std::abs(acceleration[i]) < 0.2) {
+        acceleration[i] = 2;
+      }
          // Create a smoke-like hue transition (e.g., from gray to gray with a slight shift)
         float path_hue = int (path_hue * 360 + 0.5) / 100; // Adjust values as needed
         // Normalize hue to the range [0, 1]
-        path_hue = 0.0;
+        path_hue = 1.0;
         // Control lightness for the fading effect
         float lightness = util::map_val(lin_grad_point, 0.0f, 1.0f, 0.0f, 1.0f); // Adjust the range and values as needed
         // Control alpha for transparency
@@ -793,30 +793,30 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
-  if (alwaysOnLateral) {
-    pe.setColorAt(0.0, QColor::fromHslF(80 / 360., 1.0, 0.60, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(80 / 360., 1.0, 0.60, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(80 / 360., 1.0, 0.60, 0.2));
-  } else if (conditionalStatus == 1) {
-    pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.2));
-  } else if (experimentalMode) {
+  if (alwaysOnLateral) { //deep red
+    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 1.0, 0.25, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.25, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.25, 0.2));
+  } else if (conditionalStatus == 1) { // Medium grey
+    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 0.50, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 0.0, 0.50, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 0.0, 0.50, 0.2));
+  } else if (experimentalMode) { // Orange
     pe.setColorAt(0.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.5));
     pe.setColorAt(1.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.2));
-  } else if (scene.navigate_on_openpilot) {
+  } else if (scene.navigate_on_openpilot) { // Carolina Blue
     pe.setColorAt(0.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.5));
     pe.setColorAt(1.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.2));
-  } else if (frogColors) {
+  } else if (frogColors) { // Tiffany Blue
     pe.setColorAt(0.0, QColor::fromHslF(170 / 360., 1.00, 50.0, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(170 / 360., 1.00, 50.0, 0.5));
     pe.setColorAt(1.0, QColor::fromHslF(170 / 360., 1.00, 50.0, 0.2));
-  } else {
-    pe.setColorAt(0.0, QColor::fromHslF(148 / 360., 0.94, 0.51, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(112 / 360., 1.00, 0.68, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(112 / 360., 1.00, 0.68, 0.1));
+  } else { // Seafoam
+    pe.setColorAt(0.0, QColor::fromHslF(165 / 360., 1.00, 0.50, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(165 / 360., 1.00, 0.50, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(165 / 360., 1.00, 0.50, 0.1));
   }
 
   painter.setBrush(pe);
@@ -829,9 +829,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint blindspot path
   QLinearGradient bs(0, height(), 0, 0);
   if ((blindSpotLeft || blindSpotRight) && speedCheck && isNotTurning && is_cruise_set) {
-    bs.setColorAt(0.0, QColor::fromHslF(280 / 360., 1.0, 0.10, 0.6));
-    bs.setColorAt(0.5, QColor::fromHslF(280 / 360., 1.0, 0.10, 0.4));
-    bs.setColorAt(1.0, QColor::fromHslF(280 / 360., 1.0, 0.10, 0.2));
+    bs.setColorAt(0.0, QColor::fromHslF(180 / 360., 1.0, 0.50, 0.6)); // change to teal
+    bs.setColorAt(0.5, QColor::fromHslF(180 / 360., 1.0, 0.50, 0.4));
+    bs.setColorAt(1.0, QColor::fromHslF(180 / 360., 1.0, 0.50, 0.2)); // change to teal
   }
 
   painter.setBrush(bs);
@@ -855,14 +855,14 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     const auto setGradientColors = [](QLinearGradient& gradient, const float laneWidth, const float minLaneWidth, const float maxLaneWidth, const bool blindspot) {
       static double hue;
       if ((laneWidth < minLaneWidth) || blindspot) {
-        // Make the path red for smaller paths or if there's a car in the blindspot
-        hue = 220;
+        // Make the path purple for smaller paths or if there's a car in the blindspot
+        hue = 260; // Change to purple
       } else if (laneWidth >= maxLaneWidth) {
-        // Make the path green for larger paths
-        hue = 260;
+        // Make the path teal for larger paths
+        hue = 180; // Change to teal
       } else {
-        // Transition the path from red to green based on lane width
-        hue = (220 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
+        // Transition the path from purple to teal based on lane width
+        hue = (260 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth); //Change purple to teal
       }
       gradient.setColorAt(0.0, QColor::fromHslF(hue / 360., 1.0, 0.20, 0.6));
       gradient.setColorAt(0.5, QColor::fromHslF(hue / 360., 1.0, 0.20, 0.4));
