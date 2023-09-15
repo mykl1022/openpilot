@@ -761,8 +761,10 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
       if (frogColors && std::abs(acceleration[i]) < 0.2) {
         acceleration[i] = 2;
       }
-         // Create a smoke-like hue transition (e.g., from gray to gray with a slight shift)
-        float path_hue = util::map_val(lin_grad_point, 0.0f, 1.0f, 180.0f, 300.0f);
+         // speed up: 120, slow down: 0
+      float path_hue = fmax(fmin(60 + acceleration[i] * 35, 180), 300);
+      // FIXME: painter.drawPolygon can be slow if hue is not rounded
+      path_hue = int(path_hue * 100 + 0.5) / 100;
         // Control lightness for the fading effect
         float lightness = util::map_val(lin_grad_point, 0.0f, 1.0f, 1.0f, 0.0f); // Adjust the range and values as needed
         // Control alpha for transparency
