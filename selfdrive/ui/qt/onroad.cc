@@ -741,8 +741,8 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   }
 
   // paint path
-  QLinearGradient bg(0, 0, 0, height());
-  if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
+QLinearGradient bg(0, 0, 0, height());
+if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
     // The first half of track_vertices are the points for the right side of the path
     // and the indices match the positions of accel from uiPlan
     const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
@@ -755,35 +755,32 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     for (int i = 0; i < max_len; ++i) {
         // Some points are out of frame
         if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
-        // Flip so 0 is bottom of frame
+        // Flip so 0 is the bottom of the frame
         float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
         // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
-      if (frogColors && std::abs(acceleration[i]) < 0.2) {
-        acceleration[i] = 1;
-      }
-         // speed up: 120, slow down: 0
-      float path_hue = fmax(fmin(80 + acceleration[i] * 35, 260), 0);
-      // FIXME: painter.drawPolygon can be slow if hue is not rounded
-      path_hue = int(path_hue * 100 + 0.5) / 100;
-        float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
-      float lightness = util::map_val(saturation, 0.2f, 1.0f, 0.95f, 0.62f);  // lighter when grey
-      float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f);  // matches previous alpha fade
-      bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
+        if (frogColors && std::abs(acceleration[i]) < 0.2) {
+            acceleration[i] = 2;
+        }
+        // Calculate hue value based on acceleration
+        float path_hue = (acceleration[i] + 0.2) * 60;  // Map acceleration to the hue range [0, 120]
+        path_hue = fmax(fmin(hue, 120), 0);  // Ensure hue is within the valid range
+        float saturation = 1.0; // Full saturation for vibrant colors
+        float lightness = 0.5; // Adjust as needed
+        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f); // Match previous alpha fade
+        bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360.0, saturation, lightness, alpha));
 
         // Skip a point, unless the next is the last
         i += (i + 2) < max_len ? 1 : 0;
-      // Skip a point, unless next is last
-      i += (i + 2) < max_len ? 1 : 0;
     }
+} else {
+    bg.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.00, 0.18, 0.80)); // Start with purple
+    bg.setColorAt(0.5, QColor::fromHslF(80 / 360., 1.0, 0.18, 0.70));  // Transition to green
+    bg.setColorAt(1.0, QColor::fromHslF(80 / 360., 1.0, 0.18, 0.30));  // End with green
+}
 
-  } else {
-    bg.setColorAt(0.0, QColor::fromHslF(80 / 360., 1.00, 0.18, 0.80));
-    bg.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.0, 0.18, 0.70));
-    bg.setColorAt(1.0, QColor::fromHslF(80 / 360., 1.0, 0.18, 0.30));
-  }
+painter.setBrush(bg);
+painter.drawPolygon(scene.track_vertices);
 
-  painter.setBrush(bg);
-  painter.drawPolygon(scene.track_vertices);
 
   // create new path with track vertices and track edge vertices
   QPainterPath path;
