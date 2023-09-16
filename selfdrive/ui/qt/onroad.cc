@@ -759,7 +759,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
         float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
         // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
       if (frogColors && std::abs(acceleration[i]) < 0.2) {
-        acceleration[i] = 2;
+        acceleration[i] = 1;
       }
          // speed up: 120, slow down: 0
       float path_hue = fmax(fmin(80 + acceleration[i] * 35, 260), 0);
