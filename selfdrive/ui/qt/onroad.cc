@@ -763,7 +763,7 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         }
         // Calculate hue value based on acceleration
         float path_hue = (acceleration[i] + 0.2) * 60;  // Map acceleration to the hue range [0, 120]
-        path_hue = fmax(fmin(path_hue, 120), 0);  // Ensure hue is within the valid range
+        path_hue = fmax(fmin(path_hue, 120), 260);  // Ensure hue is within the valid range
         float saturation = 1.0; // Full saturation for vibrant colors
         float lightness = 0.5; // Adjust as needed
         float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f); // Match previous alpha fade
@@ -773,8 +773,8 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         i += (i + 2) < max_len ? 1 : 0;
     }
 } else {
-    bg.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.00, 0.18, 0.80)); // Start with purple
-    bg.setColorAt(0.5, QColor::fromHslF(80 / 360., 1.0, 0.18, 0.70));  // Transition to green
+    bg.setColorAt(0.0, QColor::fromHslF(80 / 360., 1.00, 0.18, 0.80)); // Start with purple
+    bg.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.0, 0.18, 0.70));  // Transition to green
     bg.setColorAt(1.0, QColor::fromHslF(80 / 360., 1.0, 0.18, 0.30));  // End with green
 }
 
