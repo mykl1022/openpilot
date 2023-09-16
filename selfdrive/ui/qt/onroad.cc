@@ -766,7 +766,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
       // FIXME: painter.drawPolygon can be slow if hue is not rounded
       path_hue = int(path_hue * 100 + 0.5) / 100;
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
-      float lightness = util::map_val(saturation, 0.0f, 1.0f, 1.0f, 0.0f);  // lighter when grey
+      float lightness = util::map_val(saturation, 0.75f, 0.5f, 0.75f, 0.5f);  // lighter when grey
       float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f);  // matches previous alpha fade
       bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
@@ -792,9 +792,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
-  if (alwaysOnLateral) { //deep red
-    pe.setColorAt(0.0, QColor::fromHslF(250 / 360., 1.0, 0.25, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(250 / 360., 1.0, 0.25, 0.5));
+  if (alwaysOnLateral) { //purple
+    pe.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.0, 0.50, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.0, 0.50, 0.5));
     pe.setColorAt(1.0, QColor::fromHslF(180 / 360., 1.0, 1.00, 0.2));
   } else if (conditionalStatus == 1) { // Medium grey
     pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 0.50, 1.0));
