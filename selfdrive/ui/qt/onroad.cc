@@ -762,7 +762,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
         acceleration[i] = 1;
       }
          // speed up: 120, slow down: 0
-      float path_hue = fmax(fmin(60 + acceleration[i] * 35, 180), 260);
+      float path_hue = fmax(fmin(60 + acceleration[i] * 0, 180), 260);
       // FIXME: painter.drawPolygon can be slow if hue is not rounded
       path_hue = int(path_hue * 100 + 0.5) / 100;
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
