@@ -792,7 +792,7 @@ painter.drawPolygon(scene.track_vertices);
   if (alwaysOnLateral) { //purple
     pe.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.0, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.0, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(180 / 360., 1.0, 1.00, 0.2));
+    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 1.00, 0.2));
   } else if (conditionalStatus == 1) { // Medium grey
     pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 0.0, 0.50, 0.5));
