@@ -764,6 +764,7 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         // Calculate hue value based on acceleration
         float path_hue = 260 - acceleration[i] * 70;  // Map acceleration to the hue range [0, 260]
         path_hue = fmax(fmin(path_hue, 260), 0);  // Ensure hue is within the valid range
+        path_hue = int (path_hue * 100 + 0.5) / 100;
         float saturation = 1.0; // Full saturation for vibrant colors
         float lightness = 0.5; // Adjust as needed
         float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f); // Match previous alpha fade
