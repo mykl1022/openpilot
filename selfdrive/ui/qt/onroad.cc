@@ -762,11 +762,11 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
             acceleration[i] = 2;
         }
         // speed up: 120, slow down: 0
-        float path_hue = fmax(fmin(70 + acceleration[i] * 265, 260), 70); // Change hue values to get blue and purple shades
+        float path_hue = fmax(fmin(75 + acceleration[i] * 265, 250), 75); // Change hue values to get blue and purple shades
         // FIXME: painter.drawPolygon can be slow if hue is not rounded
         path_hue = int(path_hue * 100 + 0.5) / 100;
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
-        float lightness = util::map_val(saturation, 0.35f, 1.0f, 0.95f, 0.62f); // lighter when grey
+        float lightness = util::map_val(saturation, 0.35f, 0.75f, 0.75f, 0.62f); // lighter when grey
         float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f); // matches previous alpha fade
         bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
@@ -793,7 +793,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   if (alwaysOnLateral) {
     pe.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(330 / 360., 1.00, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.00, 0.50, 1.0));
+    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.00, 0.0, 1.0));
   } else if (conditionalStatus == 1) {
     pe.setColorAt(0.0, QColor::fromHslF(188 / 360., 0.79, 0.58, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(188 / 360., 0.79, 0.58, 0.5));
@@ -809,7 +809,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   } else if (frogColors) {
     pe.setColorAt(0.0, QColor::fromHslF(73 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(73 / 360., 1.00, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(73 / 360., 1.00, 0.50, 0.1));
+    pe.setColorAt(1.0, QColor::fromHslF(260 / 360., 1.00, 0.50, 0.1));
   } else {
     pe.setColorAt(0.0, QColor::fromHslF(260 / 360., 0.94, 0.18, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.00, 0.18, 0.5));
