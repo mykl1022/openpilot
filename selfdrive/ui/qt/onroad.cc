@@ -757,15 +757,15 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
         // Flip so 0 is the bottom of the frame
         float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
-        // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
-        if (frogColors && std::abs(acceleration[i]) < 0.2) {
-            acceleration[i] = 1;
+        // If acceleration is between -0.3 and 0.3 and frogColors is True, set acceleration to 2 to give it a consistent green color
+        if (frogColors && std::abs(acceleration[i]) < 0.3) {
+            acceleration[i] = 3;
         }
         // Calculate hue value based on acceleration
         float path_hue = 260 - acceleration[i] * 70;  // Map acceleration to the hue range [0, 260]
         path_hue = fmax(fmin(path_hue, 260), 0);  // Ensure hue is within the valid range
         path_hue = int (path_hue * 100 + 0.5) / 100;
-        float saturation = 1.0; // Full saturation for vibrant colors
+        float saturation = fmin(fabs (acceleration[i] * 1.0; // Full saturation for vibrant colors
         float lightness = util::map_val(saturation, 0.0f, 1.0f, 0.95f, 0.62f); // Adjust as needed
         float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f); // Match previous alpha fade
         bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360.0, saturation, lightness, alpha));
