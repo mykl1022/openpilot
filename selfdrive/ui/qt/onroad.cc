@@ -762,7 +762,7 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
             acceleration[i] = 2;
         }
         // Calculate hue value based on acceleration
-        float path_hue = 260 - acceleration[i] * 70;  // Map acceleration to the hue range [0, 260]
+        float path_hue = fmax(fmin(260 - acceleration[i] * 35, 70), 260);  // Map acceleration to the hue range [0, 260]
         path_hue = fmax(fmin(path_hue, 260), 0);  // Ensure hue is within the valid range
         path_hue = int (path_hue * 100 + 0.5) / 100;
         float saturation = 1.0; // Full saturation for vibrant colors
