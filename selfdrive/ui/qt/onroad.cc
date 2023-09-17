@@ -775,7 +775,7 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
     }
 } else {
     bg.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.00, 0.18, 0.80)); // Start with purple
-    bg.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.0, 0.18, 0.70));  // Transition to green
+    bg.setColorAt(0.5, QColor::fromHslF(70 / 360., 1.0, 0.18, 0.70));  // Transition to green
     bg.setColorAt(1.0, QColor::fromHslF(70 / 360., 1.0, 0.18, 0.30));  // End with green
 }
 
