@@ -759,7 +759,7 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
         // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
         if (frogColors && std::abs(acceleration[i]) < 0.2) {
-            acceleration[i] = 2;
+            acceleration[i] = 1;
         }
         // Calculate hue value based on acceleration
         float path_hue = 260 - acceleration[i] * 70;  // Map acceleration to the hue range [0, 260]
@@ -774,9 +774,9 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         i += (i + 2) < max_len ? 1 : 0;
     }
 } else {
-    bg.setColorAt(0.0, QColor::fromHslF(70 / 360., 1.00, 0.18, 0.80)); // Start with purple
+    bg.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.00, 0.18, 0.80)); // Start with purple
     bg.setColorAt(0.5, QColor::fromHslF(260 / 360., 1.0, 0.18, 0.70));  // Transition to green
-    bg.setColorAt(1.0, QColor::fromHslF(260 / 360., 1.0, 0.18, 0.30));  // End with green
+    bg.setColorAt(1.0, QColor::fromHslF(70 / 360., 1.0, 0.18, 0.30));  // End with green
 }
 
 painter.setBrush(bg);
