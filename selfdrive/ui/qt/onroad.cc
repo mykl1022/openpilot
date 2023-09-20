@@ -761,15 +761,15 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         if (frogColors && std::abs(acceleration[i]) < 0.2) {
             acceleration[i] = 2;
         }
-        // Calculate hue value based on acceleration
-        float path_hue = fmax(fmin(260 - acceleration[i] * 35, 70), 260);  // Map acceleration to the hue range [0, 260]
-        path_hue = fmax(fmin(path_hue, 260), 0);  // Ensure hue is within the valid range
-        path_hue = int (path_hue * 100 + 0.5) / 100;
-        float saturation = 1.0; // Full saturation for vibrant colors
-        float lightness = util::map_val(saturation, 0.0f, 1.0f, 0.95f, 0.62f); // Adjust as needed
-        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f); // Match previous alpha fade
-        bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360.0, saturation, lightness, alpha));
+        // speed up: 120, slow down: 0
+        float path_hue = fmax(fmin(270 + acceleration[i] * 0, 0), 255); // orange and black fade
+        // FIXME: painter.drawPolygon can be slow if hue is not rounded
+        path_hue = int(path_hue * 100 + 0.5) / 100;
 
+        float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
+        float lightness = util::map_val(saturation, 1.0f, 0.0f, 0.5f, 0.0f); // lighter when grey
+        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 1.0f); // matches previous alpha fade
+        bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
         // Skip a point, unless the next is the last
         i += (i + 2) < max_len ? 1 : 0;
     }
@@ -791,13 +791,13 @@ painter.drawPolygon(scene.track_vertices);
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) { //purple
-    pe.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.0, 0.50, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.50, 0.5));
+    pe.setColorAt(0.0, QColor::fromHslF(260 / 360., 1.0, 0.0, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.0, 0.5));
     pe.setColorAt(1.0, QColor::fromHslF(260 / 360., 1.0, 1.00, 0.2));
   } else if (conditionalStatus == 1) { // Medium grey
-    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 0.50, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 0.0, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 0.0, 0.50, 0.2));
+    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 1.0, 0.50, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.50, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.50, 0.2));
   } else if (experimentalMode) { // Orange
     pe.setColorAt(0.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.5));
