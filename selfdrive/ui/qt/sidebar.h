@@ -58,7 +58,7 @@ protected:
   const QColor danger_color = QColor(201, 34, 49);
 
   // FrogPilot colors
-  const QColor frog_color = QColor(0, 1.0, 0.5, 1.0);
+  const QColor frog_color = QColor(0, 255, 128, 255); // Using integer values
 
   ItemStatus connect_status, panda_status, temp_status;
   QString net_type;
