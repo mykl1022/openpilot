@@ -733,7 +733,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // road edges
   for (int i = 0; i < std::size(scene.road_edge_vertices); ++i) {
     if (frogColors) {
-      painter.setBrush(QColor(255, 182, 193, 242));
+      painter.setBrush(QColor(255, 182, 10, 242));
     } else {
       painter.setBrush(QColor::fromRgbF(1.0, 0, 0, std::clamp<float>(1.0 - scene.road_edge_stds[i], 0.0, 1.0)));
     }
@@ -767,12 +767,12 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
       }
 
       // speed up: 120, slow down: 0
-        float path_hue = fmax(fmin(320 + acceleration[i] * 0, 0), 320); // Pink and black fade
+        float path_hue = fmax(fmin(0 + acceleration[i] * 0, 0), 0); // red and black fade
         // FIXME: painter.drawPolygon can be slow if hue is not rounded
         path_hue = int(path_hue * 100 + 0.5) / 100;
 
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
-        float lightness = util::map_val(saturation, 1.0f, 0.75f, 1.0f, 0.75f); // lighter when grey
+        float lightness = util::map_val(saturation, 1.0f, 0.5f, 1.0f, 0.5f); // lighter when grey
         float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 1.0f); // matches previous alpha fade
         bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
@@ -782,8 +782,8 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   } else {
     bg.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 1.0, 0.4));
-    bg.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.75, 0.35));
-    bg.setColorAt(1.0, QColor::fromHslF(320 / 360., 1.0, 0.75, 0.1));
+    bg.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.75, 0.35));
+    bg.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.75, 0.1));
   }
 
   painter.setBrush(bg);
@@ -797,29 +797,29 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) { // Pink & white
-    pe.setColorAt(0.0, QColor::fromHslF(320 / 360.0, 1.0, 0.75, 1.0));   // Start with pink
-pe.setColorAt(0.5, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));           // Transition to white (full saturation and lightness)
-pe.setColorAt(1.0, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));           // Stay at white
+    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 1.0, 5.0, 1.0)); // Start with red
+    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 1.0, 1.0)); // Transition to white (full saturation and lightness)
+    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 1.0, 1.0)); // Stay at white
   } else if (conditionalStatus == 1) {
-    pe.setColorAt(0.0, QColor::fromHslF(188 / 360., 0.79, 0.58, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(188 / 360., 0.79, 0.58, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(188 / 360., 0.79, 0.58, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(51 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(51 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.5, 1.0));
   } else if (experimentalMode) {
-    pe.setColorAt(0.0, QColor::fromHslF(360 / 360., 1.0, 0.50, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(360 / 360., 1.0, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(360 / 360., 1.0, 0.50, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(230 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(1.0, QColor::fromHslF(51 / 360., 1.0, 0.5, 1.0));
   } else if (scene.navigate_on_openpilot) {
     pe.setColorAt(0.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.5));
     pe.setColorAt(1.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.1));
   } else if (frogColors) {
-    pe.setColorAt(0.0, QColor::fromHslF(320 / 360., 1.0, 0.5, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(320, 1.0, 0.75, 1.0));
-    pe.setColorAt(1.0, QColor::fromHslF(0, 1.0, 1.0, 1.0));
+    pe.setColorAt(0.0, QColor::fromHslF(51 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(51 / 360., 1.0, 0.0, 1.0));
+    pe.setColorAt(1.0, QColor::fromHslF(51 / 360., 1.0, 0.5, 1.0));
   } else {
-    pe.setColorAt(0.0, QColor::fromHslF(300 / 360., 1.0, 0.5, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(300 / 360., 1.0, 0.5, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(300 / 360., 1.0, 1.0, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(51 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(51 / 360., 1.0, 0.0, 1.0));
+    pe.setColorAt(1.0, QColor::fromHslF(51 / 360., 1.0, 0.5, 1.0));
   }
 
   painter.setBrush(pe);
@@ -832,9 +832,9 @@ pe.setColorAt(1.0, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));           // Stay at w
   // paint blindspot path
   QLinearGradient bs(0, height(), 0, 0);
   if ((blindSpotLeft || blindSpotRight) && speedCheck && isNotTurning && is_cruise_set) {
-    bs.setColorAt(0.0, QColor::fromHslF(300 / 360., 0.75, 0.50, 0.6));
-    bs.setColorAt(0.5, QColor::fromHslF(300 / 360., 0.75, 0.50, 0.4));
-    bs.setColorAt(1.0, QColor::fromHslF(300 / 360., 0.75, 0.50, 0.2));
+    bs.setColorAt(0.0, QColor::fromHslF(51 / 360., 0.5, 0.50, 0.6));
+    bs.setColorAt(0.5, QColor::fromHslF(51 / 360., 0.5, 0.50, 0.4));
+    bs.setColorAt(1.0, QColor::fromHslF(51 / 360., 0.5, 0.50, 0.2));
   }
 
   painter.setBrush(bs);
@@ -859,13 +859,13 @@ pe.setColorAt(1.0, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));           // Stay at w
       static double hue;
       if ((laneWidth < minLaneWidth) || blindspot) {
         // Make the path red for smaller paths or if there's a car in the blindspot
-        hue = 330;
+        hue = 0;
       } else if (laneWidth >= maxLaneWidth) {
         // Make the path green for larger paths
-        hue = 300;
+        hue = 51;
       } else {
         // Transition the path from red to green based on lane width
-        hue = (300 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
+        hue = (0 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
       }
       gradient.setColorAt(0.0, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.6));
       gradient.setColorAt(0.5, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.4));
