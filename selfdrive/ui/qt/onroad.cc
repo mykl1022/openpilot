@@ -846,14 +846,14 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     const auto setGradientColors = [](QLinearGradient& gradient, const float laneWidth, const float minLaneWidth, const float maxLaneWidth, const bool blindspot) {
       static double hue;
       if ((laneWidth < minLaneWidth) || blindspot) {
-        // Make the path red for smaller paths or if there's a car in the blindspot
-        hue = 0;
+        // Make the path grey for smaller paths or if there's a car in the blindspot
+        hue = 220;
       } else if (laneWidth >= maxLaneWidth) {
-        // Make the path green for larger paths
-        hue = 120;
+        // Make the path light blue for larger paths
+        hue = 200;
       } else {
-        // Transition the path from red to green based on lane width
-        hue = (120 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
+        // Transition the path from grey to light blue based on lane width
+        hue = (200 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
       }
       gradient.setColorAt(0.0, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.6));
       gradient.setColorAt(0.5, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.4));
