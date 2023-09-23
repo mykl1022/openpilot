@@ -114,7 +114,7 @@ const QColor bg_colors [] = {
   [STATUS_ENGAGED] = QColor(0x17, 0x86, 0x44, 0xf1),
 
   // FrogPilot colors
-  [STATUS_LATERAL_ACTIVE] = QColor(0x0a, 0xba, 0xb5, 0xf1),
+  [STATUS_LATERAL_ACTIVE] = QColor(0x00, 0x48, 0xff, 0xf1),
 };
 
 static std::map<cereal::ControlsState::AlertStatus, QColor> alert_colors = {
