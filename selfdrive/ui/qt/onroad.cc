@@ -714,7 +714,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // lanelines
   for (int i = 0; i < std::size(scene.lane_line_vertices); ++i) {
     if (frogColors) {
-      painter.setBrush(QColor(255, 213, 0, 255));
+      painter.setBrush(QColor(245, 255, 8, 255));
     } else {
       painter.setBrush(QColor::fromRgbF(1.0, 1.0, 1.0, std::clamp<float>(scene.lane_line_probs[i], 0.0, 0.7)));
     }
