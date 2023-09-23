@@ -228,7 +228,7 @@ def startup_master_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
   if "REPLAY" in os.environ:
     branch = "replay"
 
-  return StartupAlert("Hippity hoppity this is my property", "so I do what I want 🐸", alert_status=AlertStatus.frogpilot)
+  return StartupAlert("Hello and Welcome to my Tesla Theme", alert_status=AlertStatus.frogpilot)
 
 def below_engage_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
   return NoEntryAlert(f"Drive above {get_display_speed(CP.minEnableSpeed, metric)} to engage")
@@ -432,7 +432,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
 
   EventName.ldw: {
     ET.PERMANENT: Alert(
-      "Lane Departure Detected",
+      "Get your ass back in lane",
       "",
       AlertStatus.userPrompt, AlertSize.small,
       Priority.LOW, VisualAlert.ldw, AudibleAlert.prompt, 3.),
@@ -575,7 +575,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   EventName.frogSteerSaturated: {
     ET.WARNING: Alert(
       "Turn Exceeds Steering Limit",
-      "JESUS TAKE THE WHEEL!!",
+      "Thanks openpilot!!",
       AlertStatus.userPrompt, AlertSize.mid,
       Priority.LOW, VisualAlert.steerRequired, AudibleAlert.warningSoft, 2.),
   },
@@ -872,7 +872,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   EventName.accFaulted: {
     ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Cruise Fault: Restart the Car"),
     ET.PERMANENT: NormalPermanentAlert("Cruise Fault: Restart the car to engage"),
-    ET.NO_ENTRY: NoEntryAlert("Cruise Fault: Restart the Car"),
+    ET.NO_ENTRY: NoEntryAlert("Cruise Fault: Turn off Car wait for usb plug to to black"),
   },
 
   EventName.controlsMismatch: {
@@ -932,7 +932,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
 
   EventName.steerUnavailable: {
     ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("LKAS Fault: Restart the Car"),
-    ET.PERMANENT: NormalPermanentAlert("LKAS Fault: Restart the car to engage"),
+    ET.PERMANENT: NormalPermanentAlert("LKAS Fault: Turn off Car wait for usb plug to to black"),
     ET.NO_ENTRY: NoEntryAlert("LKAS Fault: Restart the Car"),
   },
 
@@ -942,8 +942,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       "",
       AlertStatus.normal, AlertSize.full,
       Priority.LOWEST, VisualAlert.none, AudibleAlert.none, .2, creation_delay=0.5),
-    ET.USER_DISABLE: ImmediateDisableAlert("Reverse Gear"),
-    ET.NO_ENTRY: NoEntryAlert("Reverse Gear"),
+    ET.USER_DISABLE: ImmediateDisableAlert("Reverse Gear", "check surroundings"),
+    ET.NO_ENTRY: NoEntryAlert("Reverse Gear", "check surroundings"),
   },
 
   # On cars that use stock ACC the car can decide to cancel ACC for various reasons.
@@ -1014,7 +1014,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       "Shift to L",
       AlertStatus.userPrompt, AlertSize.mid,
       Priority.HIGH, VisualAlert.wrongGear, AudibleAlert.promptRepeat, 4.),
-    ET.NO_ENTRY: NoEntryAlert("Shift To L To Use Pedal Interceptor"),
+    ET.NO_ENTRY: NoEntryAlert("Shift To One Pedal To Use Pedal Interceptor"),
   },
 }
 
