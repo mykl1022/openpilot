@@ -870,9 +870,9 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.accFaulted: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Cruise Fault: Restart the Car"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("Cruise Fault: Restart the car"),
     ET.PERMANENT: NormalPermanentAlert("Cruise Fault: Restart the car to engage"),
-    ET.NO_ENTRY: NoEntryAlert("Cruise Fault: Turn off Car wait for usb plug to to black"),
+    ET.NO_ENTRY: NoEntryAlert("Cruise Fault: Restart the car"),
   },
 
   EventName.controlsMismatch: {
@@ -931,9 +931,9 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   },
 
   EventName.steerUnavailable: {
-    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("LKAS Fault: Restart the Car"),
-    ET.PERMANENT: NormalPermanentAlert("LKAS Fault: Turn off Car wait for usb plug to to black"),
-    ET.NO_ENTRY: NoEntryAlert("LKAS Fault: Restart the Car"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("LKAS Fault: Restart the car"),
+    ET.PERMANENT: NormalPermanentAlert("LKAS Fault: Restart the car to engage"),
+    ET.NO_ENTRY: NoEntryAlert("LKAS Fault: Restart the car"),
   },
 
   EventName.reverseGear: {
@@ -942,8 +942,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       "",
       AlertStatus.normal, AlertSize.full,
       Priority.LOWEST, VisualAlert.none, AudibleAlert.none, .2, creation_delay=0.5),
-    ET.USER_DISABLE: ImmediateDisableAlert("Reverse Gear", "check surroundings"),
-    ET.NO_ENTRY: NoEntryAlert("Reverse Gear", "check surroundings"),
+    ET.USER_DISABLE: ImmediateDisableAlert("Reverse Gear"),
+    ET.NO_ENTRY: NoEntryAlert("Reverse Gear"),
   },
 
   # On cars that use stock ACC the car can decide to cancel ACC for various reasons.
@@ -1014,7 +1014,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       "Shift to L",
       AlertStatus.userPrompt, AlertSize.mid,
       Priority.HIGH, VisualAlert.wrongGear, AudibleAlert.promptRepeat, 4.),
-    ET.NO_ENTRY: NoEntryAlert("Shift To One Pedal To Use Pedal Interceptor"),
+    ET.NO_ENTRY: NoEntryAlert("Shift To L To Use Pedal Interceptor"),
   },
 }
 
