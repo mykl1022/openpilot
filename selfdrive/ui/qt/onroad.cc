@@ -10,6 +10,7 @@
 #include <QElapsedTimer>
 #include <QMouseEvent>
 #include <QTimer>
+#include <QtGui/QColor>
 
 #include "common/timing.h"
 #include "selfdrive/ui/qt/util.h"
@@ -739,16 +740,17 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   // paint path
 QLinearGradient bg(0, height(), 0, 0);
-bg.setColorAt(0.0);
-bg.setColorAt(0.17);
-bg.setColorAt(0.33);
-bg.setColorAt(0.5);
-bg.setColorAt(0.67);
-bg.setColorAt(0.83);
-bg.setColorAt(1.0);
+bg.setColorAt(0.0, QColor(255, 0, 0));      // Red
+bg.setColorAt(0.17, QColor(255, 165, 0));  // Orange
+bg.setColorAt(0.33, QColor(255, 255, 0));  // Yellow
+bg.setColorAt(0.5, QColor(0, 128, 0));     // Green
+bg.setColorAt(0.67, QColor(0, 0, 255));    // Blue
+bg.setColorAt(0.83, QColor(75, 0, 130));   // Indigo
+bg.setColorAt(1.0, QColor(148, 0, 211));   // Violet
 
 painter.setBrush(bg);
 painter.drawPolygon(scene.track_vertices);
+
 
 
   // create new path with track vertices and track edge vertices
