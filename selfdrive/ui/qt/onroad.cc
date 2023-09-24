@@ -738,53 +738,18 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   }
 
   // paint path
-  QLinearGradient bg(0, height(), 0, 0);
-  if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors || accelerationPath) {
-    // The first half of track_vertices are the points for the right side of the path
-    // and the indices match the positions of accel from uiPlan
-    const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
-    const int max_len = std::min<int>(scene.track_vertices.length() / 2, acceleration_const.size());
+QLinearGradient bg(0, height(), 0, 0);
+bg.setColorAt(0.0, Qt::red);
+bg.setColorAt(0.17, Qt::orange);
+bg.setColorAt(0.33, Qt::yellow);
+bg.setColorAt(0.5, Qt::green);
+bg.setColorAt(0.67, Qt::blue);
+bg.setColorAt(0.83, Qt::indigo);
+bg.setColorAt(1.0, Qt::violet);
 
-    // Copy of the acceleration vector for the "frogColors" path
-    std::vector<float> acceleration;
-    for (int i = 0; i < acceleration_const.size(); i++) {
-      acceleration.push_back(acceleration_const[i]);
-    }
+painter.setBrush(bg);
+painter.drawPolygon(scene.track_vertices);
 
-    for (int i = 0; i < max_len; ++i) {
-      // Some points are out of frame
-      if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
-
-      // Flip so 0 is bottom of frame
-      float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
-
-      // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
-      if (frogColors && std::abs(acceleration[i]) < 0.2) {
-        acceleration[i] = 2;
-      }
-
-      // speed up: 120, slow down: 0
-      float path_hue = fmax(fmin(60 + acceleration[i] * 35, 120), 0);
-      // FIXME: painter.drawPolygon can be slow if hue is not rounded
-      path_hue = int(path_hue * 100 + 0.5) / 100;
-
-      float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
-      float lightness = util::map_val(saturation, 0.0f, 1.0f, 0.95f, 0.62f);  // lighter when grey
-      float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f);  // matches previous alpha fade
-      bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
-
-      // Skip a point, unless next is last
-      i += (i + 2) < max_len ? 1 : 0;
-    }
-
-  } else {
-    bg.setColorAt(0.0, QColor::fromHslF(148 / 360., 0.94, 0.51, 0.4));
-    bg.setColorAt(0.5, QColor::fromHslF(112 / 360., 1.0, 0.68, 0.35));
-    bg.setColorAt(1.0, QColor::fromHslF(112 / 360., 1.0, 0.68, 0.0));
-  }
-
-  painter.setBrush(bg);
-  painter.drawPolygon(scene.track_vertices);
 
   // create new path with track vertices and track edge vertices
   QPainterPath path;
