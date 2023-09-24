@@ -739,13 +739,13 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   // paint path
 QLinearGradient bg(0, height(), 0, 0);
-bg.setColorAt(0.0, Qt::red);
-bg.setColorAt(0.17, Qt::orange);
-bg.setColorAt(0.33, Qt::yellow);
-bg.setColorAt(0.5, Qt::green);
-bg.setColorAt(0.67, Qt::blue);
-bg.setColorAt(0.83, Qt::indigo);
-bg.setColorAt(1.0, Qt::violet);
+bg.setColorAt(0.0);
+bg.setColorAt(0.17);
+bg.setColorAt(0.33);
+bg.setColorAt(0.5);
+bg.setColorAt(0.67);
+bg.setColorAt(0.83);
+bg.setColorAt(1.0);
 
 painter.setBrush(bg);
 painter.drawPolygon(scene.track_vertices);
