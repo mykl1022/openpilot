@@ -10,7 +10,6 @@
 #include <QElapsedTimer>
 #include <QMouseEvent>
 #include <QTimer>
-#include <QtGui/QColor>
 
 #include "common/timing.h"
 #include "selfdrive/ui/qt/util.h"
