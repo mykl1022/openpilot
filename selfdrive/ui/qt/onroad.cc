@@ -716,7 +716,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   painter.save();
 
   const UIScene &scene = s->scene;
-  //SubMaster &sm = *(s->sm);
+  SubMaster &sm = *(s->sm);
 
   // lanelines
   for (int i = 0; i < std::size(scene.lane_line_vertices); ++i) {
@@ -739,17 +739,53 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   }
 
   // paint path
-QLinearGradient bg(0, height(), 0, 0);
-bg.setColorAt(0.0, QColor(255, 0, 0));      // Red
-bg.setColorAt(0.17, QColor(255, 165, 0));  // Orange
-bg.setColorAt(0.33, QColor(255, 255, 0));  // Yellow
-bg.setColorAt(0.5, QColor(0, 128, 0));     // Green
-bg.setColorAt(0.67, QColor(0, 0, 255));    // Blue
-bg.setColorAt(0.83, QColor(75, 0, 130));   // Indigo
-bg.setColorAt(1.0, QColor(148, 0, 211));   // Violet
+  QLinearGradient bg(0, height(), 0, 0);
+  if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
+    // The first half of track_vertices are the points for the right side of the path
+    // and the indices match the positions of accel from uiPlan
+    const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
+    const int max_len = std::min<int>(scene.track_vertices.length() / 2, acceleration_const.size());
 
-painter.setBrush(bg);
-painter.drawPolygon(scene.track_vertices);
+    // Copy of the acceleration vector for the "frogColors" path
+    std::vector<float> acceleration;
+    for (int i = 0; i < acceleration_const.size(); i++) {
+      acceleration.push_back(acceleration_const[i]);
+    }
+
+    for (int i = 0; i < max_len; ++i) {
+      // Some points are out of frame
+      if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
+
+      // Flip so 0 is bottom of frame
+      float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
+
+      // If acceleration is between -0.25 and 0.25 and frogColors is True, set acceleration to 2 to give it a consistent green color
+      if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
+        acceleration[i] = 2;
+      }
+
+      // Define a variable to control the hue
+float hue = 0.0; // Initialize hue to red (0 degrees)
+
+// speed up: 120, slow down: 0
+float path_hue = fmax(fmin(0 + acceleration[i] * 0, 0), 0); // red and black fade
+// FIXME: painter.drawPolygon can be slow if hue is not rounded
+path_hue = int(path_hue * 100 + 0.5) / 100;
+
+// Calculate the hue based on acceleration
+// You can adjust the scaling factor (e.g., 60) to control the speed of the hue change
+hue += acceleration[i] * 60;
+if (hue > 360) {
+    hue -= 360; // Wrap around if the hue exceeds 360 degrees
+}
+
+float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
+float lightness = util::map_val(saturation, 1.0f, 0.5f, 1.0f, 0.5f); // lighter when grey
+float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 1.0f); // matches previous alpha fade
+bg.setColorAt(lin_grad_point, QColor::fromHslF(hue / 360.0, saturation, lightness, alpha));
+
+// Skip a point, unless next is last
+i += (i + 2) < max_len ? 1 : 0;
 
 
 
