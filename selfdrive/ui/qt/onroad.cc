@@ -785,8 +785,17 @@ float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 1.0f); // 
 bg.setColorAt(lin_grad_point, QColor::fromHslF(hue / 360.0, saturation, lightness, alpha));
 
 // Skip a point, unless next is last
-i += (i + 2) < max_len ? 1 : 0;
+      i += (i + 2) < max_len ? 1 : 0;
+    }
 
+  } else {
+    bg.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 1.0, 0.4));
+    bg.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.75, 0.35));
+    bg.setColorAt(1.0, QColor::fromHslF(320 / 360., 1.0, 0.75, 0.1));
+  }
+
+  painter.setBrush(bg);
+  painter.drawPolygon(scene.track_vertices);
 
 
   // create new path with track vertices and track edge vertices
