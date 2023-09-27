@@ -746,13 +746,13 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   // paint path
   QLinearGradient bg(0, height(), 0, 0);
-  if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
+  if (sm["controlsState"].getControlsState().getExperimentalMode() || accelerationPath) {
     // The first half of track_vertices are the points for the right side of the path
     // and the indices match the positions of accel from uiPlan
     const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
     const int max_len = std::min<int>(scene.track_vertices.length() / 2, acceleration_const.size());
 
-    // Copy of the acceleration vector for the "frogColors" path
+    // Copy of the acceleration vector
     std::vector<float> acceleration;
     for (int i = 0; i < acceleration_const.size(); i++) {
       acceleration.push_back(acceleration_const[i]);
@@ -765,23 +765,25 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
       // Flip so 0 is bottom of frame
       float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
 
-      // If acceleration is between -0.25 and 0.25 and frogColors is True, set acceleration to 2 to give it a consistent green color
-      if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
-        acceleration[i] = 2;
-      }
-
-      // speed up: 120, slow down: 0
-        float path_hue = fmax(fmin(320 + acceleration[i] * 0, 0), 320); // Pink and black fade
+      // If acceleration is between -0.2 and 0.2, resort to the theme color
+      if (std::abs(acceleration[i]) < 0.2 && (customColors != 0)) {
+        const auto &colorMap = themeConfiguration[customColors].second.second;
+        for (const auto &[position, brush] : colorMap) {
+          bg.setColorAt(position, brush.color());
+        }
+      } else {
+        // speed up: 120, slow down: 0
+        float path_hue = fmax(fmin(320 + acceleration[i] * 0, 0), 3200);
         // FIXME: painter.drawPolygon can be slow if hue is not rounded
         path_hue = int(path_hue * 100 + 0.5) / 100;
 
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
-        float lightness = util::map_val(saturation, 1.0f, 0.75f, 1.0f, 0.75f); // lighter when grey
-        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 1.0f); // matches previous alpha fade
+        float lightness = util::map_val(saturation, 0.0f, 1.0f, 0.95f, 0.62f);  // lighter when grey
+        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f);  // matches previous alpha fade
         bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
-      // Skip a point, unless next is last
-      i += (i + 2) < max_len ? 1 : 0;
+        // Skip a point, unless next is last
+        i += (i + 2) < max_len ? 1 : 0;
       }
     }
 
@@ -791,9 +793,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
       bg.setColorAt(position, brush.color());
     }
   } else {
-    bg.setColorAt(0.0, QColor::fromHslF(148 / 360., 0.94, 0.51, 0.4));
-    bg.setColorAt(0.5, QColor::fromHslF(112 / 360., 1.0, 0.68, 0.35));
-    bg.setColorAt(1.0, QColor::fromHslF(112 / 360., 1.0, 0.68, 0.0));
+    bg.setColorAt(0.0, QColor::fromHslF(220 / 360., 0.94, 0.51, 0.4));
+    bg.setColorAt(0.5, QColor::fromHslF(220 / 360., 1.0, 0.68, 0.35));
+    bg.setColorAt(1.0, QColor::fromHslF(220 / 360., 1.0, 0.68, 0.0));
   }
 
   painter.setBrush(bg);
