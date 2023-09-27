@@ -1,6 +1,6 @@
-#pragma once
-
 #include <memory>
+
+#pragma once
 
 #include <QPushButton>
 #include <QStackedLayout>
@@ -9,8 +9,6 @@
 #include "common/util.h"
 #include "selfdrive/ui/ui.h"
 #include "selfdrive/ui/qt/widgets/cameraview.h"
-
-
 const int btn_size = 192;
 const int img_size = (btn_size / 4) * 3;
 
