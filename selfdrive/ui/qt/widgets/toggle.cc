@@ -13,7 +13,7 @@ _anim(new QPropertyAnimation(this, "offset_circle", this))
   _y_circle = _radius;
   _y_rect = (_height - _height_rect)/2;
   circleColor = QColor(0xffffff); // placeholder
-  green = QColor(0xffffff); // placeholder
+  green = QColor(0x020202); // placeholder
   setEnabled(true);
 }
 
@@ -75,9 +75,9 @@ void Toggle::setEnabled(bool value) {
   enabled = value;
   if (value) {
     circleColor.setRgb(0xfafafa);
-    green.setRgb(0xffccff);
+    green.setRgb(0x020202);
   } else {
     circleColor.setRgb(0x888888);
-    green.setRgb(0xffccff);
+    green.setRgb(0x020202);
   }
 }
