@@ -800,9 +800,6 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     // Define the colors for the glow effect
 QColor whiteCenterColor = QColor(Qt::white);  // White color for the center
 QColor glowColor = QColor::fromHslF(360 / 360., 1.0, 0.5, 1.0);  // Your desired glow color
-
-// Calculate the positions for the gradient stops
-QLinearGradient pe(0, height(), 0, 0);
 pe.setColorAt(0.0, glowColor);                // Start with the glow color
 pe.setColorAt(0.5, whiteCenterColor);         // Center should be white
 pe.setColorAt(1.0, glowColor);                // End with the glow color
