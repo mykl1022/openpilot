@@ -798,11 +798,17 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) { // red and black
     // Define the colors for the glow effect
-QColor whiteCenterColor = QColor(Qt::white);  // White color for the center
-QColor glowColor = QColor::fromHslF(360 / 360., 1.0, 0.5, 1.0);  // Your desired glow color
-pe.setColorAt(0.0, glowColor);                // Start with the glow color
-pe.setColorAt(0.5, whiteCenterColor);         // Center should be white
-pe.setColorAt(1.0, glowColor);                // End with the glow color
+QColor whiteColor = QColor(Qt::white);  // White color for the center line
+QColor glowColor = QColor(Qt::red);      // Your desired red glow color
+
+// Calculate the positions for the gradient 
+pe.setColorAt(0.0, whiteColor);            // Start with white color
+pe.setColorAt(0.2, whiteColor);            // Continue white color
+pe.setColorAt(0.4, glowColor);             // Start of the red glow on the left
+pe.setColorAt(0.6, glowColor);             // End of the red glow on the right
+pe.setColorAt(0.8, whiteColor);            // Continue white color
+pe.setColorAt(1.0, whiteColor);            // End with white color
+                // End with the glow color
 
   } else if (conditionalStatus == 1) {
     pe.setColorAt(0.0, QColor::fromHslF(188 / 360., 0.79, 0.58, 1.0));
