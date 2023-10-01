@@ -740,51 +740,56 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     painter.drawPolygon(scene.road_edge_vertices[i]);
   }
 
-   // paint path
-  QLinearGradient bg(0, height(), 0, 0);
-  if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
-    // The first half of track_vertices are the points for the right side of the path
-    // and the indices match the positions of accel from uiPlan
+   // Define a list of magical colors
+std::vector<QColor> magicalColors;
+magicalColors.push_back(QColor(255, 0, 0));    // Red
+magicalColors.push_back(QColor(255, 165, 0));  // Orange
+magicalColors.push_back(QColor(255, 255, 0));  // Yellow
+magicalColors.push_back(QColor(0, 128, 0));    // Green
+magicalColors.push_back(QColor(0, 0, 255));    // Blue
+magicalColors.push_back(QColor(128, 0, 128));  // Purple
+
+// paint path
+QLinearGradient bg(0, height(), 0, 0);
+if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
     const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
     const int max_len = std::min<int>(scene.track_vertices.length() / 2, acceleration_const.size());
 
-    // Copy of the acceleration vector for the "frogColors" path
     std::vector<float> acceleration;
     for (int i = 0; i < acceleration_const.size(); i++) {
-      acceleration.push_back(acceleration_const[i]);
+        acceleration.push_back(acceleration_const[i]);
     }
 
     for (int i = 0; i < max_len; ++i) {
-      // Some points are out of frame
-      if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
+        if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
 
-      // Flip so 0 is bottom of frame
-      float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
+        float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
 
-      // If acceleration is between -0.25 and 0.25 and frogColors is True, set acceleration to 2 to give it a consistent green color
-      if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
-        acceleration[i] = 2;
-      }
+        if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
+            acceleration[i] = 2;
+        }
 
-      // speed up: 120, slow down: 0
-        float path_hue = fmax(fmin(0 + acceleration[i] * 0, 0), 0); // Pink and black fade
-        // FIXME: painter.drawPolygon can be slow if hue is not rounded
-        path_hue = int(path_hue * 100 + 0.5) / 100;
+        // Calculate a magical color index based on acceleration
+        int magicalColorIndex = static_cast<int>((acceleration[i] + 0.25) * 5);
+        magicalColorIndex = std::max(0, std::min(magicalColorIndex, 5));
+
+        // Get the magical color from the list
+        QColor magicalColor = magicalColors[magicalColorIndex];
 
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
-        float lightness = util::map_val(saturation, 0.0f, 0.75f, 0.0f, 0.75f); // lighter when grey
-        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.65f, 1.0f); // matches previous alpha fade
-        bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
+        float lightness = util::map_val(saturation, 0.0f, 0.75f, 0.0f, 0.75f);
+        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.65f, 1.0f);
+        bg.setColorAt(lin_grad_point, magicalColor);
 
-      // Skip a point, unless next is last
-      i += (i + 2) < max_len ? 1 : 0;
+        i += (i + 2) < max_len ? 1 : 0;
     }
 
-  } else {
+} else {
     bg.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 1.0, 0.4));
     bg.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.85, 0.35));
     bg.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.85, 0.1));
-  }
+}
+
 
   painter.setBrush(bg);
   painter.drawPolygon(scene.track_vertices);
