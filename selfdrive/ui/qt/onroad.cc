@@ -769,18 +769,17 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
             acceleration[i] = 2;
         }
 
-        // Calculate a magical color index based on acceleration
-        int magicalColorIndex = static_cast<int>((acceleration[i] + 0.25) * 5);
-        magicalColorIndex = std::max(0, std::min(magicalColorIndex, 5));
+        float path_hue = fmax(fmin(0 + acceleration[i] * 0, 0), 0); // Pink and black fade
+        path_hue = int(path_hue * 100 + 0.5) / 100;
 
-        // Get the magical color from the list
-        QColor magicalColor = magicalColors[magicalColorIndex];
-
+        // Use 'lightness' and 'alpha' within this scope
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
         float lightness = util::map_val(saturation, 0.0f, 0.75f, 0.0f, 0.75f);
         float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.65f, 1.0f);
-        bg.setColorAt(lin_grad_point, magicalColor);
+        
+        bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
+        // Skip a point, unless the next is the last
         i += (i + 2) < max_len ? 1 : 0;
     }
 
