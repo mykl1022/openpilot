@@ -759,18 +759,27 @@ double timeFactor = fmod(QDateTime::currentMSecsSinceEpoch() / 1000.0, 10.0); //
 
 // paint path
 
-int main() {
-    // Calculate a time-based factor for color change
-    // You can adjust the speed of color change by modifying 'timeFactor'
-    double timeFactor = fmod(QDateTime::currentMSecsSinceEpoch() / 1000.0, 10.0); // 10 seconds cycle
+// Include necessary headers
 
-    // Print the magical color for the current time
-    int magicalColorIndex = static_cast<int>(timeFactor * magicalColors.size()) % magicalColors.size();
-    QColor magicalColor = magicalColors[magicalColorIndex];
+// Define a list of magical colors
+std::vector<QColor> magicalColors;
+magicalColors.push_back(QColor(255, 0, 0));    // Red
+magicalColors.push_back(QColor(255, 165, 0));  // Orange
+magicalColors.push_back(QColor(255, 255, 0));  // Yellow
+magicalColors.push_back(QColor(0, 128, 0));    // Green
+magicalColors.push_back(QColor(0, 0, 255));    // Blue
+magicalColors.push_back(QColor(128, 0, 128));  // Purple
 
-    std::cout << "Current Magical Color: " << magicalColor.name().toStdString() << std::endl;
+// Calculate a time-based factor for color change
+double timeFactor = fmod(QDateTime::currentMSecsSinceEpoch() / 1000.0, 10.0); // 10 seconds cycle
 
-    return 0;
+// Use 'timeFactor' to determine the dynamic color for your path
+int magicalColorIndex = static_cast<int>(timeFactor * magicalColors.size()) % magicalColors.size();
+QColor magicalColor = magicalColors[magicalColorIndex];
+
+// Use 'magicalColor' for coloring your path
+bg.setColorAt(lin_grad_point, magicalColor);
+
 }
 
 
