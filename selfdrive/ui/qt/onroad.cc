@@ -749,6 +749,9 @@ magicalColors.push_back(QColor(0, 128, 0));    // Green
 magicalColors.push_back(QColor(0, 0, 255));    // Blue
 magicalColors.push_back(QColor(128, 0, 128));  // Purple
 
+// Define a variable to control color scrolling
+float colorScroll = 0.0f;
+
 // paint path
 QLinearGradient bg(0, height(), 0, 0);
 if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
@@ -765,16 +768,20 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
 
         float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
 
-        if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
-            acceleration[i] = 2;
         }
 
-        // Calculate a magical color index based on acceleration
-        int magicalColorIndex = static_cast<int>((acceleration[i] + 0.25) * 5);
-        magicalColorIndex = std::max(0, std::min(magicalColorIndex, 5));
+        // Scroll through magical colors by incrementing 'colorScroll'
+        colorScroll += 0.001f;
+        if (colorScroll > 1.0f) {
+            colorScroll -= 1.0f;
+        }
+
+        // Calculate the index of the magical color based on 'colorScroll'
+        int magicalColorIndex = static_cast<int>(colorScroll * magicalColors.size());
 
         // Get the magical color from the list
         QColor magicalColor = magicalColors[magicalColorIndex];
+
         bg.setColorAt(lin_grad_point, magicalColor);
 
         i += (i + 2) < max_len ? 1 : 0;
@@ -785,6 +792,7 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
     bg.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.85, 0.35));
     bg.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.85, 0.1));
 }
+
 
 
 
