@@ -758,40 +758,20 @@ magicalColors.push_back(QColor(128, 0, 128));  // Purple
 double timeFactor = fmod(QDateTime::currentMSecsSinceEpoch() / 1000.0, 10.0); // 10 seconds cycle
 
 // paint path
-QLinearGradient bg(0, height(), 0, 0);
-if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
-    const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
-    const int max_len = std::min<int>(scene.track_vertices.length() / 2, acceleration_const.size());
 
-    std::vector<float> acceleration;
-    for (int i = 0; i < acceleration_const.size(); i++) {
-        acceleration.push_back(acceleration_const[i]);
-    }
+int main() {
+    // Calculate a time-based factor for color change
+    // You can adjust the speed of color change by modifying 'timeFactor'
+    double timeFactor = fmod(QDateTime::currentMSecsSinceEpoch() / 1000.0, 10.0); // 10 seconds cycle
 
-    for (int i = 0; i < max_len; ++i) {
-        if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
+    // Print the magical color for the current time
+    int magicalColorIndex = static_cast<int>(timeFactor * magicalColors.size()) % magicalColors.size();
+    QColor magicalColor = magicalColors[magicalColorIndex];
 
-        float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
+    std::cout << "Current Magical Color: " << magicalColor.name().toStdString() << std::endl;
 
-        if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
-            acceleration[i] = 2;
-        }
-
-        // Calculate a dynamic index for the magical color based on time
-        int magicalColorIndex = static_cast<int>(timeFactor * magicalColors.size()) % magicalColors.size();
-
-        // Get the magical color from the list
-        QColor magicalColor = magicalColors[magicalColorIndex];
-
-        i += (i + 2) < max_len ? 1 : 0;
-    }
-
-} else {
-    bg.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 1.0, 0.4));
-    bg.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.85, 0.35));
-    bg.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.85, 0.1));
+    return 0;
 }
-
 
 
 
