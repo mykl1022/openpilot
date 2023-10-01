@@ -10,6 +10,10 @@
 #include <QElapsedTimer>
 #include <QMouseEvent>
 #include <QTimer>
+#include <iostream>
+#include <vector>
+#include <QColor>
+#include <QDateTime>
 
 #include "common/timing.h"
 #include "selfdrive/ui/qt/util.h"
@@ -749,8 +753,9 @@ magicalColors.push_back(QColor(0, 128, 0));    // Green
 magicalColors.push_back(QColor(0, 0, 255));    // Blue
 magicalColors.push_back(QColor(128, 0, 128));  // Purple
 
-// Define a variable to control color scrolling
-float colorScroll = 0.0f;
+// Calculate a time-based factor for color change
+// You can adjust the speed of color change by modifying 'timeFactor'
+double timeFactor = fmod(QDateTime::currentMSecsSinceEpoch() / 1000.0, 10.0); // 10 seconds cycle
 
 // paint path
 QLinearGradient bg(0, height(), 0, 0);
@@ -768,21 +773,15 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
 
         float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
 
+        if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
+            acceleration[i] = 2;
         }
 
-        // Scroll through magical colors by incrementing 'colorScroll'
-        colorScroll += 0.001f;
-        if (colorScroll > 1.0f) {
-            colorScroll -= 1.0f;
-        }
-
-        // Calculate the index of the magical color based on 'colorScroll'
-        int magicalColorIndex = static_cast<int>(colorScroll * magicalColors.size());
+        // Calculate a dynamic index for the magical color based on time
+        int magicalColorIndex = static_cast<int>(timeFactor * magicalColors.size()) % magicalColors.size();
 
         // Get the magical color from the list
         QColor magicalColor = magicalColors[magicalColorIndex];
-
-        bg.setColorAt(lin_grad_point, magicalColor);
 
         i += (i + 2) < max_len ? 1 : 0;
     }
