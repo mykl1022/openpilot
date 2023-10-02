@@ -11,8 +11,6 @@ from openpilot.selfdrive.car.gm.values import DBC, CanBus, CarControllerParams, 
 VisualAlert = car.CarControl.HUDControl.VisualAlert
 NetworkLocation = car.CarParams.NetworkLocation
 LongCtrlState = car.CarControl.Actuators.LongControlState
-GearShifter = car.CarState.GearShifter
-TransmissionType = car.CarParams.TransmissionType
 
 # Camera cancels up to 0.1s after brake is pressed, ECM allows 0.5s
 CAMERA_CANCEL_DELAY_FRAMES = 10
@@ -27,12 +25,10 @@ class CarController:
     self.apply_steer_last = 0
     self.apply_gas = 0
     self.apply_brake = 0
-    self.apply_speed = 0
     self.frame = 0
     self.last_steer_frame = 0
     self.last_button_frame = 0
     self.cancel_counter = 0
-    self.pedal_steady = 0.
 
     self.lka_steering_cmd_counter = 0
     self.lka_icon_status_last = (False, False)
@@ -124,11 +120,7 @@ class CarController:
           # ASCM sends max regen when not enabled
           self.apply_gas = self.params.INACTIVE_REGEN
           self.apply_brake = 0
-        elif near_stop and stopping and not CC.cruiseControl.resume:
-          self.apply_gas = self.params.INACTIVE_REGEN
-          self.apply_brake = int(min(-100 * self.CP.stopAccel, self.params.MAX_BRAKE))
         else:
-          # Normal operation
           self.apply_gas = int(round(interp(actuators.accel, self.params.GAS_LOOKUP_BP, self.params.GAS_LOOKUP_V)))
           self.apply_brake = int(round(interp(actuators.accel, self.params.BRAKE_LOOKUP_BP, self.params.BRAKE_LOOKUP_V)))
           # Don't allow any gas above inactive regen while stopping
@@ -139,18 +131,10 @@ class CarController:
             # gas interceptor only used for full long control on cars without ACC
             interceptor_gas_cmd = self.calc_pedal_command(actuators.accel, CC.longActive)
 
-        if CC.cruiseControl.resume and actuators.longControlState == LongCtrlState.starting:
-          interceptor_gas_cmd = self.params.SNG_INTERCEPTOR_GAS
-          self.apply_brake = 0
-
         idx = (self.frame // 4) % 4
 
         at_full_stop = CC.longActive and CS.out.standstill
         near_stop = CC.longActive and (CS.out.vEgo < self.params.NEAR_STOP_BRAKE_PHASE)
-        if self.CP.flags & GMFlags.CC_LONG.value:
-          if CC.longActive and CS.out.vEgo > self.CP.minEnableSpeed:
-            # Using extend instead of append since the message is only sent intermittently
-            can_sends.extend(gmcan.create_gm_cc_spam_command(self.packer_pt, self, CS, actuators))
         if self.CP.enableGasInterceptor:
           can_sends.append(create_gas_interceptor_command(self.packer_pt, interceptor_gas_cmd, idx))
         if self.CP.carFingerprint not in CC_ONLY_CAR:
@@ -235,7 +219,6 @@ class CarController:
     new_actuators.steerOutputCan = self.apply_steer_last
     new_actuators.gas = self.apply_gas
     new_actuators.brake = self.apply_brake
-    new_actuators.speed = self.apply_speed
 
     self.frame += 1
     return new_actuators, can_sends
