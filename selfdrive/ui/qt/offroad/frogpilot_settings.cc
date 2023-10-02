@@ -14,44 +14,50 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(QWidget *parent) : FrogPilotPanel
   QLabel *const descriptionLabel = new QLabel("Click on the toggle names to see a detailed toggle description", this);
   mainLayout->addWidget(descriptionLabel);
   mainLayout->addSpacing(25);
-  mainLayout->addWidget(white_horizontal_line());
+  mainLayout->addWidget(whiteHorizontalLine());
 
   static const std::vector<std::tuple<QString, QString, QString, QString>> toggles = {
     {"AlwaysOnLateral", "Always on Lateral / No disengage on Brake Pedal", "Keep openpilot lateral control when using either the brake or gas pedals. openpilot is only disengaged by deactivating the 'Cruise Control' button.", "../assets/offroad/icon_always_on_lateral.png"},
-    {"ConditionalExperimentalMode", "Conditional Experimental Mode", "Automatically activate 'Experimental Mode' based on specified conditions.", "../assets/offroad/icon_conditional.png"},
+    {"ConditionalExperimental", "Conditional Experimental Mode", "Automatically activate 'Experimental Mode' based on specified conditions.", "../assets/offroad/icon_conditional.png"},
     {"CustomDrivingPersonalities", "Custom Driving Personalities", "Customize the driving personality profiles to your liking.", "../assets/offroad/icon_custom.png"},
     {"DeviceShutdownTimer", "Device Shutdown Timer", "Set the timer for when the device turns off after being offroad to reduce energy waste and prevent battery drain.", "../assets/offroad/icon_time.png"},
-    {"DrivingPersonalitiesUIWheel", "Driving Personalities Via UI / Wheel", "Switch driving personalities using the 'Distance' button on the steering wheel (Toyota/Lexus Only) or via the onroad UI for other makes.\n\n1 bar = Aggressive\n2 bars = Standard\n3 bars = Relaxed", "../assets/offroad/icon_distance.png"},
+    {"DrivingPersonalitiesUIWheel", "Driving Personalities Via UI / Wheel", "Switch driving personalities using the 'Distance' button on the steering wheel (GM/Lexus/Toyota Only) or via the onroad UI for other makes.\n\n1 bar = Aggressive\n2 bars = Standard\n3 bars = Relaxed", "../assets/offroad/icon_distance.png"},
     {"ExperimentalModeViaWheel", "Experimental Mode Via Steering Wheel / Screen", "Enable or disable Experimental Mode by double-clicking the 'Lane Departure'/LKAS button on the steering wheel (Toyota/Lexus Only) or double tapping the screen for other makes.\n\nOverrides 'Conditional Experimental Mode'. ", "../assets/img_experimental_white.svg"},
     {"FireTheBabysitter", "Fire the Babysitter", "Disable some of openpilot's 'Babysitter Protocols'.", "../assets/offroad/icon_babysitter.png"},
     {"LateralTuning", "Lateral Tuning", "Change the way openpilot steers.", "../assets/offroad/icon_lateral_tune.png"},
     {"LongitudinalTuning", "Longitudinal Tuning", "Change the way openpilot accelerates and brakes.", "../assets/offroad/icon_longitudinal_tune.png"},
+    {"Model", "Model Selector (Requires Reboot)", "Select your preferred openpilot model.\n\nOP = Optimus Prime (Default)\nB4+B0 = B4+B0 Vision\nFV = Farmville\nNLP = New Lateral Planner\nNM = Nicki Minaj\nNI = Non-Inflatable", "../assets/offroad/icon_calibration.png"},
     {"NudgelessLaneChange", "Nudgeless Lane Change", "Switch lanes without having to nudge the steering wheel.", "../assets/offroad/icon_lane.png"},
+    {"PauseLateralOnSignal", "Pause Lateral On Turn Signal", "Pauses lateral control when a turn signal is active.", "../assets/offroad/icon_lane.png"},
     {"TurnDesires", "Turn Desires", "Use turn desires when below the minimum lane change speed for more precise turns.", "../assets/navigation/direction_continue_right.png"}
   };
 
   for (const auto &[key, label, desc, icon] : toggles) {
     ParamControl *control = createParamControl(key, label, desc, icon, this);
-    if (key == "ConditionalExperimentalMode") {
+    if (key == "AlwaysOnLateral") {
+      createSubControl(key, label, desc, icon, {}, {
+        {"AlwaysOnLateralMain", "Enable AOL On Cruise Main", "Enables Always On Lateral by simply turning on cruise control as opposed to requiring openpilot to be enabled first."}
+      });
+    } else if (key == "ConditionalExperimental") {
       createSubControl(key, label, desc, icon, {
-        createDualParamControl(new ConditionalExperimentalModeSpeed(), new ConditionalExperimentalModeSpeedLead()),
+        createDualParamControl(new ConditionalSpeed(), new ConditionalSpeedLead()),
       });
       createSubButtonControl(key, {
-        {"ConditionalExperimentalModeCurves", "Curves"},
-        {"ConditionalExperimentalModeCurvesLead", "Curves W/ Lead"},
-        {"ConditionalExperimentalModeSlowerLead", "Slower Lead"},
-        {"ConditionalExperimentalModeStopLights", "Stop Lights"},
-        {"ConditionalExperimentalModeSignal", "Turn Signal"}
+        {"ConditionalCurves", "Curves"},
+        {"ConditionalCurvesLead", "Curves W/ Lead"},
+        {"ConditionalSlowerLead", "Slower Lead"},
+        {"ConditionalStopLights", "Stop Lights"},
+        {"ConditionalSignal", "Turn Signal"}
       }, mainLayout);
     } else if (key == "CustomDrivingPersonalities") {
       createSubControl(key, label, desc, icon, {
-        createDualParamControl(new AggressivePersonalityValue(), new AggressiveJerkValue()),
-        createDualParamControl(new StandardPersonalityValue(), new StandardJerkValue()),
-        createDualParamControl(new RelaxedPersonalityValue(), new RelaxedJerkValue()),
+        createDualParamControl(new AggressivePersonality(), new AggressiveJerk()),
+        createDualParamControl(new StandardPersonality(), new StandardJerk()),
+        createDualParamControl(new RelaxedPersonality(), new RelaxedJerk()),
       });
     } else if (key == "DeviceShutdownTimer") {
       mainLayout->addWidget(new DeviceShutdownTimer());
-      mainLayout->addWidget(horizontal_line());
+      mainLayout->addWidget(horizontalLine());
     } else if (key == "FireTheBabysitter") {
       createSubControl(key, label, desc, icon, {}, {
         {"DisableAllLogging", "Disable Logging", "Prevent all data tracking by comma to go completely incognitio or to even just reduce thermals.\n\nWARNING: This will prevent any drives from being recorded and they WILL NOT be recoverable!"}
@@ -62,6 +68,9 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(QWidget *parent) : FrogPilotPanel
         {"MuteSeatbelt", "Mute Seatbelt"},
         {"MuteSystemOverheat", "Mute Overheat"}
       }, mainLayout);
+    } else if (key == "Model") {
+      mainLayout->addWidget(new Model());
+      mainLayout->addWidget(horizontalLine());
     } else if (key == "LateralTuning") {
       createSubControl(key, label, desc, icon, {}, {
         {"AverageDesiredCurvature", "Average Desired Curvature", "Use Pfeiferj's distance based curvature adjustment for smoother handling of curves."},
@@ -73,8 +82,7 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(QWidget *parent) : FrogPilotPanel
         new IncreasedStoppingDistance(),
       }, {
         {"AggressiveAcceleration", "Aggressive Acceleration With Lead", "Accelerate more aggressively behind a lead when starting from a stop."},
-        {"SmootherBraking", "Smoother Braking Behind Lead", "More natural braking behavior when coming up to a slower vehicle."},
-        {"TSS2Tune", "TSS2 Tune", "Tuning profile for TSS2 vehicles. Based on the tuning profile from DragonPilot."}
+        {"SmootherBraking", "Smoother Braking Behind Lead", "More natural braking behavior when coming up to a slower vehicle."}
       });
     } else if (key == "NudgelessLaneChange") {
       createSubControl(key, label, desc, icon, {
@@ -86,9 +94,71 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(QWidget *parent) : FrogPilotPanel
       }, mainLayout);
     } else {
       mainLayout->addWidget(control);
-      if (key != std::get<0>(toggles.back())) mainLayout->addWidget(horizontal_line());
+      if (key != std::get<0>(toggles.back())) mainLayout->addWidget(horizontalLine());
     }
   }
+  setInitialToggleStates();
+}
+
+FrogPilotVehiclesPanel::FrogPilotVehiclesPanel(QWidget *parent) : FrogPilotPanel(parent) {
+  mainLayout = new QVBoxLayout(this);
+
+  QHBoxLayout *gmLayout = new QHBoxLayout();
+  gmLayout->setSpacing(25);
+  gmLayout->setContentsMargins(0, 0, 0, 0);
+
+  QLabel *gmIconLabel = new QLabel(this);
+  gmIconLabel->setPixmap(QPixmap("../assets/offroad/icon_gm.png").scaledToWidth(80, Qt::SmoothTransformation));
+
+  QLabel *gmTextLabel = new QLabel("GM", this);
+
+  gmLayout->addWidget(gmIconLabel);
+  gmLayout->addWidget(gmTextLabel);
+  gmLayout->addStretch(1);
+  mainLayout->addLayout(gmLayout);
+  mainLayout->addWidget(whiteHorizontalLine());
+
+  static const std::vector<std::tuple<QString, QString, QString, QString>> gmToggles = {
+    {"EVTable", "EV Lookup Tables", "Smoothens out the gas and brake controls for EV vehicles.", "../assets/offroad/icon_blank.png"},
+    {"LowerVolt", "Lower Volt Enable Speed", "Lowers the Volt's minimum enable speed in order to enable openpilot at any speed.", "../assets/offroad/icon_blank.png"}
+  };
+
+  for (const auto &[key, label, desc, icon] : gmToggles) {
+    ParamControl *control = createParamControl(key, label, desc, icon, this);
+    mainLayout->addWidget(control);
+    if (key != std::get<0>(gmToggles.back())) mainLayout->addWidget(horizontalLine());
+  }
+
+  mainLayout->addWidget(whiteHorizontalLine());
+  mainLayout->setSpacing(25);
+  QHBoxLayout *toyotaLayout = new QHBoxLayout();
+  toyotaLayout->addWidget(whiteHorizontalLine());
+  toyotaLayout->setSpacing(25);
+  toyotaLayout->setContentsMargins(0, 0, 0, 0);
+
+  QLabel *toyotaIconLabel = new QLabel(this);
+  toyotaIconLabel->setPixmap(QPixmap("../assets/offroad/icon_toyota.png").scaledToWidth(80, Qt::SmoothTransformation));
+
+  QLabel *toyotaTextLabel = new QLabel("Toyota", this);
+
+  toyotaLayout->addWidget(toyotaIconLabel);
+  toyotaLayout->addWidget(toyotaTextLabel);
+  toyotaLayout->addStretch(1);
+  mainLayout->addLayout(toyotaLayout);
+  mainLayout->addWidget(whiteHorizontalLine());
+
+  static const std::vector<std::tuple<QString, QString, QString, QString>> toyotaToggles = {
+    {"SNGHack", "SNG Hack", "Enable the SNG Hack for vehicles without stock stop and go.", "../assets/offroad/icon_blank.png"},
+    {"TSS2Tune", "TSS2 Tune", "Tuning profile for TSS2 vehicles. Based on the tuning profile from DragonPilot.", "../assets/offroad/icon_blank.png"},
+    {"ZSS", "ZSS", "Enable the ZSS (Zorro Steering Sensor) for the Toyota Prius.", "../assets/offroad/icon_blank.png"}
+  };
+
+  for (const auto &[key, label, desc, icon] : toyotaToggles) {
+    ParamControl *control = createParamControl(key, label, desc, icon, this);
+    mainLayout->addWidget(control);
+    if (key != std::get<0>(toyotaToggles.back())) mainLayout->addWidget(horizontalLine());
+  }
+
   setInitialToggleStates();
 }
 
@@ -98,13 +168,14 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(QWidget *parent) : FrogPilotPanel(p
   QLabel *const descriptionLabel = new QLabel("Click on the toggle names to see a detailed toggle description", this);
   mainLayout->addWidget(descriptionLabel);
   mainLayout->addSpacing(25);
-  mainLayout->addWidget(white_horizontal_line());
+  mainLayout->addWidget(whiteHorizontalLine());
 
   static const std::vector<std::tuple<QString, QString, QString, QString>> toggles = {
-    {"FrogTheme", "FrogPilot Theme", "Enable the beloved FrogPilot Theme! Disable toggle to revert back to the stock openpilot theme.", "../assets/images/frog_button_home.png"},
+    {"CustomTheme", "Custom Theme", "Enable the ability to use custom themes.", "../assets/frog.png"},
     {"Compass", "Compass", "Add a compass to the onroad UI that indicates your current driving direction.", "../assets/offroad/icon_compass.png"},
     {"CustomRoadUI", "Custom Road UI", "Customize the road UI to your liking.", "../assets/offroad/icon_road.png"},
     {"DeveloperUI", "Developer UI", "Display various information about openpilot and the device itself.", "../assets/offroad/icon_developer.png"},
+    {"GreenLightAlert", "Green Light Alert", "Displays an alert when a light turns from red to green.", "../assets/offroad/icon_green_light.png"},
     {"NumericalTemp", "Numerical Temperature Gauge", "Replace openpilot's 'GOOD', 'OK', and 'HIGH' temperature statuses with numerical values.\n\nTap the gauge to switch between Celsius and Fahrenheit.", "../assets/offroad/icon_temp.png"},
     {"RotatingWheel", "Rotating Steering Wheel", "The steering wheel in top right corner of the onroad UI rotates alongside your physical steering wheel.", "../assets/offroad/icon_rotate.png"},
     {"ScreenBrightness", "Screen Brightness", "Choose a custom screen brightness level or use the default 'Auto' brightness setting.", "../assets/offroad/icon_light.png"},
@@ -116,36 +187,33 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(QWidget *parent) : FrogPilotPanel(p
 
   for (const auto &[key, label, desc, icon] : toggles) {
     ParamControl *control = createParamControl(key, label, desc, icon, this);
-    if (key == "FrogTheme") {
-      mainLayout->addWidget(control);
-      mainLayout->addWidget(horizontal_line());
-      createSubButtonControl(key, {
-        {"FrogColors", "Colors"},
-        {"FrogIcons", "Icons"},
-        {"FrogSounds", "Sounds"},
-        {"FrogSignals", "Turn Signals"}
-      }, mainLayout);
+    if (key == "CustomTheme") {
+      createSubControl(key, label, desc, icon, {
+        createDualParamControl(new CustomColors(), new CustomIcons()),
+        createDualParamControl(new CustomSignals(), new CustomSounds()),
+      });
     } else if (key == "CustomRoadUI") {
       createSubControl(key, label, desc, icon, {
         createDualParamControl(new LaneLinesWidth(), new RoadEdgesWidth()),
         createDualParamControl(new PathWidth(), new PathEdgeWidth()),
       });
       createSubButtonControl(key, {
+        {"AccelerationPath", "Acceleration Path"},
         {"BlindSpotPath", "Blind Spot Path"},
         {"UnlimitedLength", "'Unlimited' Road UI Length"},
       }, mainLayout);
     } else if (key == "DeveloperUI") {
       mainLayout->addWidget(new DeveloperUI());
-      mainLayout->addWidget(horizontal_line());
+      mainLayout->addWidget(horizontalLine());
     } else if (key == "ScreenBrightness") {
       mainLayout->addWidget(new ScreenBrightness());
-      mainLayout->addWidget(horizontal_line());
+      mainLayout->addWidget(horizontalLine());
     } else if (key == "SteeringWheel") {
       mainLayout->addWidget(new SteeringWheel());
-      mainLayout->addWidget(horizontal_line());
+      mainLayout->addWidget(horizontalLine());
     } else {
       mainLayout->addWidget(control);
-      if (key != std::get<0>(toggles.back())) mainLayout->addWidget(horizontal_line());
+      if (key != std::get<0>(toggles.back())) mainLayout->addWidget(horizontalLine());
     }
   }
   setInitialToggleStates();
@@ -184,11 +252,11 @@ void FrogPilotNavigationPanel::retrieveAndUpdateStatus() {
 }
 
 void FrogPilotNavigationPanel::updateIpAddress(const QString& newIpAddress) {
-  mapboxSettingsLabel->setText(QString(IP_FORMAT).arg(newIpAddress));
+  mapboxSettingsLabel->setText(QString(ipFormat).arg(newIpAddress));
 }
 
 void FrogPilotNavigationPanel::updateIpAddressLabel() {
-  mapboxSettingsLabel->setText(QString(IP_FORMAT).arg(wifiManager->getIp4Address()));
+  mapboxSettingsLabel->setText(QString(ipFormat).arg(wifiManager->getIp4Address()));
 }
 
 void FrogPilotNavigationPanel::showEvent(QShowEvent *event) {
@@ -205,7 +273,7 @@ void FrogPilotNavigationPanel::updateUI(const bool deviceOnline, const bool mapb
       imageName = "setup_completed.png";
     }
   }
-  instructionsStep->setPixmap(QPixmap(IMAGE_PATH + imageName));
+  instructionsStep->setPixmap(QPixmap(imagePath + imageName));
 }
 
 ParamControl *FrogPilotPanel::createParamControl(const QString &key, const QString &label, const QString &desc, const QString &icon, QWidget *parent) {
@@ -222,6 +290,7 @@ ParamControl *FrogPilotPanel::createParamControl(const QString &key, const QStri
     }
     static const QMap<QString, QString> parameterWarnings = {
       {"AggressiveAcceleration", "This will make openpilot driving more aggressively!"},
+      {"AlwaysOnLateralMain", "This is very experimental and isn't guaranteed to work. If you run into any issues please report it in the FrogPilot Discord!"},
       {"SmootherBraking", "This will modify openpilot's braking behavior!"},
       {"TSS2Tune", "This will modify openpilot's acceleration and braking behavior!"}
     };
@@ -241,7 +310,7 @@ ParamControl *FrogPilotPanel::createParamControl(const QString &key, const QStri
   return control;
 }
 
-QFrame *FrogPilotPanel::horizontal_line(QWidget *parent) const {
+QFrame *FrogPilotPanel::horizontalLine(QWidget *parent) const {
   QFrame *line = new QFrame(parent);
   line->setFrameShape(QFrame::StyledPanel);
   line->setStyleSheet(R"(
@@ -253,7 +322,7 @@ QFrame *FrogPilotPanel::horizontal_line(QWidget *parent) const {
   return line;
 }
 
-QFrame *FrogPilotPanel::white_horizontal_line(QWidget *parent) const {
+QFrame *FrogPilotPanel::whiteHorizontalLine(QWidget *parent) const {
   QFrame *line = new QFrame(parent);
   line->setFrameShape(QFrame::StyledPanel);
   line->setStyleSheet(R"(
@@ -286,17 +355,17 @@ QWidget *FrogPilotPanel::addSubControls(const QString &parentKey, QVBoxLayout *l
 
 void FrogPilotPanel::addControl(const QString &key, const QString &label, const QString &desc, QVBoxLayout *layout, const QString &icon) {
   layout->addWidget(createParamControl(key, label, desc, icon, this));
-  layout->addWidget(horizontal_line());
+  layout->addWidget(horizontalLine());
 }
 
 void FrogPilotPanel::createSubControl(const QString &key, const QString &label, const QString &desc, const QString &icon, const std::vector<QWidget*> &subControls, const std::vector<std::tuple<QString, QString, QString>> &additionalControls) {
   ParamControl *control = createParamControl(key, label, desc, icon, this);
   mainLayout->addWidget(control);
-  mainLayout->addWidget(horizontal_line());
+  mainLayout->addWidget(horizontalLine());
   QVBoxLayout *subControlLayout = new QVBoxLayout();
   for (QWidget *subControl : subControls) {
     subControlLayout->addWidget(subControl);
-    subControlLayout->addWidget(horizontal_line());
+    subControlLayout->addWidget(horizontalLine());
   }
   QWidget *mainControl = addSubControls(key, subControlLayout, additionalControls);
   connect(control, &ParamControl::toggleFlipped, [=](bool state) { mainControl->setVisible(state); });
@@ -304,7 +373,7 @@ void FrogPilotPanel::createSubControl(const QString &key, const QString &label, 
 
 void FrogPilotPanel::createSubButtonControl(const QString &parentKey, const std::vector<QPair<QString, QString>> &buttonKeys, QVBoxLayout *subControlLayout) {
   QHBoxLayout *buttonsLayout = new QHBoxLayout();
-  QWidget *line = horizontal_line();
+  QWidget *line = horizontalLine();
   buttonsLayout->addStretch();
   for (const auto &[key, label] : buttonKeys) {
     FrogPilotButtonParamControl* button = new FrogPilotButtonParamControl(key, label);
@@ -315,7 +384,7 @@ void FrogPilotPanel::createSubButtonControl(const QString &parentKey, const std:
     childControls[parentKey.toStdString()].push_back(button);
   }
   subControlLayout->addLayout(buttonsLayout);
-  line = horizontal_line();
+  line = horizontalLine();
   mainLayout->addWidget(line);
   childControls[parentKey.toStdString()].push_back(line);
 }

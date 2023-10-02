@@ -1,6 +1,7 @@
 from cereal import car
 from openpilot.common.conversions import Conversions as CV
 from openpilot.common.numpy_fast import interp, clip
+from openpilot.common.params import Params
 from openpilot.common.realtime import DT_CTRL
 from opendbc.can.packer import CANPacker
 from openpilot.selfdrive.car import apply_driver_steer_torque_limits, create_gas_interceptor_command
@@ -42,6 +43,27 @@ class CarController:
     self.packer_obj = CANPacker(DBC[self.CP.carFingerprint]['radar'])
     self.packer_ch = CANPacker(DBC[self.CP.carFingerprint]['chassis'])
 
+    # FrogPilot variables
+    self.param = Params()
+    self.params_memory = Params("/dev/shm/params")
+    self.personality = self.param.get_int('LongitudinalPersonality')
+    self.use_ev_tables = self.param.get_bool("EVTable")
+
+  @staticmethod
+  def calc_pedal_command(accel: float, long_active: bool) -> float:
+    if not long_active: return 0.
+
+    zero = 0.15625  # 40/256
+    if accel > 0.:
+      # Scales the accel from 0-1 to 0.156-1
+      pedal_gas = clip(((1 - zero) * accel + zero), 0., 1.)
+    else:
+      # if accel is negative, -0.1 -> 0.015625
+      pedal_gas = clip(zero + accel, 0., zero)  # Make brake the same size as gas, but clip to regen
+
+    return pedal_gas
+
+
   def update(self, CC, CS, now_nanos):
     actuators = CC.actuators
     hud_control = CC.hudControl
@@ -49,6 +71,9 @@ class CarController:
     hud_v_cruise = hud_control.setSpeed
     if hud_v_cruise > 70:
       hud_v_cruise = 0
+
+    if self.params_memory.get_bool("FrogPilotTogglesUpdated"):
+      self.personality = self.param.get_int('LongitudinalPersonality')
 
     # Send CAN commands.
     can_sends = []
@@ -105,7 +130,7 @@ class CarController:
           self.apply_brake = int(min(-100 * self.CP.stopAccel, self.params.MAX_BRAKE))
         else:
           # Normal operation
-          if self.CP.carFingerprint in EV_CAR:
+          if self.CP.carFingerprint in EV_CAR and self.use_ev_tables:
             self.params.update_ev_gas_brake_threshold(CS.out.vEgo)
             self.apply_gas = int(round(interp(actuators.accel, self.params.EV_GAS_LOOKUP_BP, self.params.GAS_LOOKUP_V)))
             self.apply_brake = int(round(interp(actuators.accel, self.params.EV_BRAKE_LOOKUP_BP, self.params.BRAKE_LOOKUP_V)))
@@ -118,7 +143,7 @@ class CarController:
             self.apply_gas = self.params.INACTIVE_REGEN
           if self.CP.carFingerprint in CC_ONLY_CAR:
             # gas interceptor only used for full long control on cars without ACC
-            interceptor_gas_cmd = clip((self.apply_gas - self.params.INACTIVE_REGEN) / (self.params.MAX_GAS - self.params.INACTIVE_REGEN), 0., 1.)
+            interceptor_gas_cmd = self.calc_pedal_command(actuators.accel, CC.longActive)
 
         if CC.cruiseControl.resume and actuators.longControlState == LongCtrlState.starting:
           interceptor_gas_cmd = self.params.SNG_INTERCEPTOR_GAS
@@ -149,8 +174,8 @@ class CarController:
 
         # Send dashboard UI commands (ACC status)
         send_fcw = hud_alert == VisualAlert.fcw
-        can_sends.append(gmcan.create_acc_dashboard_command(self.packer_pt, CanBus.POWERTRAIN, CC.enabled, CS.longitudinal_personality,
-                                                            hud_v_cruise * CV.MS_TO_KPH, hud_control.leadVisible, send_fcw))
+        can_sends.append(gmcan.create_acc_dashboard_command(self.packer_pt, CanBus.POWERTRAIN, CC.enabled,
+                                                            hud_v_cruise * CV.MS_TO_KPH, hud_control.leadVisible, send_fcw, self.personality))
 
       # Radar needs to know current speed and yaw rate (50hz),
       # and that ADAS is alive (10hz)
