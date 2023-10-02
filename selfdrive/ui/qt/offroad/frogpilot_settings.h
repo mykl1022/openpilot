@@ -6,12 +6,11 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "selfdrive/ui/qt/network/wifi_manager.h"
 #include "selfdrive/ui/qt/widgets/controls.h"
 #include "selfdrive/ui/qt/widgets/input.h"
 #include "selfdrive/ui/ui.h"
 
-static const QString button_style = R"(
+static const QString buttonStyle = R"(
   QPushButton {
     border-radius: 50px;
     font-size: 40px;
@@ -37,13 +36,13 @@ class FrogPilotButtonParamControl : public QPushButton {
   Q_OBJECT
 
 public:
-  FrogPilotButtonParamControl(const QString &param, const QString &label, const int minimum_button_width = 225)
+  FrogPilotButtonParamControl(const QString &param, const QString &label, const int minimumButtonWidth = 225)
     : QPushButton(), key(param.toStdString()), params(), 
       value(params.getBool(key)) {
     setCheckable(true);
     setChecked(value);
-    setStyleSheet(button_style);
-    setMinimumWidth(minimum_button_width);
+    setStyleSheet(buttonStyle);
+    setMinimumWidth(minimumButtonWidth);
     setText(label);
 
     QObject::connect(this, &QPushButton::toggled, this, [=](bool checked) {
@@ -62,15 +61,18 @@ private:
 
 class ParamValueControl : public AbstractControl {
 protected:
-  ParamValueControl(const QString &name, const QString &description, const QString &iconPath) : AbstractControl(name, description, iconPath) {
+  ParamValueControl(const QString &name, const QString &description, const QString &iconPath)
+    : AbstractControl(name, description, iconPath) {
     label.setAlignment(Qt::AlignVCenter | Qt::AlignRight);
     label.setStyleSheet("color: #e0e879");
     label.setFixedWidth(170);
-    setupButton(btnminus, "-", -1);
-    setupButton(btnplus, "+", 1);
+
+    setupButton(btnMinus, "-", -1);
+    setupButton(btnPlus, "+", 1);
+
     hlayout->addWidget(&label);
-    hlayout->addWidget(&btnminus);
-    hlayout->addWidget(&btnplus);
+    hlayout->addWidget(&btnMinus);
+    hlayout->addWidget(&btnPlus);
   }
 
   void setupButton(QPushButton &btn, const QString &text, int delta) {
@@ -95,10 +97,11 @@ protected:
     connect(&btn, &QPushButton::clicked, [this, delta]() { updateValue(delta); });
   }
 
-  QPushButton btnminus, btnplus;
+  QPushButton btnMinus, btnPlus;
   QLabel label;
   Params params;
-  Params params_memory{"/dev/shm/params"};
+  Params paramsMemory{"/dev/shm/params"};
+  bool isMetric = params.getBool("IsMetric");
 
   virtual void updateValue(int delta) = 0;
   virtual void refresh() = 0;
@@ -109,8 +112,8 @@ class FrogPilotPanel : public QWidget {
 
 public:
   explicit FrogPilotPanel(QWidget *parent = nullptr) : QWidget(parent) {}
-  QFrame *horizontal_line(QWidget *parent = nullptr) const;
-  QFrame *white_horizontal_line(QWidget *parent = nullptr) const;
+  QFrame *horizontalLine(QWidget *parent = nullptr) const;
+  QFrame *whiteHorizontalLine(QWidget *parent = nullptr) const;
   Params params;
 
 protected:
@@ -133,6 +136,13 @@ public:
   explicit FrogPilotControlsPanel(QWidget *parent = nullptr);
 };
 
+class FrogPilotVehiclesPanel : public FrogPilotPanel {
+  Q_OBJECT
+
+public:
+  explicit FrogPilotVehiclesPanel(QWidget *parent = nullptr);
+};
+
 class FrogPilotVisualsPanel : public FrogPilotPanel {
   Q_OBJECT
 
@@ -140,37 +150,7 @@ public:
   explicit FrogPilotVisualsPanel(QWidget *parent = nullptr);
 };
 
-class FrogPilotNavigationPanel : public FrogPilotPanel {
-  Q_OBJECT
-
-public:
-  explicit FrogPilotNavigationPanel(QWidget *parent = nullptr);
-
-protected:
-  void showEvent(QShowEvent *event) override;
-
-private:
-  bool prevDeviceOnline = false;
-  bool prevMapboxPublicKeySet = false;
-  bool prevMapboxSecretKeySet = false;
-  bool setupCompleted;
-  QLabel *instructionsStep;
-  QLabel *mapboxSettingsLabel;
-  QTimer *updateTimer;
-  WifiManager* wifiManager;
-
-  static constexpr const char* IMAGE_PATH = "../assets/images/";
-  static constexpr const char* IP_FORMAT = "Manage your mapbox settings at %1:8082";
-
-  void retrieveAndUpdateStatus();
-  void updateIpAddressLabel();
-  void updateUI(bool deviceOnline, bool mapboxPublicKeySet, bool mapboxSecretKeySet);
-
-private slots:
-  void updateIpAddress(const QString& newIpAddress);
-};
-
-#define ParamControllerInt(className, paramName, labelText, descText, iconPath, getValueStrFunc, newValueFunc) \
+#define ParamController(className, paramName, labelText, descText, iconPath, getValueStrFunc, newValueFunc) \
 class className : public ParamValueControl { \
   Q_OBJECT \
 public: \
@@ -178,123 +158,144 @@ public: \
     if (std::string(#className) == "DeveloperUI" || std::string(#className) == "DeviceShutdownTimer" || std::string(#className) == "IncreasedStoppingDistance" || std::string(#className) == "SteeringWheel") { \
       label.setFixedWidth(225); \
     } \
+    if (std::string(#className) == "ConditionalSpeed" || std::string(#className) == "ConditionalSpeedLead") { \
+      label.setFixedWidth(180); \
+    } \
     refresh(); \
   } \
 private: \
   void refresh() override { \
     label.setText(getValueStr()); \
-    params_memory.putBool("FrogPilotTogglesUpdated", true); \
   } \
   void updateValue(int delta) override { \
     int value = params.getInt(paramName); \
     value = newValue(value + delta); \
     params.putInt(paramName, value); \
+    paramsMemory.putBool("FrogPilotTogglesUpdated", true); \
     refresh(); \
   } \
-  QString getValueStr() { getValueStrFunc } \
-  int newValue(int v) { newValueFunc } \
+  QString getValueStr() { getValueStrFunc; } \
+  int newValue(int v) { newValueFunc; } \
 };
 
-ParamControllerInt(AccelerationProfile, "AccelerationProfile", "   Acceleration Profile", "Change the rate at which openpilot accelerates with either a sporty or more eco friendly profile.", "../assets/offroad/icon_blank.png",
-  int value = params.getInt("AccelerationProfile");
-  return value == 1 ? "Eco" : value == 2 ? "Normal" : "Sport";,
+ParamController(AccelerationProfile, "AccelerationProfile", "   Acceleration Profile", "Change the rate at which openpilot accelerates with either a sporty or more eco friendly profile.", "../assets/offroad/icon_blank.png",
+  const int profile = params.getInt("AccelerationProfile");
+  return profile == 1 ? "Eco" : profile == 2 ? "Normal" : "Sport";,
   return std::clamp(v, 1, 3);
 )
 
-ParamControllerInt(AggressiveJerkValue, "AggressiveJerkValue", "Jerk Value", "Set the jerk value for the 'Aggressive Personality'.\n\nValue represents the responsiveness of the brake/gas pedals.\n\nHigher value = Less responsive/more 'relaxed'\n\nStock has a value of 0.5.", "../assets/offroad/icon_blank.png",
-  return QString::number(params.getInt("AggressiveJerkValue") / 10.0);,
+ParamController(AggressiveJerk, "AggressiveJerk", "Jerk Value", "Set the jerk value for the 'Aggressive Personality'.\n\nValue represents the responsiveness of the brake/gas pedals.\n\nHigher value = Less responsive/more 'relaxed'\n\nStock has a value of 0.5.", "../assets/offroad/icon_blank.png",
+  return QString::number(params.getInt("AggressiveJerk") / 10.0);,
   return std::clamp(v, 1, 50);
 )
 
-ParamControllerInt(AggressivePersonalityValue, "AggressivePersonalityValue", "Time", "Set the following distance for the 'Aggressive Personality'.\n\nValue represents the time (in seconds) to follow the lead vehicle.\n\nStock has a value of 1.25.", "../assets/aggressive.png",
-  return QString::number(params.getInt("AggressivePersonalityValue") / 10.0) + " sec";,
+ParamController(AggressivePersonality, "AggressivePersonality", "Time", "Set the following distance for the 'Aggressive Personality'.\n\nValue represents the time (in seconds) to follow the lead vehicle.\n\nStock has a value of 1.25.", "../assets/aggressive.png",
+  return QString::number(params.getInt("AggressivePersonality") / 10.0) + " sec";,
   return std::clamp(v, 10, 50);
 )
 
-ParamControllerInt(ConditionalExperimentalModeSpeed, "ConditionalExperimentalModeSpeed", "Below", "Switch to 'Experimental Mode' below this speed when there is no lead vehicle.", "../assets/offroad/icon_blank.png",
-  int value = params.getInt("ConditionalExperimentalModeSpeed");
-  return value == 0 ? "Off" : QString::number(value) + "mph";,
-  return std::clamp(v, 0, 99);
+ParamController(ConditionalSpeed, "ConditionalSpeed", "Below", "Switch to 'Experimental Mode' below this speed when there is no lead vehicle.", "../assets/offroad/icon_blank.png",
+  const int speed = params.getInt("ConditionalSpeed");
+  return speed == 0 ? "Off" : QString::number(speed) + (isMetric ? " kph" : " mph");,
+  return std::clamp(v, 0, isMetric ? 150 : 99);
 )
 
-ParamControllerInt(ConditionalExperimentalModeSpeedLead, "ConditionalExperimentalModeSpeedLead", "With Lead", "Switch to 'Experimental Mode' below this speed when there is a lead vehicle.", "../assets/offroad/icon_blank.png",
-  int value = params.getInt("ConditionalExperimentalModeSpeedLead");
-  return value == 0 ? "Off" : QString::number(value) + "mph";,
-  return std::clamp(v, 0, 99);
+ParamController(ConditionalSpeedLead, "ConditionalSpeedLead", "With Lead", "Switch to 'Experimental Mode' below this speed when there is a lead vehicle.", "../assets/offroad/icon_blank.png",
+  const int speedLead = params.getInt("ConditionalSpeedLead");
+  return speedLead == 0 ? "Off" : QString::number(speedLead) + (isMetric ? " kph" : " mph");,
+  return std::clamp(v, 0, isMetric ? 150 : 99);
 )
 
-ParamControllerInt(DeveloperUI, "DeveloperUI", "Developer UI", "Displays various information about openpilot and the device itself.", "../assets/offroad/icon_developer.png",
-  int value = params.getInt("DeveloperUI");
-  return value == 0 ? "Off" : value == 1 ? "'merican" : value == 2 ? "Metric" : "SI";,
-  return v >= 0 ? v % 4 : 3;
+ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock openpilot colors with a custom color scheme.\n\nWant to submit your own color scheme? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
+  const int colors = params.getInt("CustomColors");
+  return colors == 0 ? "Stock" : colors == 1 ? "Frog" : "Tesla";,
+  return v >= 0 ? v % 3 : 2;
 )
 
-ParamControllerInt(DeviceShutdownTimer, "DeviceShutdownTimer", "Device Shutdown Timer", "Set the timer for when the device turns off after being offroad to reduce energy waste and prevent battery drain.", "../assets/offroad/icon_time.png",
-  int value = params.getInt("DeviceShutdownTimer");
-  return value == 0 ? "Instant" : (value > 0 && value <= 3) ? QString::number(value * 15) + " mins" : QString::number(value - 3) + (value == 4 ? " hour" : " hours");,
+ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilot icons with a custom icon pack.\n\nWant to submit your own icon pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
+  const int icons = params.getInt("CustomIcons");
+  return icons == 0 ? "Stock" : icons == 1 ? "Frog" : "Tesla";,
+  return v >= 0 ? v % 3 : 2;
+)
+
+ParamController(CustomSignals, "CustomSignals", "Signals", "Enable a custom turn signal animation.\n\nWant to submit your own turn signal animation? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
+  const int turnSignals = params.getInt("CustomSignals");
+  return turnSignals == 0 ? "Stock" : "Frog";,
+  return v >= 0 ? v % 2 : 1;
+)
+
+ParamController(CustomSounds, "CustomSounds", "Sounds", "Replace the stock openpilot sounds with a custom sound pack.\n\nWant to submit your own custom sound pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
+  const int sounds = params.getInt("CustomSounds");
+  return sounds == 0 ? "Stock" : sounds == 1 ? "Frog" : "Tesla";,
+  return v >= 0 ? v % 3 : 2;
+)
+
+ParamController(DeviceShutdownTimer, "DeviceShutdownTimer", "Device Shutdown Timer", "Set the timer for when the device turns off after being offroad to reduce energy waste and prevent battery drain.", "../assets/offroad/icon_time.png",
+  const int time = params.getInt("DeviceShutdownTimer");
+  return time == 0 ? "Instant" : (time > 0 && time <= 3) ? QString::number(time * 15) + " mins" : QString::number(time - 3) + (time == 4 ? " hour" : " hours");,
   return std::clamp(v, 0, 33);
 )
 
-ParamControllerInt(IncreasedStoppingDistance, "IncreasedStoppingDistance", "   Increase Stopping Distance", "Increase the stopping distance for a more comfortable stop.", "../assets/offroad/icon_blank.png",
-  int value = params.getInt("IncreasedStoppingDistance");
-  return value == 0 ? "Off" : QString::number(value) + " meters";,
-  return std::clamp(v, 0, 5);
+ParamController(IncreasedStoppingDistance, "IncreasedStoppingDistance", "   Increase Stopping Distance", "Increase the stopping distance for a more comfortable stop.", "../assets/offroad/icon_blank.png",
+  const int distance = params.getInt("IncreasedStoppingDistance");
+  return distance == 0 ? "Off" : QString::number(distance) + (isMetric ? " meters" : " feet");,
+  return std::clamp(v, 0, isMetric ? 5 : 15);
 )
 
-ParamControllerInt(LaneChangeTimer, "LaneChangeTimer", "   Lane Change Timer", "Set a time delay before openpilot conducts a nudgeless lane change.", "../assets/offroad/icon_blank.png",
-  int delay = params.getInt("LaneChangeTimer");
+ParamController(LaneChangeTimer, "LaneChangeTimer", "   Lane Change Timer", "Set a time delay before openpilot conducts a nudgeless lane change.", "../assets/offroad/icon_blank.png",
+  const int delay = params.getInt("LaneChangeTimer");
   return delay == 0 ? "Instant" : QString::number(static_cast<double>(delay) / 2.0) + " sec";,
   return std::clamp(v, 0, 10);
 )
 
-ParamControllerInt(LaneLinesWidth, "LaneLinesWidth", "Lanes", "Customize the lane line width.\n\nDefault matches the MUTCD average of 4 inches.", "../assets/offroad/icon_blank.png",
-  return QString::number(params.getInt("LaneLinesWidth")) + " in";,
-  return std::clamp(v, 0, 24);
+ParamController(LaneLinesWidth, "LaneLinesWidth", "Lanes", "Customize the lane line width.\n\nDefault matches the MUTCD average of 4 inches.", "../assets/offroad/icon_blank.png",
+  return QString::number(params.getInt("LaneLinesWidth")) + (isMetric ? " cm" : " in");,
+  return std::clamp(v, 0, isMetric ? 60 : 24);
 )
 
-ParamControllerInt(PathEdgeWidth, "PathEdgeWidth", "Path Edges", "Customize the path edge width that displays current driving statuses.\n\nDefault is 20% of the total path.\n\nBlue = Navigation\nLight Blue = Always On Lateral\nGreen = Default with 'FrogPilot Colors'\nLight Green = Default with stock colors\nOrange = Experimental Mode Active\nYellow = Conditional Overriden", "../assets/offroad/icon_blank.png",
+ParamController(PathEdgeWidth, "PathEdgeWidth", "Path Edges", "Customize the path edge width that displays current driving statuses.\n\nDefault is 20% of the total path.\n\nBlue = Navigation\nLight Blue = Always On Lateral\nGreen = Default with 'FrogPilot Colors'\nLight Green = Default with stock colors\nOrange = Experimental Mode Active\nYellow = Conditional Overriden", "../assets/offroad/icon_blank.png",
   return QString::number(params.getInt("PathEdgeWidth")) + "%";,
   return std::clamp(v, 0, 100);
 )
 
-ParamControllerInt(PathWidth, "PathWidth", "Path", "Customize the path width.\n\nDefault matches the width of a 2019 Lexus ES 350.", "../assets/offroad/icon_blank.png",
-  return QString::number(params.getInt("PathWidth") / 10.0) + " ft";,
-  return std::clamp(v, 0, 100);
+ParamController(PathWidth, "PathWidth", "Path ", "Customize the path width.\n\nDefault matches the width of a 2019 Lexus ES 350.", "../assets/offroad/icon_blank.png",
+  return QString::number(params.getInt("PathWidth") / 10.0) + (isMetric ? " m" : " ft");,
+  return std::clamp(v, 0, isMetric ? 30 : 100);
 )
 
-ParamControllerInt(RelaxedJerkValue, "RelaxedJerkValue", "Jerk Value", "Set the jerk value for the 'Relaxed Personality'.\n\nValue represents the responsiveness of the brake/gas pedals.\n\nHigher value = Less responsive/more 'relaxed'\n\nStock has a value of 1.0.", "../assets/offroad/icon_blank.png",
-  return QString::number(params.getInt("RelaxedJerkValue") / 10.0);,
+ParamController(RelaxedJerk, "RelaxedJerk", "Jerk Value", "Set the jerk value for the 'Relaxed Personality'.\n\nValue represents the responsiveness of the brake/gas pedals.\n\nHigher value = Less responsive/more 'relaxed'\n\nStock has a value of 1.0.", "../assets/offroad/icon_blank.png",
+  return QString::number(params.getInt("RelaxedJerk") / 10.0);,
   return std::clamp(v, 1, 50);
 )
 
-ParamControllerInt(RelaxedPersonalityValue, "RelaxedPersonalityValue", "Time", "Set the following distance for the 'Relaxed Personality'.\n\nValue represents the time (in seconds) to follow the lead vehicle.\n\nStock has a value of 1.75.", "../assets/relaxed.png",
-  return QString::number(params.getInt("RelaxedPersonalityValue") / 10.0) + " sec";,
+ParamController(RelaxedPersonality, "RelaxedPersonality", "Time", "Set the following distance for the 'Relaxed Personality'.\n\nValue represents the time (in seconds) to follow the lead vehicle.\n\nStock has a value of 1.75.", "../assets/relaxed.png",
+  return QString::number(params.getInt("RelaxedPersonality") / 10.0) + " sec";,
   return std::clamp(v, 10, 50);
 )
 
-ParamControllerInt(RoadEdgesWidth, "RoadEdgesWidth", "Road Edges", "Customize the road edges width.\n\nDefault is 1/2 of the MUTCD average lane line width of 4 inches.", "../assets/offroad/icon_blank.png",
-  return QString::number(params.getInt("RoadEdgesWidth")) + " in";,
-  return std::clamp(v, 0, 24);
+ParamController(RoadEdgesWidth, "RoadEdgesWidth", "Road Edges", "Customize the road edges width.\n\nDefault is 1/2 of the MUTCD average lane line width of 4 inches.", "../assets/offroad/icon_blank.png",
+  return QString::number(params.getInt("RoadEdgesWidth")) + (isMetric ? " cm" : " in");,
+  return std::clamp(v, 0, isMetric ? 60 : 24);
 )
 
-ParamControllerInt(ScreenBrightness, "ScreenBrightness", "Screen Brightness", "Set a custom screen brightness level or use the default 'Auto' brightness setting.", "../assets/offroad/icon_light.png",
-  int brightness = params.getInt("ScreenBrightness");
+ParamController(ScreenBrightness, "ScreenBrightness", "Screen Brightness", "Set a custom screen brightness level or use the default 'Auto' brightness setting.", "../assets/offroad/icon_light.png",
+  const int brightness = params.getInt("ScreenBrightness");
   return brightness == 101 ? "Auto" : brightness == 0 ? "Off" : QString::number(brightness) + "%";,
   return std::clamp(v, 0, 101);
 )
 
-ParamControllerInt(StandardJerkValue, "StandardJerkValue", "Jerk Value", "Set the jerk value for the 'Standard Personality'.\n\nValue represents the responsiveness of the brake/gas pedals.\n\nHigher value = Less responsive/more 'relaxed'\n\nStock has a value of 1.0.", "../assets/offroad/icon_blank.png",
-  return QString::number(params.getInt("StandardJerkValue") / 10.0);,
+ParamController(StandardJerk, "StandardJerk", "Jerk Value", "Set the jerk value for the 'Standard Personality'.\n\nValue represents the responsiveness of the brake/gas pedals.\n\nHigher value = Less responsive/more 'relaxed'\n\nStock has a value of 1.0.", "../assets/offroad/icon_blank.png",
+  return QString::number(params.getInt("StandardJerk") / 10.0);,
   return std::clamp(v, 1, 50);
 )
 
-ParamControllerInt(StandardPersonalityValue, "StandardPersonalityValue", "Time", "Set the following distance for the 'Standard Personality'.\n\nValue represents the time (in seconds) to follow the lead vehicle.\n\nStock has a value of 1.45.", "../assets/standard.png",
-  return QString::number(params.getInt("StandardPersonalityValue") / 10.0) + " sec";,
+ParamController(StandardPersonality, "StandardPersonality", "Time", "Set the following distance for the 'Standard Personality'.\n\nValue represents the time (in seconds) to follow the lead vehicle.\n\nStock has a value of 1.45.", "../assets/standard.png",
+  return QString::number(params.getInt("StandardPersonality") / 10.0) + " sec";,
   return std::clamp(v, 10, 50);
 )
 
-ParamControllerInt(SteeringWheel, "SteeringWheel", "Steering Wheel Icon", "Replace the stock openpilot steering wheel icon with a custom icon.\n\nWant to submit your own steering wheel? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_openpilot.png",
-  int value = params.getInt("SteeringWheel");
-  return value == 0 ? "Stock" : value == 1 ? "Lexus" : value == 2 ? "Toyota" : value == 3 ? "Frog" : value == 4 ? "Rocket" : "Hyundai";,
+ParamController(SteeringWheel, "SteeringWheel", "Steering Wheel Icon", "Replace the stock openpilot steering wheel icon with a custom icon.\n\nWant to submit your own steering wheel? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_openpilot.png",
+  const int wheel = params.getInt("SteeringWheel");
+  return wheel == 0 ? "Stock" : wheel == 1 ? "Lexus" : wheel == 2 ? "Toyota" : wheel == 3 ? "Frog" : wheel == 4 ? "Rocket" : "Hyundai";,
   return v >= 0 ? v % 6 : 5;
 )

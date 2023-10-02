@@ -1,20 +1,22 @@
 import yaml
-import numpy as np
+import operator
 import os
 import time
+import numpy as np
 from abc import abstractmethod, ABC
+from difflib import SequenceMatcher
 from json import load
 from typing import Any, Dict, Optional, Tuple, List, Callable, Union
 
-from cereal import car, log
+from cereal import car
 from openpilot.common.basedir import BASEDIR
 from openpilot.common.conversions import Conversions as CV
 from openpilot.common.kalman.simple_kalman import KF1D, get_kalman_gain
 from openpilot.common.numpy_fast import clip
-from openpilot.common.params import Params, put_bool_nonblocking, put_nonblocking
+from openpilot.common.params import Params
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.car import apply_hysteresis, gen_empty_fingerprint, scale_rot_inertia, scale_tire_stiffness, STD_CARGO_KG
-from openpilot.selfdrive.controls.lib.drive_helpers import V_CRUISE_MAX, get_friction, CRUISE_LONG_PRESS
+from openpilot.selfdrive.controls.lib.drive_helpers import V_CRUISE_MAX, get_friction
 from openpilot.selfdrive.controls.lib.events import Events
 from openpilot.selfdrive.controls.lib.vehicle_model import VehicleModel
 
@@ -31,7 +33,10 @@ FRICTION_THRESHOLD = 0.3
 TORQUE_PARAMS_PATH = os.path.join(BASEDIR, 'selfdrive/car/torque_data/params.yaml')
 TORQUE_OVERRIDE_PATH = os.path.join(BASEDIR, 'selfdrive/car/torque_data/override.yaml')
 TORQUE_SUBSTITUTE_PATH = os.path.join(BASEDIR, 'selfdrive/car/torque_data/substitute.yaml')
+TORQUE_NN_MODEL_PATH = os.path.join(BASEDIR, 'selfdrive/car/torque_data/lat_models')
 
+def similarity(s1:str, s2:str) -> float:
+  return SequenceMatcher(None, s1, s2).ratio()
 
 def get_torque_params(candidate):
   with open(TORQUE_SUBSTITUTE_PATH) as f:
@@ -55,6 +60,7 @@ def get_torque_params(candidate):
   else:
     raise NotImplementedError(f"Did not find torque params for {candidate}")
   return {key: out[i] for i, key in enumerate(params['legend'])}
+
 
 # Twilsonco's Lateral Neural Network Feedforward
 class FluxModel:
@@ -120,19 +126,37 @@ class FluxModel:
       if not hasattr(self, activation):
         raise ValueError(f"Unknown activation: {activation}")
 
-def get_nn_model_path(car, eps_firmware) -> Union[str, None]:
-  model_path = f"/data/openpilot/selfdrive/car/torque_data/lat_models/{car}_{eps_firmware}.json"
-  if not os.path.isfile(model_path):
-    model_path = f"/data/openpilot/selfdrive/car/torque_data/lat_models/{car}.json"
-    if not os.path.isfile(model_path):
-      model_path = None
-  return model_path
+def get_nn_model_path(car, eps_firmware) -> Tuple[Union[str, None, float]]:
+  def check_nn_path(check_model):
+    model_path = None
+    max_similarity = -1.0
+    for f in os.listdir(TORQUE_NN_MODEL_PATH):
+      if f.endswith(".json"):
+        model = f.replace(".json", "").replace(f"{TORQUE_NN_MODEL_PATH}/","")
+        similarity_score = similarity(model, check_model)
+        if similarity_score > max_similarity:
+          max_similarity = similarity_score
+          model_path = os.path.join(TORQUE_NN_MODEL_PATH, f)
+    return model_path, max_similarity
 
-def get_nn_model(car, eps_firmware) -> Union[FluxModel, None]:
-  model = get_nn_model_path(car, eps_firmware)
+  if len(eps_firmware) > 3:
+    eps_firmware = eps_firmware.replace("\\", "")
+    check_model = f"{car} {eps_firmware}"
+  else:
+    check_model = car
+  model_path, max_similarity = check_nn_path(check_model)
+  if 0.0 <= max_similarity < 0.9:
+    check_model = car
+    model_path, max_similarity = check_nn_path(check_model)
+    if 0.0 <= max_similarity < 0.9:
+      model_path = None
+  return model_path, max_similarity
+
+def get_nn_model(car, eps_firmware) -> Tuple[Union[FluxModel, None, float]]:
+  model, similarity_score = get_nn_model_path(car, eps_firmware)
   if model is not None:
     model = FluxModel(model)
-  return model
+  return model, similarity_score
 
 # generic car and radar interfaces
 
@@ -140,7 +164,7 @@ class CarInterfaceBase(ABC):
   def __init__(self, CP, CarController, CarState):
     self.CP = CP
     self.VM = VehicleModel(CP)
-    eps_firmware = next((fw.fwVersion for fw in CP.carFw if fw.ecu == "eps"), "")
+    eps_firmware = str(next((fw.fwVersion for fw in CP.carFw if fw.ecu == "eps"), ""))
 
     self.frame = 0
     self.steering_unpressed = 0
@@ -167,16 +191,16 @@ class CarInterfaceBase(ABC):
 
     # FrogPilot variables
     params = Params()
+    self.has_lateral_torque_nn = self.initialize_lat_torque_nn(CP.carFingerprint, eps_firmware) and params.get_bool("LateralTuning") and params.get_bool("NNFF")
     fire_the_babysitter = params.get_bool("FireTheBabysitter")
     self.mute_door = fire_the_babysitter and params.get_bool("MuteDoor")
     self.mute_seatbelt = fire_the_babysitter and params.get_bool("MuteSeatbelt")
-    self.has_lateral_torque_nn = self.initialize_lat_torque_nn(CP.carFingerprint, eps_firmware) and self.CP.twilsoncoNNFF
 
   def get_ff_nn(self, x):
     return self.lat_torque_nn_model.evaluate(x)
 
   def initialize_lat_torque_nn(self, car, eps_firmware):
-    self.lat_torque_nn_model = get_nn_model(car, eps_firmware)
+    self.lat_torque_nn_model, _ = get_nn_model(car, eps_firmware)
     return (self.lat_torque_nn_model is not None)
 
   @staticmethod
@@ -195,16 +219,17 @@ class CarInterfaceBase(ABC):
     ret = CarInterfaceBase.get_std_params(candidate)
     ret = cls._get_params(ret, candidate, fingerprint, car_fw, experimental_long, docs)
 
-    # Vehicle mass is published curb weight plus assumed payload such as a human driver; notCars have no assumed payload
-    if not ret.notCar:
-      ret.mass = ret.mass + STD_CARGO_KG
-
     # Enable torque controller for all cars
     CarInterfaceBase.configure_torque_tune(candidate, ret.lateralTuning)
     eps_firmware = str(next((fw.fwVersion for fw in car_fw if fw.ecu == "eps"), ""))
-    model = get_nn_model_path(candidate, eps_firmware)
+    model, similarity_score = get_nn_model_path(candidate, eps_firmware)
     if model is not None:
-      ret.lateralTuning.torque.nnModelName = os.path.splitext(os.path.basename(model))[0]
+      ret.lateralTuning.torque.nnModelName = candidate
+      ret.lateralTuning.torque.nnModelFuzzyMatch = (similarity_score < 0.99)
+
+    # Vehicle mass is published curb weight plus assumed payload such as a human driver; notCars have no assumed payload
+    if not ret.notCar:
+      ret.mass = ret.mass + STD_CARGO_KG
 
     # Set params dependent on values set by the car interface
     ret.rotationalInertia = scale_rot_inertia(ret.mass, ret.wheelbase)
@@ -279,16 +304,14 @@ class CarInterfaceBase(ABC):
 
     # FrogPilot variables
     params = Params()
-    ret.alwaysOnLateral = params.get_bool("AlwaysOnLateral")
-    ret.conditionalExperimentalMode = params.get_bool("ConditionalExperimentalMode")
+    lateralTune = params.get_bool("LateralTuning")
+    ret.conditionalExperimental = params.get_bool("ConditionalExperimental")
     ret.drivingPersonalitiesUIWheel = params.get_bool("DrivingPersonalitiesUIWheel")
     ret.experimentalModeViaWheel = params.get_bool("ExperimentalModeViaWheel")
-    ret.lateralTune = params.get_bool("LateralTuning")
     ret.longitudinalTune = params.get_bool("LongitudinalTuning")
     ret.accelerationProfile = params.get_int("AccelerationProfile") if ret.longitudinalTune else 2
-    ret.pfeiferjDesiredCurvatures = ret.lateralTune and params.get_bool("AverageDesiredCurvature")
-    ret.tss2Tune = ret.longitudinalTune and params.get_bool("TSS2Tune")
-    ret.twilsoncoNNFF = ret.lateralTune and params.get_bool("NNFF")
+    ret.pfeiferjDesiredCurvatures = lateralTune and params.get_bool("AverageDesiredCurvature")
+    ret.twilsoncoNNFF = lateralTune and params.get_bool("NNFF")
     return ret
 
   @staticmethod
@@ -381,7 +404,6 @@ class CarInterfaceBase(ABC):
       events.add(EventName.steerOverride)
 
     # Handle button presses
-    distance_button_pressed = False
     for b in cs_out.buttonEvents:
       # Enable OP long on falling edge of enable buttons (defaults to accelCruise and decelCruise, overridable per-port)
       if not self.CP.pcmCruise and (b.type in enable_buttons and not b.pressed):
@@ -389,10 +411,6 @@ class CarInterfaceBase(ABC):
       # Disable on rising and falling edge of cancel for both stock and OP long
       if b.type == ButtonType.cancel:
         events.add(EventName.buttonCancel)
-      if b.type == ButtonType.gapAdjustCruise:
-        distance_button_pressed = True
-    if self.CP.openpilotLongitudinalControl:
-      self.CS.update_personality(distance_button_pressed)
 
     # Handle permanent and temporary steering faults
     self.steering_unpressed = 0 if cs_out.steeringPressed else self.steering_unpressed + 1
@@ -443,7 +461,6 @@ class RadarInterfaceBase(ABC):
 class CarStateBase(ABC):
   def __init__(self, CP):
     self.CP = CP
-    self.params = Params()
     self.car_fingerprint = CP.carFingerprint
     self.out = car.CarState.new_message()
 
@@ -463,13 +480,6 @@ class CarStateBase(ABC):
     x0=[[0.0], [0.0]]
     K = get_kalman_gain(DT_CTRL, np.array(A), np.array(C), np.array(Q), R)
     self.v_ego_kf = KF1D(x0=x0, A=A, C=C[0], K=K)
-
-    try:
-      self.longitudinal_personality = int(self.params.get("LongitudinalPersonality", encoding="utf-8"))
-    except (ValueError, TypeError):
-      self.longitudinal_personality = log.LongitudinalPersonality.standard
-    self.distance_button_pressed = False
-    self.distance_button_timer = 0
 
   def update_speed_kf(self, v_ego_raw):
     if abs(v_ego_raw - self.v_ego_kf.x[0][0]) > 2.0:  # Prevent large accelerations when car starts at non zero speed
@@ -524,14 +534,6 @@ class CarStateBase(ABC):
     self.right_blinker_prev = right_blinker_stalk
 
     return bool(left_blinker_stalk or self.left_blinker_cnt > 0), bool(right_blinker_stalk or self.right_blinker_cnt > 0)
-
-  def update_personality(self, distance_button_pressed: bool) -> None:
-    self.distance_button_timer = self.distance_button_timer + 1 if distance_button_pressed else 0
-    if self.distance_button_timer == CRUISE_LONG_PRESS:
-      put_bool_nonblocking("ExperimentalMode", not self.params.get_bool("ExperimentalMode"))
-    elif not distance_button_pressed and self.distance_button_timer > 0:  # falling edge
-      self.longitudinal_personality = (self.longitudinal_personality - 1) % 3
-      put_nonblocking("LongitudinalPersonality", str(self.longitudinal_personality))
 
   @staticmethod
   def parse_gear_shifter(gear: Optional[str]) -> car.CarState.GearShifter:

@@ -36,7 +36,6 @@ LANE_DEPARTURE_THRESHOLD = 0.1
 REPLAY = "REPLAY" in os.environ
 SIMULATION = "SIMULATION" in os.environ
 TESTING_CLOSET = "TESTING_CLOSET" in os.environ
-NOSENSOR = "NOSENSOR" in os.environ
 IGNORE_PROCESSES = {"loggerd", "encoderd", "statsd"}
 
 ThermalStatus = log.DeviceState.ThermalStatus
@@ -69,6 +68,7 @@ class Controls:
       self.pm = messaging.PubMaster(['sendcan', 'controlsState', 'carState',
                                      'carControl', 'carEvents', 'carParams'])
 
+    self.sensor_packets = ["accelerometer", "gyroscope"]
     self.camera_packets = ["roadCameraState", "driverCameraState", "wideRoadCameraState"]
 
     self.can_sock = can_sock
@@ -78,21 +78,23 @@ class Controls:
 
     self.log_sock = messaging.sub_sock('androidLog')
 
-    self.params = Params()
     # FrogPilot variables
+    self.params = Params()
+    self.params_memory = Params("/dev/shm/params")
     fire_the_babysitter = self.params.get_bool("FireTheBabysitter")
-    self.mute_overheat = fire_the_babysitter and self.params.get_bool("MuteSystemOverheat")
+    mute_dm = fire_the_babysitter and self.params.get_bool("MuteDM")
 
     self.sm = sm
     if self.sm is None:
-      ignore = ['testJoystick']
+      ignore = self.sensor_packets + ['testJoystick']
       if SIMULATION:
         ignore += ['driverCameraState', 'managerState']
-      if fire_the_babysitter and self.params.get_bool("MuteDM"):
+      if mute_dm:
         ignore += ['driverMonitoringState']
       self.sm = messaging.SubMaster(['deviceState', 'pandaStates', 'peripheralState', 'modelV2', 'liveCalibration',
                                      'driverMonitoringState', 'longitudinalPlan', 'lateralPlan', 'liveLocationKalman',
-                                     'managerState', 'liveParameters', 'radarState', 'liveTorqueParameters', 'testJoystick'] + self.camera_packets,
+                                     'managerState', 'liveParameters', 'radarState', 'liveTorqueParameters',
+                                     'testJoystick'] + self.camera_packets + self.sensor_packets,
                                     ignore_alive=ignore, ignore_avg_freq=['radarState', 'testJoystick'])
 
     if CI is None:
@@ -114,15 +116,6 @@ class Controls:
     if not self.disengage_on_accelerator:
       self.CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.DISABLE_DISENGAGE_ON_GAS
 
-    # Set "Always On Lateral" conditions
-    self.always_on_lateral = self.CP.alwaysOnLateral
-    self.cruiseState_previously_enabled = False
-    if self.always_on_lateral:
-      self.CP.alternativeExperience |= ALTERNATIVE_EXPERIENCE.ALWAYS_ON_LATERAL
-      if self.disengage_on_accelerator:
-        self.disengage_on_accelerator = False
-        self.params.put_bool("DisengageOnAccelerator", False)
-
     # read params
     self.is_metric = self.params.get_bool("IsMetric")
     self.is_ldw_enabled = self.params.get_bool("IsLdwEnabled")
@@ -130,11 +123,15 @@ class Controls:
     passive = self.params.get_bool("Passive") or not openpilot_enabled_toggle
 
     # FrogPilot variables
-    frog_theme = self.params.get_bool("FrogTheme")
+    self.custom_theme = self.params.get_bool("CustomTheme")
+
+    self.custom_sounds = self.params.get_int("CustomSounds") if self.custom_theme else 0
+    self.frog_sounds = self.custom_sounds == 1
+
     self.average_desired_curvature = self.CP.pfeiferjDesiredCurvatures
-    self.conditional_experimental_mode = self.CP.conditionalExperimentalMode
-    self.frog_sounds = frog_theme and self.params.get_bool("FrogSounds")
+    self.conditional_experimental_mode = self.CP.conditionalExperimental
     self.reverse_cruise_increase = self.params.get_bool("ReverseCruiseIncrease")
+    self.nnff = self.CP.twilsoncoNNFF
 
     # detect sound card presence and ensure successful init
     sounds_available = HARDWARE.get_sound_card_online()
@@ -256,12 +253,9 @@ class Controls:
       return
 
     # show alert to indicate whether NNFF is loaded
-    if not self.nn_alert_shown and self.sm.frame % 1000 == 0 and self.CP.lateralTuning.which() == 'torque' and self.CP.twilsoncoNNFF:
+    if not self.nn_alert_shown and self.sm.frame % 600 == 0 and self.CP.lateralTuning.which() == 'torque' and self.nnff:
       self.nn_alert_shown = True
-      if self.LaC.use_nn:
-        self.events.add(EventName.torqueNNLoad)
-      else: 
-        self.events.add(EventName.torqueNNNotLoaded)
+      self.events.add(EventName.torqueNNLoad)
 
     # Block resume if cruise never previously enabled
     resume_pressed = any(be.type in (ButtonType.accelCruise, ButtonType.resumeCruise) for be in CS.buttonEvents)
@@ -288,7 +282,7 @@ class Controls:
       self.events.add_from_msg(CS.events)
 
     # Create events for temperature, disk space, and memory
-    if self.sm['deviceState'].thermalStatus >= ThermalStatus.red and not self.mute_overheat:
+    if self.sm['deviceState'].thermalStatus >= ThermalStatus.red:
       self.events.add(EventName.overheat)
     if self.sm['deviceState'].freeSpacePercent < 7 and not SIMULATION:
       # under 7% of space free no enable allowed
@@ -339,10 +333,11 @@ class Controls:
       self.events.add(EventName.laneChange)
 
     # Handle turning
-    if self.sm['lateralPlan'].desire == Desire.turnLeft:
-      self.events.add(EventName.turningLeft)
-    elif self.sm['lateralPlan'].desire == Desire.turnRight:
-      self.events.add(EventName.turningRight)
+    if not CS.standstill:
+      if self.sm['lateralPlan'].desire == Desire.turnLeft:
+        self.events.add(EventName.turningLeft)
+      elif self.sm['lateralPlan'].desire == Desire.turnRight:
+        self.events.add(EventName.turningRight)
 
     for i, pandaState in enumerate(self.sm['pandaStates']):
       # All pandas must match the list of safetyConfigs, and if outside this list, must be silent or noOutput
@@ -411,17 +406,20 @@ class Controls:
     else:
       self.logged_comm_issue = None
 
-    if not self.sm['liveParameters'].valid and not TESTING_CLOSET and (not SIMULATION or REPLAY):
-      self.events.add(EventName.vehicleModelInvalid)
     if not self.sm['lateralPlan'].mpcSolutionValid:
       self.events.add(EventName.plannerError)
-    if not (self.sm['liveParameters'].sensorValid or self.sm['liveLocationKalman'].sensorsOK) and not NOSENSOR:
-      if self.sm.frame > 5 / DT_CTRL:  # Give locationd some time to receive all the inputs
-        self.events.add(EventName.sensorDataInvalid)
     if not self.sm['liveLocationKalman'].posenetOK:
       self.events.add(EventName.posenetInvalid)
     if not self.sm['liveLocationKalman'].deviceStable:
       self.events.add(EventName.deviceFalling)
+    if not self.sm['liveLocationKalman'].inputsOK:
+      self.events.add(EventName.locationdTemporaryError)
+    if not self.sm['liveParameters'].valid and not TESTING_CLOSET and (not SIMULATION or REPLAY):
+      self.events.add(EventName.paramsdTemporaryError)
+
+    # conservative HW alert. if the data or frequency are off, locationd will throw an error
+    if any((self.sm.frame - self.sm.rcv_frame[s])*DT_CTRL > 10. for s in self.sensor_packets):
+      self.events.add(EventName.sensorDataInvalid)
 
     if not REPLAY:
       # Check for mismatch between openpilot and car's PCM
@@ -450,15 +448,12 @@ class Controls:
 
     # TODO: fix simulator
     if not SIMULATION or REPLAY:
-      if not NOSENSOR:
-        if not self.sm['liveLocationKalman'].gpsOK and self.sm['liveLocationKalman'].inputsOK and (self.distance_traveled > 1000):
-          # Not show in first 1 km to allow for driving out of garage. This event shows after 5 minutes
-          self.events.add(EventName.noGps)
+      if not self.sm['liveLocationKalman'].gpsOK and self.sm['liveLocationKalman'].inputsOK and (self.distance_traveled > 1000):
+        # Not show in first 1 km to allow for driving out of garage. This event shows after 5 minutes
+        self.events.add(EventName.noGps)
 
       if self.sm['modelV2'].frameDropPerc > 20:
         self.events.add(EventName.modeldLagging)
-      if self.sm['liveLocationKalman'].excessiveResets:
-        self.events.add(EventName.localizerMalfunction)
 
   def data_sample(self):
     """Receive data from sockets and update carState"""
@@ -514,7 +509,7 @@ class Controls:
   def state_transition(self, CS):
     """Compute conditional state transitions and execute actions on state transitions"""
 
-    self.v_cruise_helper.update_v_cruise(CS, self.enabled, self.is_metric)
+    self.v_cruise_helper.update_v_cruise(CS, self.enabled, self.is_metric, self.reverse_cruise_increase)
 
     # decrement the soft disable timer at every step, as it's reset on
     # entrance in SOFT_DISABLING state
@@ -619,22 +614,16 @@ class Controls:
     CC = car.CarControl.new_message()
     CC.enabled = self.enabled
 
-    # Check the value of "reverse_cruise_increase" just in case the user changed its value mid drive
-    if long_plan.frogpilotTogglesUpdated:
+    # Update FrogPilot parameters
+    if self.params_memory.get_bool("FrogPilotTogglesUpdated"):
+      self.custom_sounds = self.params.get_int("CustomSounds") if self.custom_theme else 0
+      self.frog_sounds = self.custom_sounds == 1
       self.reverse_cruise_increase = self.params.get_bool("ReverseCruiseIncrease")
     CC.reverseCruise = self.reverse_cruise_increase
 
-    # Always on lateral
-    if self.always_on_lateral:
-      self.cruiseState_previously_enabled &= CS.cruiseState.available
-      self.cruiseState_previously_enabled |= CS.cruiseState.enabled
-      gear = car.CarState.GearShifter
-      gear_check = not (CS.gearShifter == gear.neutral or CS.gearShifter == gear.park or CS.gearShifter == gear.reverse or CS.gearShifter == gear.unknown)
-      CC.alwaysOnLateral = self.cruiseState_previously_enabled and gear_check
-
     # Check which actuators can be enabled
     standstill = CS.vEgo <= max(self.CP.minSteerSpeed, MIN_LATERAL_CONTROL_SPEED) or CS.standstill
-    CC.latActive = (self.active or CC.alwaysOnLateral) and not CS.steerFaultTemporary and not CS.steerFaultPermanent and \
+    CC.latActive = self.active and not CS.steerFaultTemporary and not CS.steerFaultPermanent and \
                    (not standstill or self.joystick_mode)
     CC.longActive = self.enabled and not self.events.contains(ET.OVERRIDE_LONGITUDINAL) and self.CP.openpilotLongitudinalControl
 
@@ -662,9 +651,6 @@ class Controls:
       t_since_plan = (self.sm.frame - self.sm.rcv_frame['longitudinalPlan']) * DT_CTRL
       actuators.accel = self.LoC.update(CC.longActive, CS, long_plan, pid_accel_limits, t_since_plan)
 
-      if len(long_plan.speeds):
-        actuators.speed = long_plan.speeds[-1]
-
       # Steering PID loop and lateral MPC
       self.desired_curvature, self.desired_curvature_rate = get_lag_adjusted_curvature(self.CP, CS.vEgo,
                                                                                        lat_plan.psis,
@@ -685,8 +671,8 @@ class Controls:
 
         if CC.latActive:
           steer = clip(self.sm['testJoystick'].axes[1], -1, 1)
-          # max angle is 45 for angle-based cars
-          actuators.steer, actuators.steeringAngleDeg = steer, steer * 45.
+          # max angle is 45 for angle-based cars, max curvature is 0.02
+          actuators.steer, actuators.steeringAngleDeg, actuators.curvature = steer, steer * 45., steer * -0.02
 
         lac_log.active = self.active
         lac_log.steeringAngleDeg = CS.steeringAngleDeg
@@ -863,8 +849,6 @@ class Controls:
       controlsState.lateralControlState.pidState = lac_log
     elif lat_tuning == 'torque':
       controlsState.lateralControlState.torqueState = lac_log
-    elif lat_tuning == 'indi':
-      controlsState.lateralControlState.indiState = lac_log
 
     self.pm.send('controlsState', dat)
 
@@ -905,7 +889,7 @@ class Controls:
     self.is_metric = self.params.get_bool("IsMetric")
     if self.CP.openpilotLongitudinalControl:
       if self.conditional_experimental_mode:
-        self.experimental_mode = self.sm['longitudinalPlan'].conditionalExperimentalMode
+        self.experimental_mode = self.sm['longitudinalPlan'].conditionalExperimental
       else:
         self.experimental_mode = self.params.get_bool("ExperimentalMode")
 

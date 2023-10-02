@@ -96,7 +96,6 @@ typedef enum UIStatus {
   STATUS_ENGAGED,
 
   // FrogPilot statuses
-  STATUS_LATERAL_ACTIVE,
 } UIStatus;
 
 enum PrimeType {
@@ -111,17 +110,16 @@ enum PrimeType {
 const QColor bg_colors [] = {
   [STATUS_DISENGAGED] = QColor(0x17, 0x33, 0x49, 0xc8),
   [STATUS_OVERRIDE] = QColor(0x91, 0x9b, 0x95, 0xf1),
-  [STATUS_ENGAGED] = QColor(0xFF, 0xB0, 0xC1, 0xf1),
+  [STATUS_ENGAGED] = QColor(0x17, 0x86, 0x44, 0xf1),
 
   // FrogPilot colors
-  [STATUS_LATERAL_ACTIVE] = QColor(0xFF, 0x80, 0xD4, 0xf1),
 };
 
 static std::map<cereal::ControlsState::AlertStatus, QColor> alert_colors = {
   {cereal::ControlsState::AlertStatus::NORMAL, QColor(0x15, 0x15, 0x15, 0xf1)},
-  {cereal::ControlsState::AlertStatus::USER_PROMPT, QColor(0xFF, 0x6E, 0xFF, 0xf1)},
-  {cereal::ControlsState::AlertStatus::CRITICAL, QColor(0xFF, 0xB0, 0xC1, 0xf1)},
-  {cereal::ControlsState::AlertStatus::FROGPILOT, QColor(0xFF, 0x69, 0x84, 0xf1)},
+  {cereal::ControlsState::AlertStatus::USER_PROMPT, QColor(0xDA, 0x6F, 0x25, 0xf1)},
+  {cereal::ControlsState::AlertStatus::CRITICAL, QColor(0xC9, 0x22, 0x31, 0xf1)},
+  {cereal::ControlsState::AlertStatus::FROGPILOT, QColor(0x17, 0x86, 0x44, 0xf1)},
 };
 
 typedef struct UIScene {
@@ -156,30 +154,31 @@ typedef struct UIScene {
   uint64_t started_frame;
 
   // FrogPilot variables
-  bool always_on_lateral;
-  bool always_on_lateral_active;
+  bool acceleration_path;
   bool blind_spot_left;
   bool blind_spot_path;
   bool blind_spot_right;
   bool compass;
   bool conditional_experimental;
   bool custom_road_ui;
+  bool custom_theme;
   bool default_params_set;
   bool driving_personalities_ui_wheel;
   bool enabled;
   bool experimental_mode;
   bool experimental_mode_via_wheel;
-  bool frog_colors;
-  bool frog_signals;
-  bool frog_theme;
-  bool frogpilot_toggles_updated;
+  bool map_open;
   bool mute_dm;
+  bool right_hand_dm;
   bool rotating_wheel;
   bool toyota_car = true;
+  bool turn_signal_animation;
   bool turn_signal_left;
   bool turn_signal_right;
   bool unlimited_road_ui_length;
   bool wide_camera_disabled;
+  int custom_colors;
+  int custom_signals;
   float lane_line_width;
   float lane_width_left;
   float lane_width_right;
@@ -190,13 +189,10 @@ typedef struct UIScene {
   int conditional_speed;
   int conditional_speed_lead;
   int conditional_status;
-  int desired_follow;
-  int developer_ui;
-  int obstacle_distance;
+  int personality_profile;
   int screen_brightness;
   int steering_angle_deg;
   int steering_wheel;
-  int stopped_equivalence;
   QPolygonF track_edge_vertices;
   QPolygonF track_left_adjacent_lane_vertices;
   QPolygonF track_right_adjacent_lane_vertices;

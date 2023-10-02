@@ -63,7 +63,6 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     driverUnresponsive @45;
     belowSteerSpeed @46;
     lowBattery @48;
-    vehicleModelInvalid @50;
     accFaulted @51;
     sensorDataInvalid @52;
     commIssue @53;
@@ -106,7 +105,6 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     roadCameraError @100;
     driverCameraError @101;
     wideRoadCameraError @102;
-    localizerMalfunction @103;
     highCpuUsage @105;
     cruiseMismatch @106;
     lkasDisabled @107;
@@ -115,16 +113,16 @@ struct CarEvent @0x9b1657f34caf3ad3 {
     resumeBlocked @113;
     steerTimeLimit @115;
     vehicleSensorsInvalid @116;
+    locationdTemporaryError @103;
+    locationdPermanentError @118;
+    paramsdTemporaryError @50;
+    paramsdPermanentError @119;
 
     # FrogPilot Events
-    frogSteerSaturated @118;
-    torqueNNLoad @119;
-    turningLeft @120;
-    turningRight @121;
-
-    pedalInterceptorNoBrake @122;
-
-    pedalInterceptorNoBrake @125;
+    frogSteerSaturated @120;
+    torqueNNLoad @122;
+    turningLeft @123;
+    turningRight @124;
 
     radarCanErrorDEPRECATED @15;
     communityFeatureDisallowedDEPRECATED @62;
@@ -338,7 +336,6 @@ struct CarControl {
   rightBlinker @16: Bool;
 
   # FrogPilot CarControls
-  alwaysOnLateral @17: Bool;
   reverseCruise @18: Bool;
 
   # Any car specific rate limits or quirks applied by
@@ -475,8 +472,8 @@ struct CarParams {
   lateralParams @48 :LateralParams;
   lateralTuning :union {
     pid @26 :LateralPIDTuning;
-    indi @27 :LateralINDITuning;
-    lqr @40 :LateralLQRTuning;
+    indiDEPRECATED @27 :LateralINDITuning;
+    lqrDEPRECATED @40 :LateralLQRTuning;
     torque @67 :LateralTorqueTuning;
   }
 
@@ -510,15 +507,12 @@ struct CarParams {
 
   # FrogPilot CarParams
   accelerationProfile @73 :UInt8;
-  alwaysOnLateral @74 :Bool;
-  conditionalExperimentalMode @75 :Bool;
+  conditionalExperimental @75 :Bool;
   drivingPersonalitiesUIWheel @76 :Bool;
   experimentalModeViaWheel @77 :Bool;
-  lateralTune @78 :Bool;
-  longitudinalTune @79 :Bool;
-  pfeiferjDesiredCurvatures @80 :Bool;
-  tss2Tune @81 :Bool;
-  twilsoncoNNFF @82 :Bool;
+  longitudinalTune @78 :Bool;
+  pfeiferjDesiredCurvatures @79 :Bool;
+  twilsoncoNNFF @80 :Bool;
 
   struct SafetyConfig {
     safetyModel @0 :SafetyModel;
@@ -550,6 +544,7 @@ struct CarParams {
     latAccelFactor @6 :Float32;
     latAccelOffset @7 :Float32;
     nnModelName @8 :Text;
+    nnModelFuzzyMatch @9 :Bool;
   }
 
   struct LongitudinalPIDTuning {

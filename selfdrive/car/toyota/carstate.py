@@ -48,17 +48,20 @@ class CarState(CarStateBase):
     # FrogPilot variables
     self.params = Params()
     self.params_memory = Params("/dev/shm/params")
-    self.conditional_experimental_mode = self.CP.conditionalExperimentalMode
+    self.conditional_experimental_mode = self.CP.conditionalExperimental
     self.driving_personalities_via_wheel = self.CP.drivingPersonalitiesUIWheel
     self.experimental_mode_via_wheel = self.CP.experimentalModeViaWheel
-    self.lkas_pressed = False
+    self.distance_previously_pressed = False
     self.lkas_previously_pressed = False
     self.profile_restored = False
     self.distance_button = 0
-    self.distance_lines = 0
-    self.counter = 0
-    self.previous_distance_lines = 0
-    self.restore_counter = self.params.get_int("LongitudinalPersonality") + 1
+    self.previous_distance_lines = self.params.get_int("LongitudinalPersonality")
+
+    # DragonPilot ZSS
+    self.zss = self.params.get_bool("ZSS")
+    self.zss_compute = False
+    self.zss_cruise_active_last = False
+    self.zss_angle_offset = 0.
 
   def update(self, cp, cp_cam):
     ret = car.CarState.new_message()
@@ -179,41 +182,53 @@ class CarState(CarStateBase):
     if self.CP.carFingerprint != CAR.PRIUS_V:
       self.lkas_hud = copy.copy(cp_cam.vl["LKAS_HUD"])
 
+    # DragonPilot ZSS
+    if self.zss:
+      zorro_steer = cp.vl["SECONDARY_STEER_ANGLE"]["ZORRO_STEER"]
+      # Only compute ZSS offset when acc is active
+      if bool(cp.vl["PCM_CRUISE"]["CRUISE_ACTIVE"]) and not self.zss_cruise_active_last:
+        self.zss_compute = True # Cruise was just activated, so allow offset to be recomputed
+      self.zss_cruise_active_last = bool(cp.vl["PCM_CRUISE"]["CRUISE_ACTIVE"])
+
+      # Compute ZSS offset
+      if self.zss_compute:
+        if abs(ret.steeringAngleDeg) > 1e-3 and abs(zorro_steer) > 1e-3:
+          self.zss_angle_offset = zorro_steer - ret.steeringAngleDeg
+      # Apply offset
+      ret.steeringAngleDeg = zorro_steer - self.zss_angle_offset
+
     # Driving personalities function
     if self.driving_personalities_via_wheel and ret.cruiseState.available:
-      self.distance_lines = cp.vl["PCM_CRUISE_SM"]["DISTANCE_LINES"]
-      if self.distance_lines == self.restore_counter:
+      # Need to subtract by 1 to comply with the personality profiles of "0", "1", and "2"
+      distance_lines = cp.vl["PCM_CRUISE_SM"]["DISTANCE_LINES"] - 1
+      # Set personality to previously set personality
+      if distance_lines == self.previous_distance_lines:
         self.profile_restored = True
-      if not self.profile_restored and ret.cruiseState.enabled:
-        # Set personality to previously set personality
-        self.counter += 1
-        if self.counter % 5 == 0:
-          self.distance_button = 1
-        if self.counter % 5 != 0:
-          self.distance_button = 0
-      elif self.profile_restored:
+      if not self.profile_restored:
+        self.distance_previously_pressed = not self.distance_previously_pressed
+        self.distance_button = not self.distance_previously_pressed
+      else:
         if self.CP.carFingerprint in (TSS2_CAR - RADAR_ACC_CAR):
           # KRKeegan - Add support for toyota distance button
-          self.distance_button = 1 if cp_cam.vl["ACC_CONTROL"]["DISTANCE"] == 1 else 0
-          # Need to subtract by 1 to comply with the personality profiles of "0", "1", and "2"
-          self.distance_lines = max(cp.vl["PCM_CRUISE_SM"]["DISTANCE_LINES"] - 1, 0)
+          self.distance_button = cp_cam.vl["ACC_CONTROL"]["DISTANCE"]
 
         if self.CP.carFingerprint in RADAR_ACC_CAR:
           # These cars have the acc_control on car can
-          self.distance_button = 1 if cp.vl["ACC_CONTROL"]["DISTANCE"] == 1 else 0
-          # Need to subtract by 1 to comply with the personality profiles of "0", "1", and "2"
-          self.distance_lines = max(cp.vl["PCM_CRUISE_SM"]["DISTANCE_LINES"] - 1, 0)
+          self.distance_button = cp.vl["ACC_CONTROL"]["DISTANCE"]
 
-        if self.distance_lines != self.previous_distance_lines:
-          put_int_nonblocking("LongitudinalPersonality", self.distance_lines)
+        if self.CP.flags & ToyotaFlags.SMART_DSU:
+          self.distance_button = cp.vl["SDSU"]["FD_BUTTON"]
+
+        if distance_lines != self.previous_distance_lines and distance_lines >= 0:
+          put_int_nonblocking("LongitudinalPersonality", distance_lines)
           self.params_memory.put_bool("FrogPilotTogglesUpdated", True)
-          self.previous_distance_lines = self.distance_lines
+          self.previous_distance_lines = distance_lines
 
     # Toggle Experimental Mode from steering wheel function
-    if self.experimental_mode_via_wheel:
+    if self.experimental_mode_via_wheel and ret.cruiseState.available:
       message_keys = ["LDA_ON_MESSAGE", "SET_ME_X02"]
-      self.lkas_pressed = any(cp_cam.vl["LKAS_HUD"].get(key) == 1 for key in message_keys)
-      if self.lkas_pressed and not self.lkas_previously_pressed and ret.cruiseState.available:
+      lkas_pressed = any(cp_cam.vl["LKAS_HUD"].get(key) == 1 for key in message_keys)
+      if lkas_pressed and not self.lkas_previously_pressed:
         if self.conditional_experimental_mode:
           # Set "ConditionalStatus" to work with "Conditional Experimental Mode"
           conditional_status = self.params_memory.get_int("ConditionalStatus")
@@ -223,7 +238,7 @@ class CarState(CarStateBase):
           experimental_mode = self.params.get_bool("ExperimentalMode")
           # Invert the value of "ExperimentalMode"
           put_bool_nonblocking("ExperimentalMode", not experimental_mode)
-      self.lkas_previously_pressed = self.lkas_pressed
+      self.lkas_previously_pressed = lkas_pressed
 
     # For configuring onroad statuses
     ret.toyotaCar = True
@@ -275,10 +290,15 @@ class CarState(CarStateBase):
         ("PCS_HUD", 1),
       ]
 
-    if CP.carFingerprint not in (TSS2_CAR - RADAR_ACC_CAR) and not CP.enableDsu:
+    if CP.carFingerprint not in (TSS2_CAR - RADAR_ACC_CAR) and not CP.enableDsu and not CP.flags & ToyotaFlags.DISABLE_RADAR.value:
       messages += [
         ("PRE_COLLISION", 33),
       ]
+
+    if CP.flags & ToyotaFlags.SMART_DSU:
+      messages.append(("SDSU", 33))
+
+    messages += [("SECONDARY_STEER_ANGLE", 0)]
 
     return CANParser(DBC[CP.carFingerprint]["pt"], messages, 0)
 

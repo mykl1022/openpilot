@@ -17,7 +17,6 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(QWidget *parent) : FrogPilotPanel
   mainLayout->addWidget(whiteHorizontalLine());
 
   static const std::vector<std::tuple<QString, QString, QString, QString>> toggles = {
-    {"AlwaysOnLateral", "Always on Lateral / No disengage on Brake Pedal", "Keep openpilot lateral control when using either the brake or gas pedals. openpilot is only disengaged by deactivating the 'Cruise Control' button.", "../assets/offroad/icon_always_on_lateral.png"},
     {"ConditionalExperimental", "Conditional Experimental Mode", "Automatically activate 'Experimental Mode' based on specified conditions.", "../assets/offroad/icon_conditional.png"},
     {"CustomDrivingPersonalities", "Custom Driving Personalities", "Customize the driving personality profiles to your liking.", "../assets/offroad/icon_custom.png"},
     {"DeviceShutdownTimer", "Device Shutdown Timer", "Set the timer for when the device turns off after being offroad to reduce energy waste and prevent battery drain.", "../assets/offroad/icon_time.png"},
@@ -26,19 +25,13 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(QWidget *parent) : FrogPilotPanel
     {"FireTheBabysitter", "Fire the Babysitter", "Disable some of openpilot's 'Babysitter Protocols'.", "../assets/offroad/icon_babysitter.png"},
     {"LateralTuning", "Lateral Tuning", "Change the way openpilot steers.", "../assets/offroad/icon_lateral_tune.png"},
     {"LongitudinalTuning", "Longitudinal Tuning", "Change the way openpilot accelerates and brakes.", "../assets/offroad/icon_longitudinal_tune.png"},
-    {"Model", "Model Selector (Requires Reboot)", "Select your preferred openpilot model.\n\nOP = Optimus Prime (Default)\nB4+B0 = B4+B0 Vision\nFV = Farmville\nNLP = New Lateral Planner\nNM = Nicki Minaj\nNI = Non-Inflatable", "../assets/offroad/icon_calibration.png"},
     {"NudgelessLaneChange", "Nudgeless Lane Change", "Switch lanes without having to nudge the steering wheel.", "../assets/offroad/icon_lane.png"},
-    {"PauseLateralOnSignal", "Pause Lateral On Turn Signal", "Pauses lateral control when a turn signal is active.", "../assets/offroad/icon_lane.png"},
     {"TurnDesires", "Turn Desires", "Use turn desires when below the minimum lane change speed for more precise turns.", "../assets/navigation/direction_continue_right.png"}
   };
 
   for (const auto &[key, label, desc, icon] : toggles) {
     ParamControl *control = createParamControl(key, label, desc, icon, this);
-    if (key == "AlwaysOnLateral") {
-      createSubControl(key, label, desc, icon, {}, {
-        {"AlwaysOnLateralMain", "Enable AOL On Cruise Main", "Enables Always On Lateral by simply turning on cruise control as opposed to requiring openpilot to be enabled first."}
-      });
-    } else if (key == "ConditionalExperimental") {
+    if (key == "ConditionalExperimental") {
       createSubControl(key, label, desc, icon, {
         createDualParamControl(new ConditionalSpeed(), new ConditionalSpeedLead()),
       });
@@ -68,9 +61,6 @@ FrogPilotControlsPanel::FrogPilotControlsPanel(QWidget *parent) : FrogPilotPanel
         {"MuteSeatbelt", "Mute Seatbelt"},
         {"MuteSystemOverheat", "Mute Overheat"}
       }, mainLayout);
-    } else if (key == "Model") {
-      mainLayout->addWidget(new Model());
-      mainLayout->addWidget(horizontalLine());
     } else if (key == "LateralTuning") {
       createSubControl(key, label, desc, icon, {}, {
         {"AverageDesiredCurvature", "Average Desired Curvature", "Use Pfeiferj's distance based curvature adjustment for smoother handling of curves."},
@@ -119,8 +109,6 @@ FrogPilotVehiclesPanel::FrogPilotVehiclesPanel(QWidget *parent) : FrogPilotPanel
   mainLayout->addWidget(whiteHorizontalLine());
 
   static const std::vector<std::tuple<QString, QString, QString, QString>> gmToggles = {
-    {"EVTable", "EV Lookup Tables", "Smoothens out the gas and brake controls for EV vehicles.", "../assets/offroad/icon_blank.png"},
-    {"LowerVolt", "Lower Volt Enable Speed", "Lowers the Volt's minimum enable speed in order to enable openpilot at any speed.", "../assets/offroad/icon_blank.png"}
   };
 
   for (const auto &[key, label, desc, icon] : gmToggles) {
@@ -174,8 +162,6 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(QWidget *parent) : FrogPilotPanel(p
     {"CustomTheme", "Custom Theme", "Enable the ability to use custom themes.", "../assets/frog.png"},
     {"Compass", "Compass", "Add a compass to the onroad UI that indicates your current driving direction.", "../assets/offroad/icon_compass.png"},
     {"CustomRoadUI", "Custom Road UI", "Customize the road UI to your liking.", "../assets/offroad/icon_road.png"},
-    {"DeveloperUI", "Developer UI", "Display various information about openpilot and the device itself.", "../assets/offroad/icon_developer.png"},
-    {"GreenLightAlert", "Green Light Alert", "Displays an alert when a light turns from red to green.", "../assets/offroad/icon_green_light.png"},
     {"NumericalTemp", "Numerical Temperature Gauge", "Replace openpilot's 'GOOD', 'OK', and 'HIGH' temperature statuses with numerical values.\n\nTap the gauge to switch between Celsius and Fahrenheit.", "../assets/offroad/icon_temp.png"},
     {"RotatingWheel", "Rotating Steering Wheel", "The steering wheel in top right corner of the onroad UI rotates alongside your physical steering wheel.", "../assets/offroad/icon_rotate.png"},
     {"ScreenBrightness", "Screen Brightness", "Choose a custom screen brightness level or use the default 'Auto' brightness setting.", "../assets/offroad/icon_light.png"},
@@ -202,9 +188,6 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(QWidget *parent) : FrogPilotPanel(p
         {"BlindSpotPath", "Blind Spot Path"},
         {"UnlimitedLength", "'Unlimited' Road UI Length"},
       }, mainLayout);
-    } else if (key == "DeveloperUI") {
-      mainLayout->addWidget(new DeveloperUI());
-      mainLayout->addWidget(horizontalLine());
     } else if (key == "ScreenBrightness") {
       mainLayout->addWidget(new ScreenBrightness());
       mainLayout->addWidget(horizontalLine());
@@ -217,63 +200,6 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(QWidget *parent) : FrogPilotPanel(p
     }
   }
   setInitialToggleStates();
-}
-
-FrogPilotNavigationPanel::FrogPilotNavigationPanel(QWidget *parent) : FrogPilotPanel(parent), instructionsStep(new QLabel(this)), updateTimer(new QTimer(this)), wifiManager(new WifiManager(this)) {
-  auto mainLayout = new QVBoxLayout(this);
-
-  mainLayout->addWidget(instructionsStep, 0, Qt::AlignCenter);
-
-  mapboxSettingsLabel = new QLabel("", this);
-  mainLayout->addWidget(mapboxSettingsLabel, 0, Qt::AlignBottom | Qt::AlignCenter);
-
-  connect(updateTimer, &QTimer::timeout, this, &FrogPilotNavigationPanel::retrieveAndUpdateStatus);
-  updateTimer->start(100);
-
-  setupCompleted = !params.get("MapboxPublicKey").empty() && !params.get("MapboxSecretKey").empty();
-
-  retrieveAndUpdateStatus();
-}
-
-void FrogPilotNavigationPanel::retrieveAndUpdateStatus() {
-  const bool deviceOnline = int((*uiState()->sm)["deviceState"].getDeviceState().getNetworkStrength()) != 0;
-  const bool mapboxPublicKeySet = !params.get("MapboxPublicKey").empty();
-  const bool mapboxSecretKeySet = !params.get("MapboxSecretKey").empty();
-
-  if (deviceOnline) {
-    updateIpAddressLabel();
-  }
-  if (deviceOnline != prevDeviceOnline || mapboxPublicKeySet != prevMapboxPublicKeySet || mapboxSecretKeySet != prevMapboxSecretKeySet) {
-    updateUI(deviceOnline, mapboxPublicKeySet, mapboxSecretKeySet);
-    prevDeviceOnline = deviceOnline;
-    prevMapboxPublicKeySet = mapboxPublicKeySet;
-    prevMapboxSecretKeySet = mapboxSecretKeySet;
-  }
-}
-
-void FrogPilotNavigationPanel::updateIpAddress(const QString& newIpAddress) {
-  mapboxSettingsLabel->setText(QString(ipFormat).arg(newIpAddress));
-}
-
-void FrogPilotNavigationPanel::updateIpAddressLabel() {
-  mapboxSettingsLabel->setText(QString(ipFormat).arg(wifiManager->getIp4Address()));
-}
-
-void FrogPilotNavigationPanel::showEvent(QShowEvent *event) {
-  retrieveAndUpdateStatus();
-  QWidget::showEvent(event);
-}
-
-void FrogPilotNavigationPanel::updateUI(const bool deviceOnline, const bool mapboxPublicKeySet, const bool mapboxSecretKeySet) {
-  static QString imageName = "offline.png";
-  if (deviceOnline) {
-    if (!setupCompleted) {
-      imageName = !mapboxPublicKeySet ? "no_keys_set.png" : (!mapboxSecretKeySet ? "public_key_set.png" : "both_keys_set.png");
-    } else if (setupCompleted) {
-      imageName = "setup_completed.png";
-    }
-  }
-  instructionsStep->setPixmap(QPixmap(imagePath + imageName));
 }
 
 ParamControl *FrogPilotPanel::createParamControl(const QString &key, const QString &label, const QString &desc, const QString &icon, QWidget *parent) {
@@ -290,7 +216,6 @@ ParamControl *FrogPilotPanel::createParamControl(const QString &key, const QStri
     }
     static const QMap<QString, QString> parameterWarnings = {
       {"AggressiveAcceleration", "This will make openpilot driving more aggressively!"},
-      {"AlwaysOnLateralMain", "This is very experimental and isn't guaranteed to work. If you run into any issues please report it in the FrogPilot Discord!"},
       {"SmootherBraking", "This will modify openpilot's braking behavior!"},
       {"TSS2Tune", "This will modify openpilot's acceleration and braking behavior!"}
     };
