@@ -107,24 +107,14 @@ def create_friction_brake_command(packer, bus, apply_brake, idx, enabled, near_s
   return packer.make_can_msg("EBCMFrictionBrakeCmd", bus, values)
 
 
-def create_acc_dashboard_command(packer, bus, enabled, personality, target_speed_kph, lead_car_in_sight, fcw):
+def create_acc_dashboard_command(packer, bus, enabled, target_speed_kph, lead_car_in_sight, fcw, personality):
   target_speed = min(target_speed_kph, 255)
-  if not enabled:
-    gap = 0
-  elif personality == log.LongitudinalPersonality.aggressive:
-    gap = 1
-  elif personality == log.LongitudinalPersonality.standard:
-    gap = 2
-  elif personality == log.LongitudinalPersonality.relaxed:
-    gap = 3
-  else:
-    gap = 3
 
   values = {
     "ACCAlwaysOne": 1,
     "ACCResumeButton": 0,
     "ACCSpeedSetpoint": target_speed,
-    "ACCGapLevel": gap,
+    "ACCGapLevel": min(personality + 1, 3 * enabled),  # 3 "far", 0 "inactive"
     "ACCCmdActive": enabled,
     "ACCAlwaysOne2": 1,
     "ACCLeadCar": lead_car_in_sight,
@@ -192,26 +182,32 @@ def create_gm_cc_spam_command(packer, controller, CS, actuators):
   # TODO: Cleanup the timing - normal is every 30ms...
 
   cruiseBtn = CruiseButtons.INIT
-  # We will spam the up/down buttons till we reach the desired speed
-  # TODO: Apparently there are rounding issues.
-  speedSetPoint = int(round(CS.out.cruiseState.speed * CV.MS_TO_MPH))
-  speedActuator = math.floor(actuators.speed * CV.MS_TO_MPH)
-  speedDiff = (speedActuator - speedSetPoint)
 
-  # We will spam the up/down buttons till we reach the desired speed
-  rate = 0.64
-  if speedActuator < speedSetPoint == CS.CP.minEnableSpeed:
+  # if controller.params_.get_bool("IsMetric"):
+  #   accel = actuators.accel * CV.MS_TO_KPH  # m/s/s to km/h/s
+  # else:
+  #   accel = actuators.accel * CV.MS_TO_MPH  # m/s/s to mph/s
+  accel = actuators.accel * CV.MS_TO_MPH  # m/s/s to mph/s
+  speedSetPoint = int(round(CS.out.cruiseState.speed * CV.MS_TO_MPH))
+
+  RATE_UP_MAX = 0.2  # may be lower on new/euro cars
+  RATE_DOWN_MAX = 0.2  # may be lower on new/euro cars
+
+  if speedSetPoint == CS.CP.minEnableSpeed and accel < -1:
     cruiseBtn = CruiseButtons.CANCEL
     controller.apply_speed = 0
-  elif speedDiff < 0:
+    rate = 0.04
+  elif accel < 0:
     cruiseBtn = CruiseButtons.DECEL_SET
-    rate = 0.2
+    rate = max(-1 / accel, RATE_DOWN_MAX)
     controller.apply_speed = speedSetPoint - 1
-  elif speedDiff > 0:
+  elif accel > 0:
     cruiseBtn = CruiseButtons.RES_ACCEL
+    rate = max(1 / accel, RATE_UP_MAX)
     controller.apply_speed = speedSetPoint + 1
   else:
     controller.apply_speed = speedSetPoint
+    rate = float('inf')
 
   # Check rlogs closely - our message shouldn't show up on the pt bus for us
   # Or bus 2, since we're forwarding... but I think it does
