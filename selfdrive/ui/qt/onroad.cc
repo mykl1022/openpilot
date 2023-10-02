@@ -488,18 +488,53 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     painter.drawPolygon(scene.road_edge_vertices[i]);
   }
 
-  // Create a rolling rainbow effect for the paint path
-QLinearGradient bg(0, height(), 0, 0);
-float rainbowPosition = fmod(QTime::currentTime().msecsSinceStartOfDay() / 1000.0, 1.0);  // Calculate rainbow position based on time
-bg.setColorAt(rainbowPosition, Qt::red);
-bg.setColorAt(fmod(rainbowPosition + 0.17, 1.0), Qt::yellow);
-bg.setColorAt(fmod(rainbowPosition + 0.33, 1.0), Qt::green);
-bg.setColorAt(fmod(rainbowPosition + 0.5, 1.0), Qt::cyan);
-bg.setColorAt(fmod(rainbowPosition + 0.67, 1.0), Qt::blue);
-bg.setColorAt(fmod(rainbowPosition + 0.83, 1.0), Qt::magenta);
-bg.setColorAt(fmod(rainbowPosition + 1.0, 1.0), Qt::red);
+  // Define a list of magical colors
+std::vector<QColor> magicalColors;
+magicalColors.push_back(QColor(255, 0, 0));    // Red
+magicalColors.push_back(QColor(255, 165, 0));  // Orange
+magicalColors.push_back(QColor(255, 255, 0));  // Yellow
+magicalColors.push_back(QColor(0, 128, 0));    // Green
+magicalColors.push_back(QColor(0, 0, 255));    // Blue
+magicalColors.push_back(QColor(128, 0, 128));  // Purple
 
-// Now you have a rolling rainbow effect for your paint path
+// paint path
+QLinearGradient bg(0, height(), 0, 0);
+if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) {
+    const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
+    const int max_len = std::min<int>(scene.track_vertices.length() / 2, acceleration_const.size());
+
+    std::vector<float> acceleration;
+    for (int i = 0; i < acceleration_const.size(); i++) {
+        acceleration.push_back(acceleration_const[i]);
+    }
+
+    for (int i = 0; i < max_len; ++i) {
+        if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
+
+        float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
+
+        if (frogColors && acceleration[i] > -0.25 && acceleration[i] < 0.25) {
+            acceleration[i] = 2;
+        }
+
+        // Calculate a magical color index based on acceleration
+        int magicalColorIndex = static_cast<int>((acceleration[i] + 0.25) * 5);
+        magicalColorIndex = std::max(0, std::min(magicalColorIndex, 5));
+
+        // Get the magical color from the list
+        QColor magicalColor = magicalColors[magicalColorIndex];
+        bg.setColorAt(lin_grad_point, magicalColor);
+
+        i += (i + 2) < max_len ? 1 : 0;
+    }
+
+} else {
+    bg.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 1.0, 0.4));
+    bg.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.85, 0.35));
+    bg.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.85, 0.1));
+}
+
+
 
 
   painter.setBrush(bg);
