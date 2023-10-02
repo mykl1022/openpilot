@@ -154,48 +154,15 @@ typedef struct UIScene {
   uint64_t started_frame;
 
   // FrogPilot variables
-  bool acceleration_path;
-  bool blind_spot_left;
-  bool blind_spot_path;
-  bool blind_spot_right;
-  bool compass;
-  bool conditional_experimental;
-  bool custom_road_ui;
   bool custom_theme;
   bool default_params_set;
-  bool driving_personalities_ui_wheel;
   bool enabled;
   bool experimental_mode;
-  bool experimental_mode_via_wheel;
   bool map_open;
-  bool mute_dm;
   bool right_hand_dm;
-  bool rotating_wheel;
   bool toyota_car = true;
-  bool turn_signal_animation;
-  bool turn_signal_left;
-  bool turn_signal_right;
-  bool unlimited_road_ui_length;
-  bool wide_camera_disabled;
   int custom_colors;
   int custom_signals;
-  float lane_line_width;
-  float lane_width_left;
-  float lane_width_right;
-  float path_edge_width;
-  float path_width;
-  float road_edge_width;
-  int bearing_deg;
-  int conditional_speed;
-  int conditional_speed_lead;
-  int conditional_status;
-  int personality_profile;
-  int screen_brightness;
-  int steering_angle_deg;
-  int steering_wheel;
-  QPolygonF track_edge_vertices;
-  QPolygonF track_left_adjacent_lane_vertices;
-  QPolygonF track_right_adjacent_lane_vertices;
 
 } UIScene;
 

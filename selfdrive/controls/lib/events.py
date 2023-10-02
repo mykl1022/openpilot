@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import math
 import os
 from enum import IntEnum
@@ -227,8 +228,7 @@ def startup_master_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
   if "REPLAY" in os.environ:
     branch = "replay"
 
-  return StartupAlert(
-"Welcome to Dream Land! 🌟 Ready for Kirby fun?", alert_status=AlertStatus.frogpilot)
+  return StartupAlert("Hippity hoppity this is my property", "so I do what I want 🐸", alert_status=AlertStatus.frogpilot)
 
 def below_engage_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
   return NoEntryAlert(f"Drive above {get_display_speed(CP.minEnableSpeed, metric)} to engage")
@@ -257,21 +257,6 @@ def no_gps_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, m
     "Hardware malfunctioning if sky is visible",
     AlertStatus.normal, AlertSize.mid,
     Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=300.)
-
-def torque_nn_load_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
-  model_name = CP.lateralTuning.torque.nnModelName
-  if model_name == "":
-    return Alert(
-      "NNFF Torque Controller not available",
-      "Donate logs to Twilsonco to get it added!",
-      AlertStatus.frogpilot, AlertSize.mid,
-      Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 5.0)
-  else:
-    return Alert(
-      "NNFF Torque Controller loaded",
-      model_name,
-      AlertStatus.frogpilot, AlertSize.mid,
-      Priority.LOW, VisualAlert.none, AudibleAlert.engage, 5.0)
 
 # *** debug alerts ***
 
@@ -439,19 +424,6 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
 
   # ********** events only containing alerts that display while engaged **********
 
-  # openpilot tries to learn certain parameters about your car by observing
-  # how the car behaves to steering inputs from both human and openpilot driving.
-  # This includes:
-  # - steer ratio: gear ratio of the steering rack. Steering angle divided by tire angle
-  # - tire stiffness: how much grip your tires have
-  # - angle offset: most steering angle sensors are offset and measure a non zero angle when driving straight
-  # This alert is thrown when any of these values exceed a sanity check. This can be caused by
-  # bad alignment or bad sensor data. If this happens consistently consider creating an issue on GitHub
-  EventName.vehicleModelInvalid: {
-    ET.NO_ENTRY: NoEntryAlert("Vehicle Parameter Identification Failed"),
-    ET.SOFT_DISABLE: soft_disable_alert("Vehicle Parameter Identification Failed"),
-  },
-
   EventName.steerTempUnavailableSilent: {
     ET.WARNING: Alert(
       "Steering Temporarily Unavailable",
@@ -544,22 +516,6 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
-  EventName.turningLeft: {
-    ET.WARNING: Alert(
-      "Turning Left",
-      "",
-      AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
-  },
-
-  EventName.turningRight: {
-    ET.WARNING: Alert(
-      "Turning Right",
-      "",
-      AlertStatus.normal, AlertSize.small,
-      Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
-  },
-
   EventName.laneChangeBlocked: {
     ET.WARNING: Alert(
       "Car Detected in Blindspot",
@@ -587,9 +543,9 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   EventName.frogSteerSaturated: {
     ET.WARNING: Alert(
       "Turn Exceeds Steering Limit",
-      "Control Your Kitty!!",
+      "JESUS TAKE THE WHEEL!!",
       AlertStatus.userPrompt, AlertSize.mid,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.warningSoft, 1.),
+      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.warningSoft, 2.),
   },
 
   # Thrown when the fan is driven at >50% but is not rotating
@@ -615,11 +571,34 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.PERMANENT: NormalPermanentAlert("GPS Malfunction", "Likely Hardware Issue"),
   },
 
-  # When the GPS position and localizer diverge the localizer is reset to the
-  # current GPS position. This alert is thrown when the localizer is reset
-  # more often than expected.
-  EventName.localizerMalfunction: {
-    # ET.PERMANENT: NormalPermanentAlert("Sensor Malfunction", "Hardware Malfunction"),
+  EventName.locationdTemporaryError: {
+    ET.NO_ENTRY: NoEntryAlert("locationd Temporary Error"),
+    ET.SOFT_DISABLE: soft_disable_alert("locationd Temporary Error"),
+  },
+
+  EventName.locationdPermanentError: {
+    ET.NO_ENTRY: NoEntryAlert("locationd Permanent Error"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("locationd Permanent Error"),
+    ET.PERMANENT: NormalPermanentAlert("locationd Permanent Error"),
+  },
+
+  # openpilot tries to learn certain parameters about your car by observing
+  # how the car behaves to steering inputs from both human and openpilot driving.
+  # This includes:
+  # - steer ratio: gear ratio of the steering rack. Steering angle divided by tire angle
+  # - tire stiffness: how much grip your tires have
+  # - angle offset: most steering angle sensors are offset and measure a non zero angle when driving straight
+  # This alert is thrown when any of these values exceed a sanity check. This can be caused by
+  # bad alignment or bad sensor data. If this happens consistently consider creating an issue on GitHub
+  EventName.paramsdTemporaryError: {
+    ET.NO_ENTRY: NoEntryAlert("paramsd Temporary Error"),
+    ET.SOFT_DISABLE: soft_disable_alert("paramsd Temporary Error"),
+  },
+
+  EventName.paramsdPermanentError: {
+    ET.NO_ENTRY: NoEntryAlert("paramsd Permanent Error"),
+    ET.IMMEDIATE_DISABLE: ImmediateDisableAlert("paramsd Permanent Error"),
+    ET.PERMANENT: NormalPermanentAlert("paramsd Permanent Error"),
   },
 
   # ********** events that affect controls state transitions **********
@@ -717,7 +696,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
   EventName.sensorDataInvalid: {
     ET.PERMANENT: Alert(
       "Sensor Data Invalid",
-      "Ensure device is mounted securely",
+      "Possible Hardware Issue",
       AlertStatus.normal, AlertSize.mid,
       Priority.LOWER, VisualAlert.none, AudibleAlert.none, .2, creation_delay=1.),
     ET.NO_ENTRY: NoEntryAlert("Sensor Data Invalid"),
@@ -993,24 +972,12 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.NO_ENTRY: NoEntryAlert("Vehicle Sensors Calibrating"),
   },
 
-  EventName.torqueNNLoad: {
-    ET.PERMANENT: torque_nn_load_alert,
-  },
-
-  EventName.pedalInterceptorNoBrake: {
-    ET.WARNING: Alert(
-      "Braking Unavailable",
-      "Shift to L",
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.HIGH, VisualAlert.wrongGear, AudibleAlert.promptRepeat, 4.),
-    ET.NO_ENTRY: NoEntryAlert("Shift To L To Use Pedal Interceptor"),
-  },
 }
 
 
 if __name__ == '__main__':
   # print all alerts by type and priority
-  from cereal.services import service_list
+  from cereal.services import SERVICE_LIST
   from collections import defaultdict, OrderedDict
 
   event_names = {v: k for k, v in EventName.schema.enumerants.items()}
@@ -1018,7 +985,7 @@ if __name__ == '__main__':
 
   CP = car.CarParams.new_message()
   CS = car.CarState.new_message()
-  sm = messaging.SubMaster(list(service_list.keys()))
+  sm = messaging.SubMaster(list(SERVICE_LIST.keys()))
 
   for i, alerts in EVENTS.items():
     for et, alert in alerts.items():

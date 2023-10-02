@@ -17,17 +17,27 @@ Sound::Sound(QObject *parent) : sm({"controlsState", "microphone"}) {
   qInfo() << "default audio device: " << QAudioDeviceInfo::defaultOutputDevice().deviceName();
 
   // FrogPilot variables
-  static auto params = Params();
-  const bool isFrogTheme = params.getBool("FrogTheme");
-  const bool isFrogSounds = isFrogTheme && params.getBool("FrogSounds");
-  isSilentMode = params.getBool("SilentMode");
+  isCustomTheme = params.getBool("CustomTheme");
+  customSounds = isCustomTheme ? params.getInt("CustomSounds") : 0;
 
-  for (auto &[alert, fn, loops] : sound_list) {
+  const std::unordered_map<int, QString> themeConfiguration = {
+    {0, "stock"},
+    {1, "frog_theme"},
+    {2, "tesla_theme"}
+  };
+
+  for (const auto& [key, themeName] : themeConfiguration) {
+    QString base = themeName == "stock" ? "../../assets/sounds" : QString("../../assets/custom_themes/%1/sounds").arg(themeName);
+    soundPaths[key] = base;
+  }
+
+  for (auto &[alert, fn, loops, volume] : sound_list) {
     QSoundEffect *s = new QSoundEffect(this);
     QObject::connect(s, &QSoundEffect::statusChanged, [=]() {
       assert(s->status() != QSoundEffect::Error);
     });
-    s->setSource(QUrl::fromLocalFile(QString("../../assets/") + (isFrogSounds ? "frogsounds/" : "sounds/") + QString(fn)));
+    s->setSource(QUrl::fromLocalFile(soundPaths[customSounds] + "/" + fn));
+    s->setVolume(volume);
     sounds[alert] = {s, loops};
   }
 
@@ -39,10 +49,14 @@ Sound::Sound(QObject *parent) : sm({"controlsState", "microphone"}) {
 void Sound::update() {
   sm.update(0);
 
-  // no sounds if "Silent Mode" is toggled on
-  if (isSilentMode) {
-    setAlert({});
-    return;
+  if (Params("/dev/shm/params").getBool("FrogPilotTogglesUpdated")) {
+    customSounds = isCustomTheme ? params.getInt("CustomSounds") : 0;
+
+    for (auto &[alert, fn, loops, volume] : sound_list) {
+      auto &[s, _] = sounds[alert];
+      s->setSource(QUrl::fromLocalFile(soundPaths[customSounds] + "/" + fn));
+      s->setVolume(volume);
+    }
   }
 
   // scale volume using ambient noise level

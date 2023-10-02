@@ -120,9 +120,6 @@ struct CarEvent @0x9b1657f34caf3ad3 {
 
     # FrogPilot Events
     frogSteerSaturated @120;
-    torqueNNLoad @122;
-    turningLeft @123;
-    turningRight @124;
 
     radarCanErrorDEPRECATED @15;
     communityFeatureDisallowedDEPRECATED @62;
@@ -336,7 +333,6 @@ struct CarControl {
   rightBlinker @16: Bool;
 
   # FrogPilot CarControls
-  reverseCruise @18: Bool;
 
   # Any car specific rate limits or quirks applied by
   # the CarController are reflected in actuatorsOutput
@@ -506,13 +502,6 @@ struct CarParams {
   wheelSpeedFactor @63 :Float32; # Multiplier on wheels speeds to computer actual speeds
 
   # FrogPilot CarParams
-  accelerationProfile @73 :UInt8;
-  conditionalExperimental @75 :Bool;
-  drivingPersonalitiesUIWheel @76 :Bool;
-  experimentalModeViaWheel @77 :Bool;
-  longitudinalTune @78 :Bool;
-  pfeiferjDesiredCurvatures @79 :Bool;
-  twilsoncoNNFF @80 :Bool;
 
   struct SafetyConfig {
     safetyModel @0 :SafetyModel;
@@ -543,8 +532,6 @@ struct CarParams {
     steeringAngleDeadzoneDeg @5 :Float32;
     latAccelFactor @6 :Float32;
     latAccelOffset @7 :Float32;
-    nnModelName @8 :Text;
-    nnModelFuzzyMatch @9 :Bool;
   }
 
   struct LongitudinalPIDTuning {

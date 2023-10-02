@@ -26,21 +26,6 @@ static void drawIcon(QPainter &p, const QPoint &center, const QPixmap &img, cons
   p.setOpacity(1.0);
 }
 
-static void drawIconRotate(QPainter &p, const QPoint &center, const QPixmap &img, const QBrush &bg, float opacity, const int angle) {
-  p.setRenderHint(QPainter::Antialiasing);
-  p.setOpacity(1.0);  // bg dictates opacity of ellipse
-  p.setPen(Qt::NoPen);
-  p.setBrush(bg);
-  p.drawEllipse(center, btn_size / 2, btn_size / 2);
-  p.save();
-  p.translate(center);
-  p.rotate(-angle);
-  p.setOpacity(opacity);
-  p.drawPixmap(-QPoint(img.width() / 2, img.height() / 2), img); 
-  p.setOpacity(1.0);
-  p.restore();
-}
-
 OnroadWindow::OnroadWindow(QWidget *parent) : QWidget(parent) {
   QVBoxLayout *main_layout  = new QVBoxLayout(this);
   main_layout->setMargin(UI_BORDER_SIZE);
@@ -119,28 +104,6 @@ void OnroadWindow::mousePressEvent(QMouseEvent* e) {
   const int x_offset = 250;
 
   bool widgetClicked = false;
-
-  // Change cruise control increments button
-  const QRect maxSpeedRect(1, 1, 350, 350);
-  const bool isMaxSpeedClicked = maxSpeedRect.contains(e->pos());
-
-  // Hide speed button
-  const QRect speedRect(rect().center().x() - 175, 50, 350, 350);
-  const bool isSpeedClicked = speedRect.contains(e->pos());
-
-  if (isMaxSpeedClicked || isSpeedClicked) {
-    // Check if the click was within the max speed area
-    if (isMaxSpeedClicked) {
-      reverseCruiseIncrease = !params.getBool("ReverseCruiseIncrease");
-      params.putBool("ReverseCruiseIncrease", reverseCruiseIncrease);
-    // Check if the click was within the speed text area
-    } else {
-      speedHidden = !params.getBool("HideSpeed");
-      params.putBool("HideSpeed", speedHidden);
-    }
-    params_memory.putBool("FrogPilotTogglesUpdated", true);
-    widgetClicked = true;
-  }
 
 #ifdef ENABLE_MAPS
   if (map != nullptr && !widgetClicked) {
@@ -270,16 +233,6 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : experimental_mode(fals
   engage_img = loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size});
   experimental_img = loadPixmap("../assets/img_experimental.svg", {img_size, img_size});
   QObject::connect(this, &QPushButton::clicked, this, &ExperimentalButton::changeMode);
-
-  // Custom steering wheel images
-  wheelImages = {
-    {0, loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size})},
-    {1, loadPixmap("../assets/lexus.png", {img_size, img_size})},
-    {2, loadPixmap("../assets/toyota.png", {img_size, img_size})},
-    {3, loadPixmap("../assets/frog.png", {img_size, img_size})},
-    {4, loadPixmap("../assets/rocket.png", {img_size, img_size})},
-    {5, loadPixmap("../assets/hyundai.png", {img_size, img_size})}
-  };
 }
 
 void ExperimentalButton::changeMode() {
@@ -300,19 +253,12 @@ void ExperimentalButton::updateState(const UIState &s) {
   }
 
   // FrogPilot variables
-  steeringWheel = s.scene.steering_wheel;
 }
 
 void ExperimentalButton::paintEvent(QPaintEvent *event) {
-  const auto &scene = uiState()->scene;
-  if (!scene.rotating_wheel) {
-    QPainter p(this);
-    // Custom steering wheel icon
-    engage_img = wheelImages[steeringWheel];
-    QPixmap img = steeringWheel ? engage_img : (experimental_mode ? experimental_img : engage_img);
-    QColor background_color = steeringWheel && (!isDown() && engageable) ? (experimental_mode ? QColor(218, 111, 37, 241) : scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)) : QColor(0, 0, 0, 166);
-    drawIcon(p, QPoint(btn_size / 2, btn_size / 2), img, background_color, (isDown() || !engageable) ? 0.6 : 1.0);
-  }
+  QPainter p(this);
+  QPixmap img = experimental_mode ? experimental_img : engage_img;
+  drawIcon(p, QPoint(btn_size / 2, btn_size / 2), img, QColor(0, 0, 0, 166), (isDown() || !engageable) ? 0.6 : 1.0);
 }
 
 
@@ -339,12 +285,6 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   // FrogPilot variable checks
   const auto &scene = uiState()->scene;
   static auto params = Params();
-  if (params.getBool("HideSpeed")) {
-    speedHidden = true;
-  }
-  if (params.getBool("ReverseCruiseIncrease")) {
-    reverseCruiseIncrease = true;
-  }
 
   main_layout = new QVBoxLayout(this);
   main_layout->setMargin(UI_BORDER_SIZE);
@@ -359,19 +299,6 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   dm_img = loadPixmap("../assets/img_driver_face.png", {img_size + 5, img_size + 5});
 
   // FrogPilot declarations
-  engage_img = loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size});
-  experimental_img = loadPixmap("../assets/img_experimental.svg", {img_size, img_size});
-
-  // Custom steering wheel images
-  wheelImages = {
-    {0, loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size})},
-    {1, loadPixmap("../assets/lexus.png", {img_size, img_size})},
-    {2, loadPixmap("../assets/toyota.png", {img_size, img_size})},
-    {3, loadPixmap("../assets/frog.png", {img_size, img_size})},
-    {4, loadPixmap("../assets/rocket.png", {img_size, img_size})},
-    {5, loadPixmap("../assets/hyundai.png", {img_size, img_size})}
-  };
-
   // Custom themes configuration
   themeConfiguration = {
     {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
@@ -435,20 +362,13 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   }
 
   // FrogPilot variables
-  accelerationPath = s.scene.acceleration_path;
-  blindSpotLeft = s.scene.blind_spot_left;
-  blindSpotRight = s.scene.blind_spot_right;
   customColors = s.scene.custom_colors;
   experimentalMode = s.scene.experimental_mode;
   mapOpen = s.scene.map_open;
-  muteDM = s.scene.mute_dm;
-  rotatingWheel = s.scene.rotating_wheel;
-  steeringAngleDeg = s.scene.steering_angle_deg;
-  steeringWheel = s.scene.steering_wheel;
   toyotaCar = s.scene.toyota_car;
 }
 
-void AnnotatedCameraWidget::drawHud(QPainter &p, const UIState *s) {
+void AnnotatedCameraWidget::drawHud(QPainter &p) {
   p.save();
 
   // Header gradient
@@ -478,11 +398,7 @@ void AnnotatedCameraWidget::drawHud(QPainter &p, const UIState *s) {
   int bottom_radius = has_eu_speed_limit ? 100 : 32;
 
   QRect set_speed_rect(QPoint(60 + (default_size.width() - set_speed_size.width()) / 2, 45), set_speed_size);
-  if (reverseCruiseIncrease) {
-    p.setPen(QPen(QColor(0, 150, 255), 6));
-  } else {
-    p.setPen(QPen(whiteColor(75), 6));
-  }
+  p.setPen(QPen(whiteColor(75), 6));
   p.setBrush(blackColor(166));
   drawRoundedRect(p, set_speed_rect, top_radius, top_radius, bottom_radius, bottom_radius);
 
@@ -542,24 +458,12 @@ void AnnotatedCameraWidget::drawHud(QPainter &p, const UIState *s) {
   }
 
   // current speed
-  if (!speedHidden) {
-    p.setFont(InterFont(176, QFont::Bold));
-    drawText(p, rect().center().x(), 210, speedStr);
-    p.setFont(InterFont(66));
-    drawText(p, rect().center().x(), 290, speedUnit, 200);
-  }
+  p.setFont(InterFont(176, QFont::Bold));
+  drawText(p, rect().center().x(), 210, speedStr);
+  p.setFont(InterFont(66));
+  drawText(p, rect().center().x(), 290, speedUnit, 200);
 
   p.restore();
-
-  // Rotating steering wheel
-  if (rotatingWheel) {
-    const UIScene &scene = s->scene;
-    // Custom steering wheel icon
-    engage_img = wheelImages[steeringWheel];
-    QPixmap img = steeringWheel ? engage_img : (experimentalMode ? experimental_img : engage_img);
-    QColor background_color = steeringWheel && (status != STATUS_DISENGAGED) ? (experimentalMode ? QColor(218, 111, 37, 241) : scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)) : QColor(0, 0, 0, 166);
-    drawIconRotate(p, QPoint(rect().right() - btn_size / 2 - UI_BORDER_SIZE * 2 + 25, btn_size / 2 + int(UI_BORDER_SIZE * 1.5)), img, background_color, status != STATUS_DISENGAGED ? 1.0 : 0.6, steeringAngleDeg);
-  }
 
   // FrogPilot status bar
   if (true) {
@@ -632,7 +536,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   // paint path
   QLinearGradient bg(0, height(), 0, 0);
-  if (sm["controlsState"].getControlsState().getExperimentalMode() || accelerationPath) {
+  if (sm["controlsState"].getControlsState().getExperimentalMode()) {
     // The first half of track_vertices are the points for the right side of the path
     // and the indices match the positions of accel from uiPlan
     const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
@@ -686,53 +590,6 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   painter.setBrush(bg);
   painter.drawPolygon(scene.track_vertices);
-
-  // create new path with track vertices and track edge vertices
-  QPainterPath path;
-  path.addPolygon(scene.track_vertices);
-  path.addPolygon(scene.track_edge_vertices);
-
-  // paint path edges
-  QLinearGradient pe(0, height(), 0, 0);
-  if (experimentalMode) {
-    pe.setColorAt(0.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.1));
-  } else if (scene.navigate_on_openpilot) {
-    pe.setColorAt(0.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.1));
-  } else if (customColors != 0) {
-    const auto &colorMap = themeConfiguration[customColors].second.second;
-    for (const auto &[position, brush] : colorMap) {
-      QColor darkerColor = brush.color().darker(120);
-      pe.setColorAt(position, darkerColor);
-    }
-  } else {
-    pe.setColorAt(0.0, QColor::fromHslF(148 / 360., 0.94, 0.51, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(112 / 360., 1.00, 0.68, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(112 / 360., 1.00, 0.68, 0.1));
-  }
-
-  painter.setBrush(pe);
-  painter.drawPath(path);
-
-  // paint adjacent lane paths
-  // paint blindspot path
-  QLinearGradient bs(0, height(), 0, 0);
-  if (blindSpotLeft || blindSpotRight) {
-    bs.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.6));
-    bs.setColorAt(0.5, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.4));
-    bs.setColorAt(1.0, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.2));
-  }
-
-  painter.setBrush(bs);
-  if (blindSpotLeft) {
-    painter.drawPolygon(scene.track_left_adjacent_lane_vertices);
-  }
-  if (blindSpotRight) {
-    painter.drawPolygon(scene.track_right_adjacent_lane_vertices);
-  }
 
   painter.restore();
 }
@@ -843,7 +700,7 @@ void AnnotatedCameraWidget::paintGL() {
     }
 
     // Wide or narrow cam dependent on speed
-    bool has_wide_cam = available_streams.count(VISION_STREAM_WIDE_ROAD) && !s->scene.wide_camera_disabled;
+    bool has_wide_cam = available_streams.count(VISION_STREAM_WIDE_ROAD);
     if (has_wide_cam) {
       float v_ego = sm["carState"].getCarState().getVEgo();
       if ((v_ego < 10) || available_streams.size() == 1) {
@@ -895,12 +752,12 @@ void AnnotatedCameraWidget::paintGL() {
   }
 
   // DMoji
-  if (!hideBottomIcons && (sm.rcv_frame("driverStateV2") > s->scene.started_frame) && !muteDM) {
+  if (!hideBottomIcons && (sm.rcv_frame("driverStateV2") > s->scene.started_frame)) {
     update_dmonitoring(s, sm["driverStateV2"].getDriverStateV2(), dm_fade_state, rightHandDM);
     drawDriverState(painter, s);
   }
 
-  drawHud(painter, s);
+  drawHud(painter);
 
   double cur_draw_t = millis_since_boot();
   double dt = cur_draw_t - prev_draw_t;

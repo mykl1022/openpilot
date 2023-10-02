@@ -15,8 +15,6 @@ const int btn_size = 192;
 const int img_size = (btn_size / 4) * 3;
 
 // FrogPilot global variables
-static bool reverseCruiseIncrease;
-static bool speedHidden;
 
 
 // ***** onroad widgets *****
@@ -53,8 +51,6 @@ private:
   bool engageable;
 
   // FrogPilot variables
-  int steeringWheel;
-  std::map<int, QPixmap> wheelImages;
 
 };
 
@@ -85,10 +81,7 @@ private:
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255);
 
   // FrogPilot widgets
-  void drawCompass(QPainter &p);
-  void drawDrivingPersonalities(QPainter &p);
   void drawStatusBar(QPainter &p);
-  void drawTurnSignals(QPainter &p);
 
   QVBoxLayout *main_layout;
   ExperimentalButton *experimental_btn;
@@ -113,37 +106,10 @@ private:
   bool wide_cam_requested = false;
 
   // FrogPilot variables
-  bool accelerationPath;
-  bool blindSpotLeft;
-  bool blindSpotRight;
-  bool compass;
-  bool conditionalExperimental;
   bool experimentalMode;
   bool mapOpen;
-  bool muteDM;
-  bool onroadAdjustableProfiles;
-  bool rotatingWheel;
-  bool toyotaCar;
-  bool turnSignalAnimation;
-  bool turnSignalLeft;
-  bool turnSignalRight;
-  int animationFrameIndex;
-  int bearingDeg;
-  int conditionalSpeed;
-  int conditionalSpeedLead;
-  int conditionalStatus;
   int customColors;
-  int personalityProfile;
-  int steeringAngleDeg;
-  int steeringWheel;
-  static constexpr int totalFrames = 8;
-  QPixmap compass_inner_img;
-  QPixmap engage_img;
-  QPixmap experimental_img;
-  QVector<std::pair<QPixmap, QString>> profile_data;
-  std::map<int, QPixmap> wheelImages;
   std::unordered_map<int, std::pair<QString, std::pair<QColor, std::map<double, QBrush>>>> themeConfiguration;
-  std::vector<QPixmap> signalImgVector;
 
 protected:
   void paintGL() override;
@@ -152,7 +118,7 @@ protected:
   void updateFrameMat() override;
   void drawLaneLines(QPainter &painter, const UIState *s);
   void drawLead(QPainter &painter, const cereal::RadarState::LeadData::Reader &lead_data, const QPointF &vd);
-  void drawHud(QPainter &p, const UIState *s);
+  void drawHud(QPainter &p);
   void drawDriverState(QPainter &painter, const UIState *s);
   inline QColor redColor(int alpha = 255) { return QColor(201, 34, 49, alpha); }
   inline QColor whiteColor(int alpha = 255) { return QColor(255, 255, 255, alpha); }
@@ -185,8 +151,6 @@ private:
 
   // FrogPilot variables
   bool rightHandDM;
-  QPoint timeoutPoint = QPoint(420, 69);
-  QTimer clickTimer;
 
 private slots:
   void offroadTransition(bool offroad);

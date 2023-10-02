@@ -18,10 +18,6 @@ class Sidebar : public QFrame {
   Q_PROPERTY(QString netType MEMBER net_type NOTIFY valueChanged);
   Q_PROPERTY(int netStrength MEMBER net_strength NOTIFY valueChanged);
 
-  // Developer UI properties
-  Q_PROPERTY(ItemStatus cpuStatus MEMBER cpu_status NOTIFY valueChanged)
-  Q_PROPERTY(ItemStatus memoryStatus MEMBER memory_status NOTIFY valueChanged)
-
 public:
   explicit Sidebar(QWidget* parent = 0);
 
@@ -57,22 +53,21 @@ protected:
   const QColor warning_color = QColor(218, 202, 37);
   const QColor danger_color = QColor(201, 34, 49);
 
-  // FrogPilot colors
-  const QColor frog_color = QColor(191, 64, 191);
-
   ItemStatus connect_status, panda_status, temp_status;
   QString net_type;
   int net_strength = 0;
-
-  // Developer UI variables
-  ItemStatus cpu_status, memory_status;
 
 private:
   std::unique_ptr<PubMaster> pm;
 
   // FrogPilot variables
-  bool isFahrenheit;
-  bool isFrogColors;
-  bool isNumericalTemp;
-  int isDeveloperUI;
+  bool isCustomTheme;
+  int customColors;
+  int customIcons;
+  Params params;
+  std::unordered_map<int, std::pair<QString, std::vector<QColor>>> themeConfiguration;
+  std::unordered_map<int, QPixmap> flag_imgs;
+  std::unordered_map<int, QPixmap> home_imgs;
+  std::unordered_map<int, QPixmap> settings_imgs;
+  std::vector<QColor> currentColors;
 };
