@@ -966,7 +966,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
 
   EventName.torqueNNFFLoadSuccess: {
     ET.PERMANENT: Alert(
-      "e2e NN torque controller loaded successfully",
+      "NNFF loaded successfully",
       "",
       AlertStatus.normal, AlertSize.small,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, 2.0),
