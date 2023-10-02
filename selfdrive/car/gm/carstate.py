@@ -207,6 +207,11 @@ class CarState(CarStateBase):
         ("GAS_SENSOR", 50),
       ]
 
+    if CP.carFingerprint in CC_ONLY_CAR:
+      messages += [
+        ("ECMCruiseControl", 10),
+      ]
+
     return CANParser(DBC[CP.carFingerprint]["pt"], messages, CanBus.POWERTRAIN)
 
   @staticmethod
