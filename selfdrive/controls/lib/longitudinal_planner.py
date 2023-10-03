@@ -62,10 +62,35 @@ class LongitudinalPlanner:
     self.solverExecutionTime = 0.0
     self.params = Params()
     self.param_read_counter = 0
+    self.personality = log.LongitudinalPersonality.standard
+    self.is_metric = self.params.get_bool("IsMetric")
+
+    # FrogPilot variables
+    self.acceleration_profile = self.CP.accelerationProfile
+    self.increased_stopping_distance = self.params.get_int("IncreasedStoppingDistance") * (1 if self.is_metric else 0.3048)
+    self.custom_personalities = self.params.get_bool("CustomDrivingPersonalities")
+    self.aggressive_follow = self.params.get_int("AggressivePersonality") / 10
+    self.standard_follow = self.params.get_int("StandardPersonality") / 10
+    self.relaxed_follow = self.params.get_int("RelaxedPersonality") / 10
+    self.aggressive_jerk = self.params.get_int("AggressiveJerk") / 10
+    self.standard_jerk = self.params.get_int("StandardJerk") / 10
+    self.relaxed_jerk = self.params.get_int("RelaxedJerk") / 10
+    self.frogpilot_toggles_updated = False
     self.read_param()
     self.personality = log.LongitudinalPersonality.standard
 
   def read_param(self):
+    if self.frogpilot_toggles_updated:
+      if self.CP.longitudinalTune:
+        self.acceleration_profile = self.params.get_int("AccelerationProfile")
+        self.increased_stopping_distance = self.params.get_int("IncreasedStoppingDistance") * (1 if self.is_metric else 0.3048)
+      if self.custom_personalities:
+        self.aggressive_follow = self.params.get_int("AggressivePersonality") / 10
+        self.standard_follow = self.params.get_int("StandardPersonality") / 10
+        self.relaxed_follow = self.params.get_int("RelaxedPersonality") / 10
+        self.aggressive_jerk = self.params.get_int("AggressiveJerk") / 10
+        self.standard_jerk = self.params.get_int("StandardJerk") / 10
+        self.relaxed_jerk = self.params.get_int("RelaxedJerk") / 10
     try:
       self.personality = int(self.params.get('LongitudinalPersonality'))
     except (ValueError, TypeError):
@@ -129,11 +154,11 @@ class LongitudinalPlanner:
     accel_limits_turns[0] = min(accel_limits_turns[0], self.a_desired + 0.05)
     accel_limits_turns[1] = max(accel_limits_turns[1], self.a_desired - 0.05)
 
-    self.mpc.set_weights(prev_accel_constraint, personality=self.personality)
+    self.mpc.set_weights(prev_accel_constraint, self.custom_personalities, self.aggressive_jerk, self.standard_jerk, self.relaxed_jerk, personality=self.personality)
     self.mpc.set_accel_limits(accel_limits_turns[0], accel_limits_turns[1])
     self.mpc.set_cur_state(self.v_desired_filter.x, self.a_desired)
     x, v, a, j = self.parse_model(sm['modelV2'], self.v_model_error)
-    self.mpc.update(sm['radarState'], v_cruise, x, v, a, j, personality=self.personality)
+    self.mpc.update(sm['radarState'], v_cruise, x, v, a, j, self.increased_stopping_distance, self.custom_personalities, self.aggressive_follow, self.standard_follow, self.relaxed_follow, personality=self.personality)
 
     self.v_desired_trajectory_full = np.interp(T_IDXS, T_IDXS_MPC, self.mpc.v_solution)
     self.a_desired_trajectory_full = np.interp(T_IDXS, T_IDXS_MPC, self.mpc.a_solution)
