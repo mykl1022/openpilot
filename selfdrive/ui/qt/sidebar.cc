@@ -54,9 +54,9 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
   customIcons = isCustomTheme ? params.getInt("CustomIcons") : 0;
 
   themeConfiguration = {
-    {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"frog_theme", {QColor(23, 134, 68)}}},
-    {2, {"tesla_theme", {QColor(0, 72, 255)}}}
+    {0, {"stock", {QColor(0, 255, 251)}}},
+    {1, {"frog_theme", {QColor(200, 255, 0)}}},
+    {2, {"tesla_theme", {QColor(255, 173, 224)}}}
   };
 
   for (const auto& [key, themeData] : themeConfiguration) {
