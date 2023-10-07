@@ -816,13 +816,13 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
         }
       } else {
         // speed up: 120, slow down: 0
-        float path_hue = fmax(fmin(60 + acceleration[i] * 35, 120), 0);
+        float path_hue = fmax(fmin(320 + acceleration[i] * 0, 0), 320); // Pink and black fade
         // FIXME: painter.drawPolygon can be slow if hue is not rounded
         path_hue = int(path_hue * 100 + 0.5) / 100;
 
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
-        float lightness = util::map_val(saturation, 0.0f, 1.0f, 0.95f, 0.62f);  // lighter when grey
-        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.4f, 0.0f);  // matches previous alpha fade
+        float lightness = util::map_val(saturation, 1.0f, 0.75f, 1.0f, 0.75f); // lighter when grey
+        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.65f, 1.0f); // matches previous alpha fade
         bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
         // Skip a point, unless next is last
@@ -835,12 +835,11 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     for (const auto &[position, brush] : colorMap) {
       bg.setColorAt(position, brush.color());
     }
-  } else {
-    bg.setColorAt(0.0, QColor::fromHslF(148 / 360., 0.94, 0.51, 0.4));
-    bg.setColorAt(0.5, QColor::fromHslF(112 / 360., 1.0, 0.68, 0.35));
-    bg.setColorAt(1.0, QColor::fromHslF(112 / 360., 1.0, 0.68, 0.0));
+   } else {
+    bg.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 1.0, 0.4));
+    bg.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.85, 0.35));
+    bg.setColorAt(1.0, QColor::fromHslF(320 / 360., 1.0, 0.85, 0.1));
   }
-
   painter.setBrush(bg);
   painter.drawPolygon(scene.track_vertices);
 
@@ -849,20 +848,20 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   path.addPolygon(scene.track_vertices);
   path.addPolygon(scene.track_edge_vertices);
 
-  // paint path edges
+ // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
-  if (alwaysOnLateral) {
-    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.1));
+  if (alwaysOnLateral) { // Pink & white
+    pe.setColorAt(0.0, QColor::fromHslF(320 / 360.0, 1.0, 0.75, 1.0));   // Start with pink
+    pe.setColorAt(0.5, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));           // Transition to white (full saturation and lightness)
+    pe.setColorAt(1.0, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));
   } else if (conditionalStatus == 1) {
-    pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(188 / 360., 0.79, 0.58, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(188 / 360., 0.79, 0.58, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(188 / 360., 0.79, 0.58, 0.1));
   } else if (experimentalMode) {
-    pe.setColorAt(0.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(320 / 360., 1.0, 0.0, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(320 / 360., 0.0, 0.0, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(320 / 360., 0.0, 0.0, 0.1));
   } else if (scene.navigate_on_openpilot) {
     pe.setColorAt(0.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.5));
@@ -874,9 +873,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
       pe.setColorAt(position, darkerColor);
     }
   } else {
-    pe.setColorAt(0.0, QColor::fromHslF(148 / 360., 0.94, 0.51, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(112 / 360., 1.00, 0.68, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(112 / 360., 1.00, 0.68, 0.1));
+   pe.setColorAt(0.0, QColor::fromHslF(320 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.5, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(320 / 360., 1.0, 1.0, 0.1));
   }
 
   painter.setBrush(pe);
@@ -915,17 +914,17 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
       static double hue;
       if ((laneWidth < minLaneWidth) || blindspot) {
         // Make the path red for smaller paths or if there's a car in the blindspot
-        hue = 0;
+        hue = 320;
       } else if (laneWidth >= maxLaneWidth) {
         // Make the path green for larger paths
-        hue = 120;
+        hue = 269;
       } else {
         // Transition the path from red to green based on lane width
-        hue = (120 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
+        hue = (269 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
       }
-      gradient.setColorAt(0.0, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.6));
-      gradient.setColorAt(0.5, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.4));
-      gradient.setColorAt(1.0, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.2));
+      gradient.setColorAt(0.0, QColor::fromHslF(hue / 360., 1.0, 0.75, 0.8));
+      gradient.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.75, 0.6));
+      gradient.setColorAt(1.0, QColor::fromHslF(320 / 360., 1.0, 0.75, 0.4));
     };
 
     const auto paintLane = [&](QPainter& painter, const QPolygonF& lane, const float laneWidth, const bool blindspot) {
