@@ -390,7 +390,7 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
     // Custom steering wheel icon
     engage_img = wheelImages[steeringWheel];
     QPixmap img = steeringWheel ? engage_img : (experimental_mode ? experimental_img : engage_img);
-    QColor background_color = steeringWheel && (!isDown() && engageable) ? (scene.always_on_lateral_active ? QColor(10, 186, 181, 255) : scene.conditional_status == 1 ? QColor(255, 246, 0, 255) : experimental_mode ? QColor(218, 111, 37, 241) : scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)) : QColor(0, 0, 0, 166);
+    QColor background_color = steeringWheel && (!isDown() && engageable) ? (scene.always_on_lateral_active ? QColor(10, 186, 181, 255) : scene.conditional_status == 1 ? QColor(255, 246, 0, 255) : experimental_mode ? QColor(76, 29, 114, 255) : scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)) : QColor(0, 0, 0, 166);
     drawIcon(p, QPoint(btn_size / 2, btn_size / 2), img, background_color, (isDown() || !engageable) ? 0.6 : 1.0);
   }
 }
@@ -455,12 +455,12 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}}},
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(205 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(205 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(205 / 360., 1.0, 0.5, 0.1))}}}}}
+    {1, {QString("frog_theme"), {QColor(200, 255, 0, 242), {{0.0, QBrush(QColor::fromHslF(73 / 360., 1.0, 0.5, 1.0))},
+                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 1.0, 1.0))},
+                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 1.0, 1.0))}}}}},
+    {2, {QString("tesla_theme"), {QColor(255, 173, 224, 255), {{0.0, QBrush(QColor::fromHslF(323 / 360., 1.0, 0.84, 1.0))},
+                                                            {0.5, QBrush(QColor::fromHslF(323 / 360., 1.0, 1.0, 0.5))},
+                                                            {1.0, QBrush(QColor::fromHslF(323 / 360., 1.0, 1.0, 0.1))}}}}}
   };
 
   // Driving personalities profiles
@@ -885,9 +885,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint blindspot path
   QLinearGradient bs(0, height(), 0, 0);
   if (blindSpotLeft || blindSpotRight) {
-    bs.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.6));
-    bs.setColorAt(0.5, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.4));
-    bs.setColorAt(1.0, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.2));
+    bs.setColorAt(0.0, QColor::fromHslF(269 / 360., 0.5, 0.25, 1.0));
+    bs.setColorAt(0.5, QColor::fromHslF(269 / 360., 0.5, 0.10, 0.8));
+    bs.setColorAt(1.0, QColor::fromHslF(269 / 360., 0.5, 0.10, 0.6));
   }
 
   painter.setBrush(bs);
