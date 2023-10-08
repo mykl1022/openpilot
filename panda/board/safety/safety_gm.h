@@ -144,7 +144,7 @@ static int gm_rx_hook(CANPacket_t *to_push) {
     // Cruise check for CC only cars
     if ((addr == 0x3D1) && !gm_has_acc) {
       bool cruise_engaged = (GET_BYTE(to_push, 4) >> 7) != 0U;
-      if (gm_cc_long) {
+      if (gm_cam_long) {
         pcm_cruise_check(cruise_engaged);
       } else {
         cruise_engaged_prev = cruise_engaged;
@@ -292,8 +292,8 @@ static const addr_checks* gm_init(uint16_t param) {
   } else {
   }
 
-gm_cc_long = GET_FLAG(param, GM_PARAM_CC_LONG);
-  gm_cam_long = GET_FLAG(param, GM_PARAM_HW_CAM_LONG) && !gm_cc_long;
+  gm_cc_long = GET_FLAG(param, GM_PARAM_CC_LONG);
+  gm_cam_long = GET_FLAG(param, GM_PARAM_HW_CAM_LONG);
   gm_pcm_cruise = (gm_hw == GM_CAM) && (!gm_cam_long || gm_cc_long) && !gm_force_ascm;
   gm_skip_relay_check = GET_FLAG(param, GM_PARAM_NO_CAMERA);
   gm_has_acc = !GET_FLAG(param, GM_PARAM_NO_ACC);
