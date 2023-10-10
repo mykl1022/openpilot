@@ -217,34 +217,34 @@ ParamControllerInt(ConditionalExperimentalModeSpeed, "ConditionalExperimentalMod
   return std::clamp(v, 0, 99);
 )
 
-ParamControllerInt(ConditionalExperimentalModeSpeedLead, "ConditionalExperimentalModeSpeedLead", "With Lead", "Switch to 'Experimental Mode' below this speed when there is a lead vehicle.", "../assets/offroad/icon_blank.png",
-  int value = params.getInt("ConditionalExperimentalModeSpeedLead");
-  return value == 0 ? "Off" : QString::number(value) + "mph";,
-  return std::clamp(v, 0, 99);
+ParamController(ConditionalSpeedLead, "ConditionalSpeedLead", "With Lead", "Switch to 'Experimental Mode' below this speed when there is a lead vehicle.", "../assets/offroad/icon_blank.png",
+  const int speedLead = params.getInt("ConditionalSpeedLead");
+  return speedLead == 0 ? "Off" : QString::number(speedLead) + (isMetric ? " kph" : " mph");,
+  return std::clamp(v, 0, isMetric ? 150 : 99);
 )
 
-ParamControllerInt(DeveloperUI, "DeveloperUI", "Developer UI", "Displays various information about openpilot and the device itself.", "../assets/offroad/icon_developer.png",
-  int value = params.getInt("DeveloperUI");
-  return value == 0 ? "Off" : value == 1 ? "'merican" : value == 2 ? "Metric" : "SI";,
+ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock openpilot colors with a custom color scheme.\n\nWant to submit your own color scheme? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
+  const int colors = params.getInt("CustomColors");
+  return colors == 0 ? "Stock" : colors == 1 ? "Frog" : colors == 2 ? "Tesla" : "Stalin";,
   return v >= 0 ? v % 4 : 3;
 )
 
-ParamControllerInt(DeviceShutdownTimer, "DeviceShutdownTimer", "Device Shutdown Timer", "Set the timer for when the device turns off after being offroad to reduce energy waste and prevent battery drain.", "../assets/offroad/icon_time.png",
-  int value = params.getInt("DeviceShutdownTimer");
-  return value == 0 ? "Instant" : (value > 0 && value <= 3) ? QString::number(value * 15) + " mins" : QString::number(value - 3) + (value == 4 ? " hour" : " hours");,
-  return std::clamp(v, 0, 33);
+ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilot icons with a custom icon pack.\n\nWant to submit your own icon pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
+  const int icons = params.getInt("CustomIcons");
+  return icons == 0 ? "Stock" : icons == 1 ? "Frog" : icons == 2 ? "Tesla" : "Stalin";,
+  return v >= 0 ? v % 4 : 3;
 )
 
-ParamControllerInt(IncreasedStoppingDistance, "IncreasedStoppingDistance", "   Increase Stopping Distance", "Increase the stopping distance for a more comfortable stop.", "../assets/offroad/icon_blank.png",
-  int value = params.getInt("IncreasedStoppingDistance");
-  return value == 0 ? "Off" : QString::number(value) + " meters";,
-  return std::clamp(v, 0, 5);
+ParamController(CustomSignals, "CustomSignals", "Signals", "Enable a custom turn signal animation.\n\nWant to submit your own turn signal animation? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
+  const int turnSignals = params.getInt("CustomSignals");
+  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "Frog" : "Stalin";,
+  return v >= 0 ? v % 4 : 3;
 )
 
-ParamControllerInt(LaneChangeTimer, "LaneChangeTimer", "   Lane Change Timer", "Set a time delay before openpilot conducts a nudgeless lane change.", "../assets/offroad/icon_blank.png",
-  int delay = params.getInt("LaneChangeTimer");
-  return delay == 0 ? "Instant" : QString::number(static_cast<double>(delay) / 2.0) + " sec";,
-  return std::clamp(v, 0, 10);
+ParamController(CustomSounds, "CustomSounds", "Sounds", "Replace the stock openpilot sounds with a custom sound pack.\n\nWant to submit your own custom sound pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
+  const int sounds = params.getInt("CustomSounds");
+  return sounds == 0 ? "Stock" : sounds == 1 ? "Frog" : sounds == 2 ? "Tesla" : "Stalin";,
+  return v >= 0 ? v % 4 : 3;
 )
 
 ParamControllerInt(LaneLinesWidth, "LaneLinesWidth", "Lanes", "Customize the lane line width.\n\nDefault matches the MUTCD average of 4 inches.", "../assets/offroad/icon_blank.png",

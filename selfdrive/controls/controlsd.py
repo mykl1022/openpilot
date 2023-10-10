@@ -130,6 +130,10 @@ class Controls:
     passive = self.params.get_bool("Passive") or not openpilot_enabled_toggle
 
     # FrogPilot variables
+    self.custom_theme = self.params.get_bool("CustomTheme")
+
+    self.custom_sounds = self.params.get_int("CustomSounds") if self.custom_theme else 0
+    self.frog_sounds = self.custom_sounds == 1
     frog_theme = self.params.get_bool("FrogTheme")
     self.average_desired_curvature = self.CP.pfeiferjDesiredCurvatures
     self.conditional_experimental_mode = self.CP.conditionalExperimentalMode
@@ -623,6 +627,9 @@ class Controls:
     if long_plan.frogpilotTogglesUpdated:
       self.reverse_cruise_increase = self.params.get_bool("ReverseCruiseIncrease")
     CC.reverseCruise = self.reverse_cruise_increase
+    if self.params_memory.get_bool("FrogPilotTogglesUpdated"):
+      self.custom_sounds = self.params.get_int("CustomSounds") if self.custom_theme else 0
+      self.frog_sounds = self.custom_sounds == 1
 
     # Always on lateral
     if self.always_on_lateral:

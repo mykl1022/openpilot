@@ -123,6 +123,7 @@ private:
   void drawDrivingPersonalities(QPainter &p);
   void drawFrogSignals(QPainter &p);
   void drawStatusBar(QPainter &p);
+  void drawTurnSignals(QPainter &p);
 
   QVBoxLayout *main_layout;
   ExperimentalButton *experimental_btn;
@@ -169,6 +170,8 @@ private:
   int conditionalSpeed;
   int conditionalSpeedLead;
   int conditionalStatus;
+  int customColors;
+  int customSignals;
   int desiredFollow;
   int developerUI;
   int obstacleDistance;
@@ -176,11 +179,13 @@ private:
   int steeringWheel;
   int stoppedEquivalence;
   QPixmap compass_inner_img;
+  int totalFrames = 8;
   QPixmap engage_img;
   QPixmap experimental_img;
-  QVector<std::pair<QPixmap, QString>> profile_data;
-  static constexpr int totalFrames = 8;
-  std::map<int, QPixmap> wheel_images;
+  QString theme_path;
+  size_t animationFrameIndex;
+  std::map<int, QPixmap> wheelImages;
+  std::unordered_map<int, std::pair<QString, std::pair<QColor, std::map<double, QBrush>>>> themeConfiguration;
   std::vector<QPixmap> signalImgVector;
 
 protected:

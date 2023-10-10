@@ -420,39 +420,49 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
     {2, loadPixmap("../assets/toyota.png", {img_size, img_size})},
     {3, loadPixmap("../assets/frog.png", {img_size, img_size})},
     {4, loadPixmap("../assets/rocket.png", {img_size, img_size})},
-    {5, loadPixmap("../assets/hyundai.png", {img_size, img_size})}
+    {5, loadPixmap("../assets/hyundai.png", {img_size, img_size})},
+    {6, loadPixmap("../assets/stalin.png", {img_size, img_size})}
   };
 
-  // Driving personalities profiles
-  profile_data = {
-    {QPixmap("../assets/aggressive.png"), "Aggressive"},
-    {QPixmap("../assets/standard.png"), "Standard"},
-    {QPixmap("../assets/relaxed.png"), "Relaxed"}
+  // Custom themes configuration
+  themeConfiguration = {
+    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
+                                                            {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
+                                                            {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}}},
+    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
+                                                            {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
+                                                            {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
+    {3, {QString("stalin_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
+                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
+                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}}
   };
 
   // Turn signal images
+  theme_path = QString("../assets/custom_themes/%1/images").arg(themeConfiguration.find(customSignals) != themeConfiguration.end() ? themeConfiguration[customSignals].first : "stock_theme");
   const QStringList imagePaths = {
-    "../assets/images/frog_turn_signal_1.png",
-    "../assets/images/frog_turn_signal_2.png",
-    "../assets/images/frog_turn_signal_3.png",
-    "../assets/images/frog_turn_signal_4.png"
+    theme_path + "/turn_signal_1.png",
+    theme_path + "/turn_signal_2.png",
+    theme_path + "/turn_signal_3.png",
+    theme_path + "/turn_signal_4.png"
   };
+
   signalImgVector.reserve(2 * imagePaths.size() + 1);
   for (int i = 0; i < 2; ++i) {
-    for (const QString& path : imagePaths) {
-      signalImgVector.push_back(QPixmap(path));
+    for (const QString &imagePath : imagePaths) {
+      signalImgVector.push_back(QPixmap(imagePath));
     }
   }
+
   // Add the blindspot signal image to the vector
-  signalImgVector.push_back(QPixmap("../assets/images/frog_turn_signal_1_red.png"));
+  signalImgVector.push_back(QPixmap(theme_path + "/turn_signal_1_red.png"));
 
   // Initialize the timer for the turn signal animation
-  auto animationTimer = new QTimer(this);
+  const auto animationTimer = new QTimer(this);
   connect(animationTimer, &QTimer::timeout, this, [this] {
     animationFrameIndex = (animationFrameIndex + 1) % totalFrames;
     update();
   });
-  animationTimer->start(totalFrames * 11); // 50 milliseconds per frame; syncs up perfectly with my 2019 Lexus ES 350 turn signal clicks
+  animationTimer->start(totalFrames * 11); // 450 milliseconds per loop; syncs up perfectly with my 2019 Lexus ES 350 turn signal clicks
 }
 
 void AnnotatedCameraWidget::updateState(const UIState &s) {
@@ -487,7 +497,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   has_eu_speed_limit = (nav_alive && speed_limit_sign == cereal::NavInstruction::SpeedLimitSign::VIENNA);
   is_metric = s.scene.is_metric;
   speedUnit =  s.scene.is_metric ? tr("km/h") : tr("mph");
-  hideBottomIcons = (cs.getAlertSize() != cereal::ControlsState::AlertSize::NONE || frogSignals && (turnSignalLeft || turnSignalRight));
+  hideBottomIcons = (cs.getAlertSize() != cereal::ControlsState::AlertSize::NONE || customSignals && (turnSignalLeft || turnSignalRight) || frogSignals && (turnSignalLeft || turnSignalRight));
   status = s.status;
 
   // update engageability/experimental mode button
@@ -519,6 +529,7 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("conditionalSpeed", s.scene.conditional_speed);
   setProperty("conditionalSpeedLead", s.scene.conditional_speed_lead);
   setProperty("conditionalStatus", s.scene.conditional_status);
+  customColors = s.scene.custom_colors;
   setProperty("desiredFollow", s.scene.desired_follow);
   setProperty("developerUI", s.scene.developer_ui);
   setProperty("experimentalMode", s.scene.experimental_mode);
@@ -536,6 +547,30 @@ void AnnotatedCameraWidget::updateState(const UIState &s) {
   setProperty("toyotaCar", s.scene.toyota_car);
   setProperty("turnSignalLeft", s.scene.turn_signal_left);
   setProperty("turnSignalRight", s.scene.turn_signal_right);
+  turnSignalLeft = s.scene.turn_signal_left;
+  turnSignalRight = s.scene.turn_signal_right;
+
+  // Update the turn signal animation images upon toggle change
+  if (customSignals != s.scene.custom_signals) {
+    customSignals = s.scene.custom_signals;
+
+    theme_path = QString("../assets/custom_themes/%1/images").arg(themeConfiguration.find(customSignals) != themeConfiguration.end() ? themeConfiguration[customSignals].first : "stock_theme");
+    const QStringList imagePaths = {
+      theme_path + "/turn_signal_1.png",
+      theme_path + "/turn_signal_2.png",
+      theme_path + "/turn_signal_3.png",
+      theme_path + "/turn_signal_4.png"
+    };
+
+    signalImgVector.clear();
+    signalImgVector.reserve(2 * imagePaths.size() + 1);
+    for (int i = 0; i < 2; ++i) {
+      for (const QString &imagePath : imagePaths) {
+        signalImgVector.push_back(QPixmap(imagePath));
+      }
+    }
+    signalImgVector.push_back(QPixmap(theme_path + "/turn_signal_1_red.png"));
+  }
 }
 
 void AnnotatedCameraWidget::drawHud(QPainter &p) {
@@ -675,6 +710,11 @@ void AnnotatedCameraWidget::drawHud(QPainter &p) {
   if (conditionalExperimental || alwaysOnLateral) {
     drawStatusBar(p);
   }
+
+  // Turn signal animation
+  if (customSignals && (turnSignalLeft || turnSignalRight)) {
+    drawTurnSignals(p);
+  }
 }
 
 void AnnotatedCameraWidget::drawText(QPainter &p, int x, int y, const QString &text, int alpha) {
@@ -722,8 +762,8 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   // lanelines
   for (int i = 0; i < std::size(scene.lane_line_vertices); ++i) {
-    if (frogColors) {
-      painter.setBrush(QColor(255, 255, 255, 255));
+    if (customColors != 0) {
+      painter.setBrush(themeConfiguration[customColors].second.first);
     } else {
       painter.setBrush(QColor::fromRgbF(1.0, 1.0, 1.0, std::clamp<float>(scene.lane_line_probs[i], 0.0, 0.7)));
     }
@@ -732,8 +772,8 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
   // road edges
   for (int i = 0; i < std::size(scene.road_edge_vertices); ++i) {
-    if (frogColors) {
-      painter.setBrush(QColor(255, 182, 193, 242));
+    if (customColors != 0) {
+      painter.setBrush(themeConfiguration[customColors].second.first);
     } else {
       painter.setBrush(QColor::fromRgbF(1.0, 0, 0, std::clamp<float>(1.0 - scene.road_edge_stds[i], 0.0, 1.0)));
     }
@@ -748,7 +788,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     const auto &acceleration_const = sm["uiPlan"].getUiPlan().getAccel();
     const int max_len = std::min<int>(scene.track_vertices.length() / 2, acceleration_const.size());
 
-    // Copy of the acceleration vector for the "frogColors" path
+    // Copy of the acceleration vector
     std::vector<float> acceleration;
     for (int i = 0; i < acceleration_const.size(); i++) {
       acceleration.push_back(acceleration_const[i]);
@@ -766,8 +806,15 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
         acceleration[i] = 2;
       }
 
-      // speed up: 120, slow down: 0
-        float path_hue = fmax(fmin(320 + acceleration[i] * 0, 0), 320); // Pink and black fade
+      // If acceleration is between -0.2 and 0.2, resort to the theme color
+      if (std::abs(acceleration[i]) < 0.2 && (customColors != 0)) {
+        const auto &colorMap = themeConfiguration[customColors].second.second;
+        for (const auto &[position, brush] : colorMap) {
+          bg.setColorAt(position, brush.color());
+        }
+      } else {
+        // speed up: 120, slow down: 0
+        float path_hue = fmax(fmin(60 + acceleration[i] * 35, 120), 0);
         // FIXME: painter.drawPolygon can be slow if hue is not rounded
         path_hue = int(path_hue * 100 + 0.5) / 100;
 
@@ -776,10 +823,16 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
         float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.65f, 1.0f); // matches previous alpha fade
         bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
 
-      // Skip a point, unless next is last
-      i += (i + 2) < max_len ? 1 : 0;
+        // Skip a point, unless next is last
+        i += (i + 2) < max_len ? 1 : 0;
+      }
     }
 
+  } else if (customColors != 0) {
+    const auto &colorMap = themeConfiguration[customColors].second.second;
+    for (const auto &[position, brush] : colorMap) {
+      bg.setColorAt(position, brush.color());
+    }
   } else {
     bg.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.0, 1.0, 0.4));
     bg.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.85, 0.35));
@@ -940,8 +993,8 @@ void AnnotatedCameraWidget::drawDriverState(QPainter &painter, const UIState *s)
 void AnnotatedCameraWidget::drawLead(QPainter &painter, const cereal::RadarState::LeadData::Reader &lead_data, const QPointF &vd) {
   painter.save();
 
-  const float speedBuff = frogColors ? 25. : 10.; // The center of the chevron appears sooner when frogColors is "true"
-  const float leadBuff = frogColors ? 100. : 40.; // The center of the chevron appears sooner when frogColors is "true"
+  const float speedBuff = customColors ? 25. : 10.; // Make the center of the chevron appear sooner if a custom theme is active
+  const float leadBuff = customColors ? 100. : 40.; // Make the center of the chevron appear sooner if a custom theme is active
   const float d_rel = lead_data.getDRel();
   const float v_rel = lead_data.getVRel();
 
@@ -967,7 +1020,11 @@ void AnnotatedCameraWidget::drawLead(QPainter &painter, const cereal::RadarState
 
   // chevron
   QPointF chevron[] = {{x + (sz * 1.25), y + sz}, {x, y}, {x - (sz * 1.25), y + sz}};
-  painter.setBrush(frogColors ? frogColor(fillAlpha) : redColor(fillAlpha));
+  if (customColors != 0) {
+    painter.setBrush(themeConfiguration[customColors].second.first);
+  } else {
+    painter.setBrush(redColor(fillAlpha));
+  }
   painter.drawPolygon(chevron, std::size(chevron));
 
   // Add developer UI if enabled
@@ -1408,4 +1465,34 @@ void AnnotatedCameraWidget::drawStatusBar(QPainter &p) {
   p.drawText(textRect, Qt::AlignCenter | Qt::TextWordWrap, statusText);
 
   p.restore();
+}
+
+void AnnotatedCameraWidget::drawTurnSignals(QPainter &p) {
+  // Declare the turn signal size
+  constexpr int signalHeight = 480;
+  constexpr int signalWidth = 360;
+
+  // Calculate the vertical position for the turn signals
+  const int baseYPosition = (height() - signalHeight) / 2 + (conditionalExperimental || alwaysOnLateral ? 225 : 300);
+  // Calculate the x-coordinates for the turn signals
+  const int leftSignalXPosition = 75 + width() - signalWidth - 300 * (blindSpotLeft ? 0 : animationFrameIndex);
+  const int rightSignalXPosition = -75 + 300 * (blindSpotRight ? 0 : animationFrameIndex);
+
+  // Enable Antialiasing
+  p.setRenderHint(QPainter::Antialiasing);
+
+  // Draw the turn signals
+  if (animationFrameIndex < signalImgVector.size()) {
+    const auto drawSignal = [&](const bool signalActivated, const int xPosition, const bool flip, const bool blindspot) {
+      if (signalActivated) {
+        // Get the appropriate image from the signalImgVector
+        const QPixmap signal = signalImgVector[(blindspot ? signalImgVector.size() - 1 : animationFrameIndex % totalFrames)].transformed(QTransform().scale(flip ? -1 : 1, 1));
+        p.drawPixmap(xPosition, baseYPosition, signalWidth, signalHeight, signal);
+      }
+    };
+
+    // Display the animation based on which signal is activated
+    drawSignal(turnSignalLeft, leftSignalXPosition, false, blindSpotLeft);
+    drawSignal(turnSignalRight, rightSignalXPosition, true, blindSpotRight);
+  }
 }

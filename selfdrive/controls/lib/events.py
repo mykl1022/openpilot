@@ -1004,7 +1004,14 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       AlertStatus.userPrompt, AlertSize.mid,
       Priority.HIGH, VisualAlert.wrongGear, AudibleAlert.promptRepeat, 4.),
     ET.NO_ENTRY: NoEntryAlert("Shift To L To Use Pedal Interceptor"),
+  },  EventName.frogSteerSaturated: {
+    ET.WARNING: Alert(
+      "Turn Exceeds Steering Limit",
+      "JESUS TAKE THE WHEEL!!",
+      AlertStatus.userPrompt, AlertSize.mid,
+      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.warningSoft, 2.),
   },
+
 }
 
 

@@ -225,7 +225,7 @@ static void update_state(UIState *s) {
   }
   if (sm.updated("carState")) {
     const auto carState = sm["carState"].getCarState();
-    if (scene.blind_spot_path || scene.frog_signals) {
+    if (scene.blind_spot_path || scene.custom_signals || scene.frog_signals) {
       scene.blind_spot_left = carState.getLeftBlindspot();
       scene.blind_spot_right = carState.getRightBlindspot();
     }
@@ -235,6 +235,10 @@ static void update_state(UIState *s) {
     }
     if (scene.blind_spot_path || scene.developer_ui || scene.rotating_wheel) {
       scene.steering_angle_deg = carState.getSteeringAngleDeg();
+    }
+    if (scene.custom_signals) {
+      scene.turn_signal_left = carState.getLeftBlinker();
+      scene.turn_signal_right = carState.getRightBlinker();
     }
     if (scene.started) {
       scene.toyota_car = carState.getToyotaCar();
@@ -301,9 +305,14 @@ void ui_update_params(UIState *s) {
     scene.lane_line_width = params.getInt("LaneLinesWidth") / 12.0 * 0.1524; // Convert from inches to meters
     scene.mute_dm = params.getBool("FireTheBabysitter") && params.getBool("MuteDM");
     scene.path_edge_width = params.getInt("PathEdgeWidth");
-    scene.path_width = params.getInt("PathWidth") / 10.0 * 0.1524;           // Convert from feet to meters
-    scene.road_edge_width = params.getInt("RoadEdgesWidth") / 12.0 * 0.1524; // Convert from inches to meters
-    scene.rotating_wheel = params.getBool("RotatingWheel");
+    scene.path_width = params.getInt("PathWidth") / 10.0 * (scene.is_metric ? 0.5 : 0.1524);
+    scene.road_edge_width = params.getInt("RoadEdgesWidth") / 12.0 * conversion;
+    scene.unlimited_road_ui_length = scene.custom_road_ui && params.getBool("UnlimitedLength");
+
+    scene.custom_theme = params.getBool("CustomTheme");
+    scene.custom_colors = scene.custom_theme ? params.getInt("CustomColors") : 0;
+    scene.custom_signals = scene.custom_theme ? params.getInt("CustomSignals") : 0;
+
     scene.screen_brightness = params.getInt("ScreenBrightness");
     scene.steering_wheel = params.getInt("SteeringWheel");
     scene.unlimited_road_ui_length = scene.custom_road_ui && params.getBool("UnlimitedLength");
@@ -324,6 +333,10 @@ void ui_update_params(UIState *s) {
       scene.path_edge_width = params.getInt("PathEdgeWidth");
       scene.path_width = params.getInt("PathWidth") / 10.0 * 0.1524;           // Convert from feet to meters
       scene.road_edge_width = params.getInt("RoadEdgesWidth") / 12.0 * 0.1524; // Convert from inches to meters
+    }
+    if (scene.custom_theme) {
+      scene.custom_colors = params.getInt("CustomColors");
+      scene.custom_signals = params.getInt("CustomSignals");
     }
     scene.developer_ui = params.getInt("DeveloperUI");
     scene.screen_brightness = params.getInt("ScreenBrightness");
