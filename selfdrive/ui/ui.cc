@@ -289,10 +289,8 @@ void ui_update_params(UIState *s) {
   // FrogPilot variables
   static UIScene &scene = s->scene;
   static bool toggles_checked = false;
-  if (!scene.default_params_set) {
-    scene.default_params_set = params.getBool("DefaultParamsSet");
-  }
-  if (!toggles_checked && scene.default_params_set) {
+  static float conversion = scene.is_metric ? 0.06 : 0.1524;
+  if (!toggles_checked) {
     scene.compass = params.getBool("Compass");
     scene.conditional_speed = params.getInt("ConditionalExperimentalModeSpeed");
     scene.conditional_speed_lead = params.getInt("ConditionalExperimentalModeSpeedLead");
