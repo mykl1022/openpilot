@@ -390,7 +390,7 @@ UIState::UIState(QObject *parent) : QObject(parent) {
   }
 
   // update timer
-  timer = new QTimer(this);
+  timer = new QTimer();
   QObject::connect(timer, &QTimer::timeout, this, &UIState::update);
   timer->start(1000 / UI_FREQ);
 }
