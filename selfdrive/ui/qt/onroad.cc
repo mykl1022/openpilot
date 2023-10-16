@@ -769,7 +769,9 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         // Calculate hue based on acceleration
         float hue = 60 + (acceleration[i] * 50); // Adjust the multiplier as needed
         if (hue < 0) {
-            hue += 360; // Ensure hue stays within the valid range (0-360)
+    hue += 360;
+} else if (hue > 360) {
+    hue -= 360;
         }
 
         float saturation = 1.0; // Full saturation
