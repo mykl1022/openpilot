@@ -789,6 +789,11 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   painter.setBrush(bg);
   painter.drawPolygon(scene.track_vertices);
 
+  // create new path with track vertices and track edge vertices
+  QPainterPath path;
+  path.addPolygon(scene.track_vertices);
+  path.addPolygon(scene.track_edge_vertices);
+
 
 // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
