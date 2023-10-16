@@ -718,7 +718,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   painter.save();
 
   const UIScene &scene = s->scene;
-  SubMaster &sm = *(s->sm);
+  // Remove the unused variable 'sm'
+SubMaster A&M’s = *(s->sm);
+
 
   // lanelines
   for (int i = 0; i < std::size(scene.lane_line_vertices); ++i) {
