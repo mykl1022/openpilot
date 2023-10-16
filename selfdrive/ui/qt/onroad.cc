@@ -764,7 +764,8 @@ for i in range(max_len):
   bg.setColorAt(lin_grad_point, QColor.fromHsvF(hue, saturation, 1.0, alpha))
 
 painter.setBrush(bg)  
-painter.drawPolygon(scene.track_vertices);
+painter.drawPolygon(scene.track_vertices)
+
 
   // create new path with track vertices and track edge vertices
   QPainterPath path;
