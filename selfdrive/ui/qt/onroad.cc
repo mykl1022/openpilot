@@ -796,6 +796,106 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
 
 
 // paint path edges
+  QLinearGradient pe(0, height(), 0, 0);
+  if (alwaysOnLateral) { // Pink & white
+    pe.setColorAt(0.0, QColor::fromHslF(320 / 360.0, 1.0, 0.75, 1.0));   // Start with pink
+    pe.setColorAt(0.5, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));           // Transition to white (full saturation and lightness)
+    pe.setColorAt(1.0, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));
+  } else if (conditionalStatus == 1) {
+    pe.setColorAt(0.0, QColor::fromHslF(188 / 360., 0.79, 0.58, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(188 / 360., 0.79, 0.58, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(188 / 360., 0.79, 0.58, 0.1));
+  } else if (experimentalMode) {
+    pe.setColorAt(0.0, QColor::fromHslF(320 / 360., 1.0, 0.0, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(320 / 360., 0.0, 0.0, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(320 / 360., 0.0, 0.0, 0.1));
+  } else if (scene.navigate_on_openpilot) {
+    pe.setColorAt(0.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.1));
+  } else if (frogColors) {
+    pe.setColorAt(0.0, QColor::fromHslF(300 / 360., 1.0, 0.15, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(300 / 360., 1.0, 0.8, 1.0));
+    pe.setColorAt(1.0, QColor::fromHslF(188 / 360., 1.0, 0.6, 1.0));
+  } else {
+    pe.setColorAt(0.0, QColor::fromHslF(320 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.5, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(320 / 360., 1.0, 1.0, 0.1));
+  }
+
+  painter.setBrush(pe);
+  painter.drawPath(path);
+
+  // paint adjacent lane paths
+  const bool speedCheck = speed >= (is_metric ? 32 : 20);
+  const bool isNotTurning = abs(steeringAngleDeg) <= 60;
+
+  // paint blindspot path
+  QLinearGradient bs(0, height(), 0, 0);
+  if ((blindSpotLeft || blindSpotRight) && speedCheck && isNotTurning && is_cruise_set) {
+    bs.setColorAt(0.0, QColor::fromHslF(269 / 360., 0.5, 0.25, 1.0));
+    bs.setColorAt(0.5, QColor::fromHslF(269 / 360., 0.5, 0.10, 0.8));
+    bs.setColorAt(1.0, QColor::fromHslF(269 / 360., 0.5, 0.10, 0.6));
+  }
+
+  painter.setBrush(bs);
+  if (blindSpotLeft) {
+    painter.drawPolygon(scene.track_left_adjacent_lane_vertices);
+  }
+  if (blindSpotRight) {
+    painter.drawPolygon(scene.track_right_adjacent_lane_vertices);
+  }
+
+  // paint developerUI path
+  if (developerUI && speedCheck && isNotTurning && is_cruise_set) {
+    const bool isImperialUnits = developerUI == 1;
+    const double conversionFactor = isImperialUnits ? 3.28084 : 1.0;
+    const float minLaneWidth = 2.5;
+    const float maxLaneWidth = 3.0;
+    const QFont font = InterFont(35, QFont::Bold);
+    const QPen whitePen(Qt::white), transparentPen(Qt::transparent);
+    const QString unit_d = isImperialUnits ? " feet" : " meters";
+
+    const auto setGradientColors = [](QLinearGradient& gradient, const float laneWidth, const float minLaneWidth, const float maxLaneWidth, const bool blindspot) {
+      static double hue;
+      if ((laneWidth < minLaneWidth) || blindspot) {
+        // Make the path red for smaller paths or if there's a car in the blindspot
+        hue = 320;
+      } else if (laneWidth >= maxLaneWidth) {
+        // Make the path green for larger paths
+        hue = 269;
+      } else {
+        // Transition the path from red to green based on lane width
+        hue = (269 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
+      }
+      gradient.setColorAt(0.0, QColor::fromHslF(hue / 360., 1.0, 0.75, 0.8));
+      gradient.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.75, 0.6));
+      gradient.setColorAt(1.0, QColor::fromHslF(320 / 360., 1.0, 0.75, 0.4));
+    };
+
+    const auto paintLane = [&](QPainter& painter, const QPolygonF& lane, const float laneWidth, const bool blindspot) {
+      QLinearGradient gradient(0, height(), 0, 0);
+      setGradientColors(gradient, laneWidth, minLaneWidth, maxLaneWidth, blindspot);
+      painter.setBrush(gradient);
+      painter.setPen(transparentPen);
+      painter.drawPolygon(lane);
+      painter.setFont(font);
+      painter.setPen(Qt::white);
+      if (blindspot) {
+        painter.drawText(lane.boundingRect().center(), QString("Vehicle in blind spot"));
+      } else {
+        painter.drawText(lane.boundingRect().center(), QString("%1%2").arg(laneWidth * conversionFactor, 0, 'f', 2).arg(unit_d));
+      }
+      painter.setPen(Qt::NoPen);
+    };
+
+    paintLane(painter, scene.track_left_adjacent_lane_vertices, laneWidthLeft, blindSpotLeft);
+    paintLane(painter, scene.track_right_adjacent_lane_vertices, laneWidthRight, blindSpotRight);
+  }
+
+  painter.restore();
+}
+
 void AnnotatedCameraWidget::drawDriverState(QPainter &painter, const UIState *s) {
   const UIScene &scene = s->scene;
 
