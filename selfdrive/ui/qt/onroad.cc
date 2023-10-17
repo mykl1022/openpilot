@@ -763,7 +763,7 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
 
         // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
         if (frogColors && acceleration[i] > -0.2 && acceleration[i] < 0.2) {
-            acceleration[i] = 2;
+            acceleration[i] = 0;
         }
 
         // Calculate hue based on acceleration
