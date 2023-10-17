@@ -774,8 +774,8 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
     hue -= 360;
         }
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1); // Full saturation
-        float lightness = util::map_val(saturation, 0.65f, 0.8f, 0.65f, 0.8f); // Moderate lightness
-        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.65f, 1.0f); // Full alpha
+        float lightness = util::map_val(saturation, 0.75f, 0.8f, 0.75f, 0.8f); // Moderate lightness
+        float alpha = util::map_val(lin_grad_point, 0.85f / 2.f, 0.85f, 0.75f, 1.0f); // Full alpha
 
         // Set the color at the linear gradient point
         bg.setColorAt(lin_grad_point, QColor::fromHslF(hue / 360.0, saturation, lightness, alpha));
