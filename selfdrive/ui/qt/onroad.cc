@@ -773,8 +773,6 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
 } else if (hue > 360) {
     hue -= 360;
         }
-// FIXME: painter.drawPolygon can be slow if hue is not rounded
-        hue = int(hue * 100 + 0.5) / 100;
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1); // Full saturation
         float lightness = util::map_val(saturation, 0.65f, 0.8f, 0.65f, 0.8f); // Moderate lightness
         float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.65f, 1.0f); // Full alpha
