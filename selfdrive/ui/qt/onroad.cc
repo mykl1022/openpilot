@@ -766,11 +766,14 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
         acceleration[i] = 2;
       }
 
-      // speed up: 120, slow down: 0
-      float path_hue = util::map_val(i, 0, max_len, 180, 320);
-      float saturation = 1;
-      float lightness = 0.5;
-      float alpha = util::map_val(scene.track_vertices[i].y(), 0, height(), 0.3, 1);
+      // Calculate hue based on acceleration
+        float hue = 290 + (acceleration[i] * 60); // Adjust the multiplier as needed
+        hue = max(min(hue, 350), 290)
+        }
+        float saturation = fmin(fabs(acceleration[i] * 1.5), 1); // Full saturation
+        float lightness = util::map_val(saturation, 0.75f, 0.8f, 0.75f, 0.8f); // Moderate lightness
+        float lightness = util::map_val(saturation, 0.6f, 0.7f, 0.6f, 0.7f); // Moderate lightness
+        float alpha = util::map_val(lin_grad_point, 0.85f / 2.f, 0.85f, 0.75f, 1.0f); // Full alpha
 
       // Skip a point, unless next is last
       i += (i + 2) < max_len ? 1 : 0;
