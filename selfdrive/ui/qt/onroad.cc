@@ -766,22 +766,15 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
             acceleration[i] = 0;
         }
 
-        // Calculate hue based on acceleration
-        float hue = 60 + (acceleration[i] * 360); // Adjust the multiplier as needed
-        if (hue < 0) {
-    hue += 360;
-} else if (hue > 360) {
-    hue -= 360;
-        }
-        float saturation = fmin(fabs(acceleration[i] * 1.5), 1); // Full saturation
-        float lightness = util::map_val(saturation, 0.6f, 0.7f, 0.6f, 0.7f); // Moderate lightness
-        float alpha = util::map_val(lin_grad_point, 0.85f / 2.f, 0.85f, 0.75f, 1.0f); // Full alpha
+       float hue = util::map_val(acceleration[i], 0, max_len, 180, 320);
+  float saturation = 1;
+  float lightness = 0.5;
+  float alpha = util::map_val(scene.track_vertices[i].y(), 0, height(), 0.3, 1);
 
-        // Set the color at the linear gradient point
-        bg.setColorAt(lin_grad_point, QColor::fromHslF(hue / 360.0, saturation, lightness, alpha));
+  bg.setColorAt(lin_grad_point, QColor::fromHslF(hue/360.0, saturation, lightness, alpha));
 
         // Skip a point, unless the next is the last
-        i += (i + 2) < max_len ? 1 : 0;
+        i = 0; i < max_len; ++i;
     }
 
   } else {
