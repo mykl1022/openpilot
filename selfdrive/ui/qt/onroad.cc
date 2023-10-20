@@ -758,25 +758,26 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         // Some points are out of frame
         if (scene.track_vertices[i].y() < 0 || scene.track_vertices[i].y() > height()) continue;
 
-        // Flip so 0 is the bottom of the frame
-        float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
+        // Flip so 0 is bottom of frame
+      float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
 
-        // Calculate hue based on acceleration
-        float hue = 65 + (acceleration[i] * 360); // Adjust the multiplier as needed
-        if (hue < 0) {
-    hue += 0;
-} else if (hue > 65) {
-    hue -= 65;
-        }
-        float saturation = fmin(fabs(acceleration[i] * 1.5), 1); // Full saturation
-        float lightness = util::map_val(saturation, 0.6f, 0.7f, 0.6f, 0.7f); // Moderate lightness
-        float alpha = util::map_val(lin_grad_point, 0.85f / 2.f, 0.85f, 0.75f, 1.0f); // Full alpha
+      // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
+      if (frogColors && acceleration[i] > -0.2 && acceleration[i] < 0.2) {
+        acceleration[i] = 2;
+      }
 
-        // Set the color at the linear gradient point
-        bg.setColorAt(lin_grad_point, QColor::fromHslF(hue / 360.0, saturation, lightness, alpha));
+      // speed up: 120, slow down: 0
+        float path_hue = fmax(fmin(35 + acceleration[i] * 35, 120), 65); // Pink and black fade
+        // FIXME: painter.drawPolygon can be slow if hue is not rounded
+        path_hue = int(path_hue * 100 + 0.5) / 100;
 
-        // Skip a point, unless the next is the last
-        i += (i + 2) < max_len ? 1 : 0;
+        float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
+        float lightness = util::map_val(saturation, 0.65f, 0.8f, 0.65f, 0.8f); // lighter when grey
+        float alpha = util::map_val(lin_grad_point, 0.75f / 2.f, 0.75f, 0.65f, 1.0f); // matches previous alpha fade
+        bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
+
+      // Skip a point, unless next is last
+      i += (i + 2) < max_len ? 1 : 0;
     }
 
   } else {
