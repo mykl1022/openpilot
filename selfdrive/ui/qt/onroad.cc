@@ -761,17 +761,12 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         // Flip so 0 is the bottom of the frame
         float lin_grad_point = (height() - scene.track_vertices[i].y()) / height();
 
-        // If acceleration is between -0.2 and 0.2 and frogColors is True, set acceleration to 2 to give it a consistent green color
-        if (frogColors && acceleration[i] > -0.2 && acceleration[i] < 0.2) {
-            acceleration[i] = 0;
-        }
-
         // Calculate hue based on acceleration
-        float hue = 60 + (acceleration[i] * 360); // Adjust the multiplier as needed
-        if (hue < 270) {
-    hue += 270;
-} else if (hue > 330) {
-    hue -= 330;
+        float hue = 65 + (acceleration[i] * 360); // Adjust the multiplier as needed
+        if (hue < 0) {
+    hue += 0;
+} else if (hue > 65) {
+    hue -= 65;
         }
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1); // Full saturation
         float lightness = util::map_val(saturation, 0.6f, 0.7f, 0.6f, 0.7f); // Moderate lightness
