@@ -774,7 +774,7 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
   bg.setColorAt(lin_grad_point, QColor::fromHslF(hue/360.0, saturation, lightness, alpha));
 
         // Skip a point, unless the next is the last
-       for (int i = 0; i < max_len; i+=2) {
+        i = 0; i < max_len; ++i;
     }
 
   } else {
