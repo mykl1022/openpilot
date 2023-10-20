@@ -800,7 +800,7 @@ bg.setColorAt(1.0, QColor(255, 127, 0));
 // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) { // Pink & white
-    pe.setColorAt(0.0, QColor::fromHslF(320 / 360.0, 1.0, 0.75, 1.0));   // Start with pink
+    pe.setColorAt(0.0, QColor::fromHslF(0 / 360.0, 1.0, 0.5, 1.0));   // Start with pink
     pe.setColorAt(0.5, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));           // Transition to white (full saturation and lightness)
     pe.setColorAt(1.0, QColor::fromHslF(0.0, 1.0, 1.0, 1.0));
   } else if (conditionalStatus == 1) {
@@ -816,9 +816,9 @@ bg.setColorAt(1.0, QColor(255, 127, 0));
     pe.setColorAt(0.5, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.5));
     pe.setColorAt(1.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.1));
   } else if (frogColors) {
-    pe.setColorAt(0.0, QColor::fromHslF(300 / 360., 1.0, 0.15, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(300 / 360., 1.0, 0.8, 1.0));
-    pe.setColorAt(1.0, QColor::fromHslF(188 / 360., 1.0, 0.6, 1.0));
+    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(35 / 360., 1.0, 0.5, 1.0));
+    pe.setColorAt(1.0, QColor::fromHslF(65 / 360., 1.0, 0.5, 1.0));
   } else {
     pe.setColorAt(0.0, QColor::fromHslF(320 / 360., 1.0, 0.5, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(320 / 360., 1.0, 0.5, 0.5));
