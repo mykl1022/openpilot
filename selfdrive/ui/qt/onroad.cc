@@ -478,7 +478,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
     {2, {QString("tesla_theme"), {QColor(0, 255, 247, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
                                                             {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
                                                             {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
-    {3, {QString("stalin_theme"), {QColor(255, 153, 213, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
+    {3, {QString("stalin_theme"), {QColor(255, 153, 213, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 1.0, 0.9))},
                                                             {0.5, QBrush(QColor::fromHslF(330 / 360., 1.0, 0.5, 0.5))},
                                                             {1.0, QBrush(QColor::fromHslF(330 / 360., 1.0, 0.5, 0.1))}}}}}
   };
