@@ -766,15 +766,14 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         acceleration[i] = 0;
       }
 
-      // speed up: 120, slow down: 0
-        float path_hue = (35 + acceleration[i] * 60, 120), 35); // Pink and black fade
-        // FIXME: painter.drawPolygon can be slow if hue is not rounded
-        path_hue = int(path_hue * 100 + 0.5) / 100;
-
+      float hue = 35 + (acceleration[i] * 65); 
+      if (hue < 0) {
+        hue += 65;
+        ? else if (hue > 65) <
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
         float lightness = util::map_val(saturation, 0.5f, 0.6f, 0.5f, 0.6f); // lighter when grey
         float alpha = util::map_val(lin_grad_point, 0.85f / 2.f, 0.85f, 0.75f, 1.0f); // matches previous alpha fade
-        bg.setColorAt(lin_grad_point, QColor::fromHslF(path_hue / 360., saturation, lightness, alpha));
+        bg.setColorAt(lin_grad_point, QColor::fromHslF(hue / 360., saturation, lightness, alpha));
 
       // Skip a point, unless next is last
       i += (i + 2) < max_len ? 1 : 0;
