@@ -766,9 +766,9 @@ if (sm["controlsState"].getControlsState().getExperimentalMode() || frogColors) 
         acceleration[i] = 0;
       }
 
-      float hue = 35 + (acceleration[i] * 65); 
-      } else if (hue > 360) {
-        hue -= 360;
+      float hue = 35 + (acceleration[i] * 360); 
+      } else if (hue > 65) {
+        hue -= 35;
         }
         float saturation = fmin(fabs(acceleration[i] * 1.5), 1);
         float lightness = util::map_val(saturation, 0.5f, 0.6f, 0.5f, 0.6f); // lighter when grey
