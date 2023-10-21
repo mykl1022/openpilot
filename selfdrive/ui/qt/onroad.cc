@@ -472,15 +472,15 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}}},
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
+    {1, {QString("frog_theme"), {QColor(255, 77, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360.0, 1.0, 0.5, 1.0))},
+                                                            {0.5, QBrush(QColor::fromHslF(30 / 360., 1.0, 0.5, 1.0))},
+                                                            {1.0, QBrush(QColor::fromHslF(50 / 360., 1.0, 0.5, 1.0))}}}}},
+    {2, {QString("tesla_theme"), {QColor(0, 255, 247, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
                                                             {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
                                                             {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
-    {3, {QString("stalin_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}}
+    {3, {QString("stalin_theme"), {QColor(255, 153, 213, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
+                                                            {0.5, QBrush(QColor::fromHslF(330 / 360., 1.0, 0.5, 0.5))},
+                                                            {1.0, QBrush(QColor::fromHslF(330 / 360., 1.0, 0.5, 0.1))}}}}}
   };
 
   // Turn signal images
