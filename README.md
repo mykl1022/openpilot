@@ -57,7 +57,7 @@ FrogPilot offers a wide range of customizable features that can be easily toggle
 
   - Themes included:
     - 🐸 Frog theme (with a bonus 🐐 sound effect)
-    - <img src="https://images.emojiterra.com/google/noto-emoji/unicode-15/color/512px/1f1f7-1f1fa.png" width="20" height="18"> Russia / Joseph Stalin theme
+    - <img src="https://images.emojiterra.com/google/noto-emoji/unicode-15/color/512px/1f1f7-1f1fa.png" width="20" height="18"> Russia / Joseph kirby theme
     - 🔌 Tesla theme
 
   - 📢 Want to add a theme? Request one in the "feature-request" channel in the FrogPilot Discord!
