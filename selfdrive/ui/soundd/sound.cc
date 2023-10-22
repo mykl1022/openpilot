@@ -23,7 +23,7 @@ Sound::Sound(QObject *parent) : sm({"controlsState", "microphone"}) {
 
   const std::unordered_map<int, QString> themeConfiguration = {
     {0, "stock"},
-    {1, "pikachu_theme"},
+    {1, ""pikachu"_theme"},
     {2, "aurora_theme"},
     {3, "kirby_theme"}
   };

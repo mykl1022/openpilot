@@ -55,7 +55,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   themeConfiguration = {
     {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"pikachu_theme", {QColor(23, 134, 68)}}},
+    {1, {""pikachu"_theme", {QColor(23, 134, 68)}}},
     {2, {"aurora_theme", {QColor(0, 72, 255)}}},
     {3, {"kirby_theme", {QColor(255, 0, 0)}}}
   };
