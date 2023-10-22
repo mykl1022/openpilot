@@ -472,7 +472,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(0, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(59 / 360., 0.0, 0.0, 1.0))},
+    {1, {QString("pikachu_theme"), {QColor(0, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(59 / 360., 0.0, 0.0, 1.0))},
                                                             {0.5, QBrush(QColor::fromHslF(59 / 360., 1.0, 0.5, 1.0))},
                                                             {1.0, QBrush(QColor::fromHslF(59 / 360., 1.0, 0.5, 1.0))}}}}},
     {2, {QString("aurora_theme"), {QColor(0, 255, 247, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
