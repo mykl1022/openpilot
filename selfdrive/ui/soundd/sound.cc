@@ -25,7 +25,8 @@ Sound::Sound(QObject *parent) : sm({"controlsState", "microphone"}) {
     {0, "stock"},
     {1, "pikachu_theme"},
     {2, "aurora_theme"},
-    {3, "kirby_theme"}
+    {3, "kirby_theme"},
+    {4, "eevee_theme"}
   };
 
   for (const auto& [key, themeName] : themeConfiguration) {

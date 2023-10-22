@@ -481,6 +481,9 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
     {3, {QString("kirby_theme"), {QColor(255, 153, 213, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 1.0, 0.9))},
                                                             {0.5, QBrush(QColor::fromHslF(330 / 360., 1.0, 0.5, 0.5))},
                                                             {1.0, QBrush(QColor::fromHslF(330 / 360., 1.0, 0.5, 0.1))}}}}}
+    {4, {QString("eevee_theme"), {QColor(105, 60, 44, 255), {{0.0, QBrush(QColor::fromHslF(25 / 360., 0.56, 0.42, 1.0))},
+                                                            {0.5, QBrush(QColor::fromHslF(33 / 360., 0.57, 0.64, 1.0))},
+                                                            {1.0, QBrush(QColor::fromHslF(33 / 360., 0.57, 0.64, 1.0))}}}}},
   };
 
   // Turn signal images
