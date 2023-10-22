@@ -240,25 +240,25 @@ ParamController(CurveSensitivity, "CurveSensitivity", "   Curve Detection Sensit
 
 ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock openpilot colors with a custom color scheme.\n\nWant to submit your own color scheme? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int colors = params.getInt("CustomColors");
-  return colors == 0 ? "Stock" : colors == 1 ? "Frog" : colors == 2 ? "Tesla" : "kirby";,
+  return colors == 0 ? "Stock" : colors == 1 ? Pikachu : colors == 2 ? "Tesla" : "kirby";,
   return v >= 0 ? v % 4 : 3;
 )
 
 ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilot icons with a custom icon pack.\n\nWant to submit your own icon pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int icons = params.getInt("CustomIcons");
-  return icons == 0 ? "Stock" : icons == 1 ? "Frog" : icons == 2 ? "Tesla" : "kirby";,
+  return icons == 0 ? "Stock" : icons == 1 ? Pikachu : icons == 2 ? "Tesla" : "kirby";,
   return v >= 0 ? v % 4 : 3;
 )
 
 ParamController(CustomSignals, "CustomSignals", "Signals", "Enable a custom turn signal animation.\n\nWant to submit your own turn signal animation? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int turnSignals = params.getInt("CustomSignals");
-  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "Frog" : "kirby";,
+  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? Pikachu : "kirby";,
   return v >= 0 ? v % 4 : 3;
 )
 
 ParamController(CustomSounds, "CustomSounds", "Sounds", "Replace the stock openpilot sounds with a custom sound pack.\n\nWant to submit your own custom sound pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int sounds = params.getInt("CustomSounds");
-  return sounds == 0 ? "Stock" : sounds == 1 ? "Frog" : sounds == 2 ? "Tesla" : "kirby";,
+  return sounds == 0 ? "Stock" : sounds == 1 ? Pikachu : sounds == 2 ? "Tesla" : "kirby";,
   return v >= 0 ? v % 4 : 3;
 )
 
@@ -340,7 +340,7 @@ ParamController(StandardPersonality, "StandardPersonality", "Time", "Set the fol
 
 ParamController(SteeringWheel, "SteeringWheel", "Steering Wheel Icon", "Replace the stock openpilot steering wheel icon with a custom icon.\n\nWant to submit your own steering wheel? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_openpilot.png",
   const int wheel = params.getInt("SteeringWheel");
-  return wheel == 0 ? "Stock" : wheel == 1 ? "Lexus" : wheel == 2 ? "Toyota" : wheel == 3 ? "Frog" : wheel == 4 ? "Rocket" : wheel == 5 ? "Hyundai" : "kirby";,
+  return wheel == 0 ? "Stock" : wheel == 1 ? "Lexus" : wheel == 2 ? "Toyota" : wheel == 3 ? Pikachu : wheel == 4 ? "Rocket" : wheel == 5 ? "Hyundai" : "kirby";,
   return v >= 0 ? v % 7 : 6;
 )
 
