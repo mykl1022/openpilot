@@ -240,25 +240,25 @@ ParamController(CurveSensitivity, "CurveSensitivity", "   Curve Detection Sensit
 
 ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock openpilot colors with a custom color scheme.\n\nWant to submit your own color scheme? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int colors = params.getInt("CustomColors");
-  return colors == 0 ? "Stock" : colors == 1 ? "pikachu" : colors == 2 ? "Aurora" : colors == 3 ? "kirby" : "eevee";,
+  return colors == 0 ? "Stock" : colors == 1 ? "pikachu" : colors == 2 ? "Aurora" : colors == 3 ? "kirby" : colors == 4 ? "eevee";,
   return v >= 0 ? v % 4 : 3;
 )
 
 ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilot icons with a custom icon pack.\n\nWant to submit your own icon pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int icons = params.getInt("CustomIcons");
-  return icons == 0 ? "Stock" : icons == 1 ? "pikachu" : icons == 2 ? "Aurora" : icons == 3 ? "kirby" : "eevee";,
+  return icons == 0 ? "Stock" : icons == 1 ? "pikachu" : icons == 2 ? "Aurora" : icons == 3 ? "kirby" : icons == 4 ? "eevee";,
   return v >= 0 ? v % 4 : 3;
 )
 
 ParamController(CustomSignals, "CustomSignals", "Signals", "Enable a custom turn signal animation.\n\nWant to submit your own turn signal animation? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int turnSignals = params.getInt("CustomSignals");
-  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "pikachu" : turnSignals == 2 ? "kirby" : "eevee";,
+  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "pikachu" : turnSignals == 2 ? "kirby" : turnSignals == 4 ? "eevee";,
   return v >= 0 ? v % 4 : 3;
 )
 
 ParamController(CustomSounds, "CustomSounds", "Sounds", "Replace the stock openpilot sounds with a custom sound pack.\n\nWant to submit your own custom sound pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int sounds = params.getInt("CustomSounds");
-  return sounds == 0 ? "Stock" : sounds == 1 ? "pikachu" : sounds == 2 ? "Aurora" : sounds == 3 ? "kirby" : "eevee";,
+  return sounds == 0 ? "Stock" : sounds == 1 ? "pikachu" : sounds == 2 ? "Aurora" : sounds == 3 ? "kirby" : sounds == 4 ? "eevee";,
   return v >= 0 ? v % 4 : 3;
 )
 
