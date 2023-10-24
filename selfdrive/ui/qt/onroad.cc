@@ -489,7 +489,13 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
                                                                {0.4, QBrush(QColor::fromHslF(60 / 360., 1.0, 0.5, 1.0))},
                                                                {0.6, QBrush(QColor::fromHslF(130 / 360., 1.0, 0.5, 1.0))},
                                                                {0.8, QBrush(QColor::fromHslF(188 / 360., 1.0, 0.5, 1.0))},
-                                                               {1.0, QBrush(QColor::fromHslF(265 / 360., 1.0, 0.5, 1.0))}}}}}                                                      
+                                                               {1.0, QBrush(QColor::fromHslF(265 / 360., 1.0, 0.5, 1.0))}}}}},
+    {6, {QString("ocean_theme"), {QColor(0, 255, 213, 255), {{0.0, QBrush(QColor::fromHslF(191 / 360., 0.91, 0.17, 1.0))},
+                                                               {0.2, QBrush(QColor::fromHslF(209 / 360., 0.44, 0.15, 1.0))},
+                                                               {0.4, QBrush(QColor::fromHslF(187 / 360., 0.65, 0.42, 1.0))},
+                                                               {0.6, QBrush(QColor::fromHslF(182 / 360., 0.43, 0.54, 1.0))},
+                                                               {0.8, QBrush(QColor::fromHslF(182 / 360., 0.26, 0.77, 1.0))},
+                                                               {1.0, QBrush(QColor::fromHslF(182 / 360., 0.26, 1,0, 1.0))}}}}}                                                     
   };
 
   // Turn signal images
