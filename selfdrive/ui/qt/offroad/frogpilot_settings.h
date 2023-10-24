@@ -254,7 +254,7 @@ ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilo
          icons == 1 ? "pikachu" :
          icons == 2 ? "Aurora" :
          icons == 3 ? "kirby" :
-         icons == 4 ? "eevee";,
+         icons == 4 ? "eevee" ;,
   return v >= 0 ? v % 6 : 5;
 )
 
