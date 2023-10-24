@@ -244,7 +244,7 @@ ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock open
    colors == 1 ? "pika" :
     colors == 2 ? "Aurora" :
      colors == 3 ? "kirby" :
-     colors == 4 ? "eevee" ;,
+     colors == 4 ? "eevee";
   return v >= 0 ? v % 6 : 5;
 )
 
@@ -254,7 +254,7 @@ ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilo
          icons == 1 ? "pika" :
          icons == 2 ? "Aurora" :
          icons == 3 ? "kirby" :
-         icons == 4 ? "eevee" ;,
+         icons == 4 ? "eevee";
   return v >= 0 ? v % 6 : 5;
 )
 
@@ -263,7 +263,7 @@ ParamController(CustomSignals, "CustomSignals", "Signals", "Enable a custom turn
   return turnSignals == 0 ? "Stock" :
          turnSignals == 1 ? "pika" :
          turnSignals == 2 ? "kirby" :
-         turnSignals == 4 ? "eevee" ;,
+         turnSignals == 4 ? "eevee";
   return v >= 0 ? v % 6 : 5;
 )
 
@@ -273,7 +273,7 @@ ParamController(CustomSounds, "CustomSounds", "Sounds", "Replace the stock openp
    sounds == 1 ? "pika" :
    sounds == 2 ? "Aurora" :
    sounds == 3 ? "kirby" :
-   sounds == 4 ? "eevee" ;,
+   sounds == 4 ? "eevee";
   return v >= 0 ? v % 6 : 5;
 )
 
