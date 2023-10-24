@@ -495,7 +495,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
                                                                {0.4, QBrush(QColor::fromHslF(187 / 360., 0.65, 0.42, 1.0))},
                                                                {0.6, QBrush(QColor::fromHslF(182 / 360., 0.43, 0.54, 1.0))},
                                                                {0.8, QBrush(QColor::fromHslF(182 / 360., 0.26, 0.77, 1.0))},
-                                                               {1.0, QBrush(QColor::fromHslF(182 / 360., 0.26, 1,0, 1.0))}}}}}                                                     
+                                                               {1.0, QBrush(QColor::fromHslF(182 / 360., 0.26, 1.0, 1.0))}}}}}                                                     
   };
 
   // Turn signal images
