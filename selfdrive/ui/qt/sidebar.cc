@@ -60,7 +60,8 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {3, {"kirby_theme", {QColor(255, 0, 0)}}},
     {4, {"eevee_theme", {QColor(168, 98, 47)}}},
     {5, {"rainbow_theme", {QColor(119, 51, 255)}}},
-    {6, {"ocean_theme", {QColor(119, 51, 255)}}}
+    {6, {"ocean_theme", {QColor(119, 51, 255)}}},
+    {7, {"corn_theme", {QColor(254, 232, 1)}}}
   };
 
   for (const auto& [key, themeData] : themeConfiguration) {
