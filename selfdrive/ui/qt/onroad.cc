@@ -496,7 +496,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
                                                                {0.6, QBrush(QColor::fromHslF(182 / 360., 0.43, 0.54, 1.0))},
                                                                {0.8, QBrush(QColor::fromHslF(182 / 360., 0.26, 0.77, 1.0))},
                                                                {1.0, QBrush(QColor::fromHslF(182 / 360., 0.26, 1.0, 1.0))}}}}},
-    {7, {QString("corn_theme"), {QColor(105, 60, 44, 255) , {{0.0, QBrush(QColor::fromHslF(55 / 360., 1.0, 0.50, 1.0))},
+    {7, {QString("corn_theme"), {QColor(71, 119, 23, 255) , {{0.0, QBrush(QColor::fromHslF(55 / 360., 1.0, 0.50, 1.0))},
 							                                               {0.5, QBrush(QColor::fromHslF(19 / 360., 1.0, 0.6, 1.0))},
 						                                                 {1.0, QBrush(QColor::fromHslF(32 / 360., 0.71, 0.96, 1.0))}}}}}                                                                                                                
   };
