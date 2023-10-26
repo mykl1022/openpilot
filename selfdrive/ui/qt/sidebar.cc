@@ -62,7 +62,26 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {5, {"rainbow_theme", {QColor(119, 51, 255)}}},
     {6, {"ocean_theme", {QColor(119, 51, 255)}}},
     {7, {"corn_theme", {QColor(254, 232, 1)}}},
-    {8, {"sunset_theme", {QColor(129, 0, 204)}}}
+    {8, {"sunset_theme", {QColor(129, 0, 204)}}},
+    {9, {"enchantedforest", {QColor(0, 51, 0, 255)}}},
+    {10, {"lavaflow", {QColor(255, 0, 0, 255)}}},
+    {11, {"underwateradventure", {QColor(0, 102, 102, 255)}}},
+    {12, {"candyland", {QColor(255, 85, 85, 255)}}},
+    {13, {"desert", {QColor(255, 204, 153, 255)}}},
+    {14, {"icepalace", {QColor(204, 229, 255, 255)}}},
+    {15, {"hauntedforest", {QColor(51, 0, 51, 255)}}},
+    {16, {"volcanotrail", {QColor(51, 0, 0, 255)}}},
+    {17, {"rainbowbridge", {QColor(255, 0, 0, 255)}}},
+    {18, {"goldenroad", {QColor(255, 255, 85, 255)}}},
+    {19, {"dreamycloudscape", {QColor(173, 216, 230, 255)}}},
+    {20, {"sherbetsunrise", {QColor(255, 153, 102, 255)}}},
+    {21, {"ancientruins", {QColor(165, 140, 125, 255)}}},
+    {22, {"crystalcavern", {QColor(102, 0, 204, 255)}}},
+    {23, {"citylights", {QColor(85, 85, 255, 255)}}},
+    {24, {"jungleadventure", {QColor(0, 102, 0, 255)}}},
+    {25, {"fairytale", {QColor(255, 153, 204, 255)}}},
+    {26, {"hauntedhouse", {QColor(51, 0, 51, 255)}}},
+    {27, {"steampunk", {QColor(139, 69, 19, 255)}}}
   };
 
   for (const auto& [key, themeData] : themeConfiguration) {
