@@ -240,13 +240,13 @@ ParamController(CurveSensitivity, "CurveSensitivity", "   Curve Detection Sensit
 
 ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock openpilot colors with a custom color scheme.\n\nWant to submit your own color scheme? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int colors = params.getInt("CustomColors");
-  return colors == 0 ? "Stock" : colors == 1 ? "pika" : colors == 2 ? "Aurora" : colors == 3 ? "kirby" : colors == 4 ? "opRnBw" : colors == 5 ? "rainbow" : colors == 6 ? "ocean" : colors == 7 ? "corn" : colors == 8 ? "sunset" : colors == 9 ? "enchantedforest" : colors == 10 ? "lavaflow" : colors == 11 ? "underwater" : colors == 12 ? "candyland" : colors == 13 ? "desert" : colors == 14 ? "icepalace" : colors == 15 ? "hauntedforest" : colors == 16 ? "volcanotrail" : colors == 17 ? "rainbowbridge" : colors == 18 ? "goldenroad" : colors == 19 ? "dreamycloudscape" : colors == 20 ? "sherbertsunrise" : colors == 21 ? "ancientruins" : colors == 22 ? "crystalcavern" : colors == 23 ? "citylights" : colors == 24 ? "jungleadventure" : colors == 25 ? "fairytale" : colors == 26 ? "hauntedhouse" : colors == 27 ? "steampunk" : colors == 28 ? "mercury" : colors == 29 ? "venus" : colors == 30 ? "earth" : colors == 31 "mars" : colors == 32 ? "Jupiter" : colors == 33 ? "Saturn" : colors == 34 ? "Uranus" : colors == 35 ? "Neptune" : "phobos";,
-  return v >= 0 ? v % 36 : 35;
+  return colors == 0 ? "Stock" : colors == 1 ? "pika" : colors == 2 ? "Aurora" : colors == 3 ? "kirby" : colors == 4 ? "opRnBw" : colors == 5 ? "rainbow" : colors == 6 ? "ocean" : colors == 7 ? "corn" : colors == 8 ? "sunset" : colors == 9 ? "enchantedforest" : colors == 10 ? "lavaflow" : colors == 11 ? "underwater" : colors == 12 ? "candyland" : colors == 13 ? "desert" : colors == 14 ? "icepalace" : colors == 15 ? "hauntedforest" : colors == 16 ? "volcanotrail" : colors == 17 ? "rainbowbridge" : colors == 18 ? "goldenroad" : colors == 19 ? "dreamycloudscape" : colors == 20 ? "sherbertsunrise" : colors == 21 ? "ancientruins" : colors == 22 ? "crystalcavern" : colors == 23 ? "citylights" : colors == 24 ? "jungleadventure" : colors == 25 ? "fairytale" : colors == 26 ? "hauntedhouse" : colors == 27 ? "steampunk" : colors == 28 ? "mercury" : colors == 29 ? "venus" : colors == 30 ? "earth" : colors == 31 ? "mars" : colors == 32 ? "Jupiter" : colors == 33 ? "Saturn" : colors == 34 ? "Uranus" : colors == 35 ? "Neptune" : "phobos";,
+  return v >= 0 ? v % 37 : 36;
 )
 
 ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilot icons with a custom icon pack.\n\nWant to submit your own icon pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int icons = params.getInt("CustomIcons");
-  return icons == 0 ? "Stock" : icons == 1 ? "pika" : icons == 2 ? "Aurora" : icons == 3 ? "kirby" : icons == 4 ? "opRnBw" : icons == 5 ? "rainbow" : icons ==6 ? "ocean" : "corn";,
+  return icons == 0 ? "Stock" : icons == 1 ? "pika" : icons == 2 ? "Aurora" : icons == 3 ? "kirby" : icons == 4 ? "opRnBw" : icons == 5 ? "rainbow" : icons == 6 ? "ocean" : "corn";,
   return v >= 0 ? v % 8 : 7;
 )
 
