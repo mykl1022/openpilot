@@ -630,7 +630,19 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 								{0.4, QBrush(QColor(184, 134, 11, 255))},
 								{0.6, QBrush(QColor(139, 69, 19, 255))},
 								{0.8, QBrush(QColor(205, 133, 63, 255))},
-								{1.0, QBrush(QColor(139, 69, 19, 255))}}}}}                                                                                                                                                                                                                                   
+								{1.0, QBrush(QColor(139, 69, 19, 255))}}}}},
+    {28, {QString("mercury_theme"), {QColor(255, 102, 0, 255), {{0.0, QBrush(QColor(255, 102, 0, 255))}, {0.2, QBrush(QColor(255, 102, 0, 255))}, {0.4, QBrush(QColor(255, 102, 0, 255))}, {0.6, QBrush(QColor(255, 102, 0, 255))}, {0.8, QBrush(QColor(255, 102, 0, 255))}, {1.0, QBrush(QColor(255, 102, 0, 255))}}}}},
+    {29, {QString("venus_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor(255, 0, 0, 255))}, {0.2, QBrush(QColor(255, 0, 0, 255))}, {0.4, QBrush(QColor(255, 0, 0, 255))}, {0.6, QBrush(QColor(255, 0, 0, 255))}, {0.8, QBrush(QColor(255, 0, 0, 255))}, {1.0, QBrush(QColor(255, 0, 0, 255))}}}}},
+    {30, {QString("earth_theme"), {QColor(0, 0, 255, 255), {{0.0, QBrush(QColor(0, 0, 255, 255))}, {0.2, QBrush(QColor(0, 0, 255, 255))}, {0.4, QBrush(QColor(0, 0, 255, 255))}, {0.6, QBrush(QColor(0, 0, 255, 255))}, {0.8, QBrush(QColor(0, 0, 255, 255))}, {1.0, QBrush(QColor(0, 0, 255, 255))}}}}},
+    {31, {QString("mars_theme"), {QColor(255, 69, 0, 255), {{0.0, QBrush(QColor(255, 69, 0, 255))}, {0.2, QBrush(QColor(255, 69, 0, 255))}, {0.4, QBrush(QColor(255, 69, 0, 255))}, {0.6, QBrush(QColor(255, 69, 0, 255))}, {0.8, QBrush(QColor(255, 69, 0, 255))}, {1.0, QBrush(QColor(255, 69, 0, 255))}}}}},
+    {32, {QString("jupiter_theme"), {QColor(255, 204, 102, 255), {{0.0, QBrush(QColor(255, 204, 102, 255))}, {0.2, QBrush(QColor(255, 204, 102, 255))}, {0.4, QBrush(QColor(255, 204, 102, 255))}, {0.6, QBrush(QColor(255, 204, 102, 255))}, {0.8, QBrush(QColor(255, 204, 102, 255))}, {1.0, QBrush(QColor(255, 204, 102, 255))}}}}},
+    {33, {QString("saturn_theme"), {QColor(255, 255, 153, 255), {{0.0, QBrush(QColor(255, 255, 153, 255))}, {0.2, QBrush(QColor(255, 255, 153, 255))}, {0.4, QBrush(QColor(255, 255, 153, 255))}, {0.6, QBrush(QColor(255, 255, 153, 255))}, {0.8, QBrush(QColor(255, 255, 153, 255))}, {1.0, QBrush(QColor(255, 255, 153, 255))}}}}},
+    {34, {QString("uranus_theme"), {QColor(102, 204, 255, 255), {{0.0, QBrush(QColor(102, 204, 255, 255))}, {0.2, QBrush(QColor(102, 204, 255, 255))}, {0.4, QBrush(QColor(102, 204, 255, 255))}, {0.6, QBrush(QColor(102, 204, 255, 255))}, {0.8, QBrush(QColor(102, 204, 255, 255))}, {1.0, QBrush(QColor(102, 204, 255, 255))}}}}},
+    {35, {QString("neptune_theme"), {QColor(0, 51, 102, 255), {{0.0, QBrush(QColor(0, 51, 102, 255))}, {0.2, QBrush(QColor(0, 51, 102, 255))}, {0.4, QBrush(QColor(0, 51, 102, 255))}, {0.6, QBrush(QColor(0, 51, 102, 255))}, {0.8, QBrush(QColor(0, 51, 102, 255))}, {1.0, QBrush(QColor(0, 51, 102, 255))}}}}},
+
+    // Moon
+    {36, {QString("phobos_theme"), {QColor(102, 51, 0, 255), {{0.0, QBrush(QColor(102, 51, 0, 255))}, {0.2, QBrush(QColor(102, 51, 0, 255))}, {0.4, QBrush(QColor(102, 51, 0, 255))}, {0.6, QBrush(QColor(102, 51, 0, 255))}, {0.8, QBrush(QColor(102, 51, 0, 255))}, {1.0, QBrush(QColor(102, 51, 0, 255))}}}}}
+                                                                                                                                                                                                                                
   };
 
   // Turn signal images
