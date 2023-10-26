@@ -240,25 +240,25 @@ ParamController(CurveSensitivity, "CurveSensitivity", "   Curve Detection Sensit
 
 ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock openpilot colors with a custom color scheme.\n\nWant to submit your own color scheme? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int colors = params.getInt("CustomColors");
-  return colors == 0 ? "Stock" : colors == 1 ? "pika" : colors == 2 ? "Aurora" : colors == 3 ? "kirby" : colors == 4 ? "galaxy" : colors == 5 ? "rainbow" : colors == 6 ? "ocean" : colors == 7 ? "corn" : "sunet";,
+  return colors == 0 ? "Stock" : colors == 1 ? "pika" : colors == 2 ? "Aurora" : colors == 3 ? "kirby" : colors == 4 ? "opRnBw" : colors == 5 ? "rainbow" : colors == 6 ? "ocean" : colors == 7 ? "corn" : "sunset";,
   return v >= 0 ? v % 9 : 8;
 )
 
 ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilot icons with a custom icon pack.\n\nWant to submit your own icon pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int icons = params.getInt("CustomIcons");
-  return icons == 0 ? "Stock" : icons == 1 ? "pika" : icons == 2 ? "Aurora" : icons == 3 ? "kirby" : icons == 4 ? "galaxy" : icons == 5 ? "rainbow" : icons ==6 ? "ocean" : "corn";,
+  return icons == 0 ? "Stock" : icons == 1 ? "pika" : icons == 2 ? "Aurora" : icons == 3 ? "kirby" : icons == 4 ? "opRnBw" : icons == 5 ? "rainbow" : icons ==6 ? "ocean" : "corn";,
   return v >= 0 ? v % 8 : 7;
 )
 
 ParamController(CustomSignals, "CustomSignals", "Signals", "Enable a custom turn signal animation.\n\nWant to submit your own turn signal animation? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int turnSignals = params.getInt("CustomSignals");
-  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "pika" : turnSignals == 2 ? "Aurora" : turnSignals == 3 ? "kirby" : turnSignals == 4 ? "galaxy" : turnSignals == 5 ? "rainbow" : turnSignals == 6 ? "ocean" : "corn";,
+  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "pika" : turnSignals == 2 ? "Aurora" : turnSignals == 3 ? "kirby" : turnSignals == 4 ? "opRnBw" : turnSignals == 5 ? "rainbow" : turnSignals == 6 ? "ocean" : "corn";,
   return v >= 0 ? v % 8 : 7;
 )
 
 ParamController(CustomSounds, "CustomSounds", "Sounds", "Replace the stock openpilot sounds with a custom sound pack.\n\nWant to submit your own custom sound pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int sounds = params.getInt("CustomSounds");
-  return sounds == 0 ? "Stock" : sounds == 1 ? "pika" : sounds == 2 ? "Aurora" : sounds == 3 ? "kirby" : sounds == 4 ? "galaxy" : sounds == 5 ? "rainbow" : sounds == 6 ? "ocean" : "corn";,
+  return sounds == 0 ? "Stock" : sounds == 1 ? "pika" : sounds == 2 ? "Aurora" : sounds == 3 ? "kirby" : sounds == 4 ? "opRnBw" : sounds == 5 ? "rainbow" : sounds == 6 ? "ocean" : "corn";,
   return v >= 0 ? v % 8 : 7;
 )
 
