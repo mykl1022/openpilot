@@ -81,7 +81,14 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {24, {"jungleadventure", {QColor(0, 102, 0, 255)}}},
     {25, {"fairytale", {QColor(255, 153, 204, 255)}}},
     {26, {"hauntedhouse", {QColor(51, 0, 51, 255)}}},
-    {27, {"steampunk", {QColor(139, 69, 19, 255)}}}
+    {27, {"steampunk", {QColor(139, 69, 19, 255)}}},
+    {37, {"Nebula Path", {QColor(0, 0, 255, 255)}}},
+    {38, {"Supernova Trail", {QColor(255, 255, 0, 255)}}},
+    {39, {"Wormhole Vortex", {QColor(128, 0, 128, 255)}}},
+    {40, {"Galactic Rainbow", {QColor(255, 0, 0, 255)}}},
+    {41, {"Liquid Mercury", {QColor(255, 255, 255, 255)}}},
+    {42, {"Polished Silver", {QColor(192, 192, 192, 255)}}},
+    {43, {"Brushed Aluminum", {QColor(128, 128, 128, 255)}}}
   };
 
   for (const auto& [key, themeData] : themeConfiguration) {
