@@ -88,7 +88,8 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {40, {"Galactic Rainbow", {QColor(255, 0, 0, 255)}}},
     {41, {"Liquid Mercury", {QColor(255, 255, 255, 255)}}},
     {42, {"Polished Silver", {QColor(192, 192, 192, 255)}}},
-    {43, {"Brushed Aluminum", {QColor(128, 128, 128, 255)}}}
+    {43, {"Brushed Aluminum", {QColor(128, 128, 128, 255)}}},
+    {44, {"Glowing Path", {QColor(255, 255, 0, 255)}}}
   };
 
   for (const auto& [key, themeData] : themeConfiguration) {
