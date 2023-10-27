@@ -639,10 +639,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
     {32, {QString("jupiter_theme"), {QColor(255, 179, 25, 255), {{0.0, QBrush(QColor(255, 179, 25, 255))}, {0.2, QBrush(QColor(255, 204, 51, 255))}, {0.4, QBrush(QColor(255, 179, 25, 255))}, {0.6, QBrush(QColor(255, 204, 51, 255))}, {0.8, QBrush(QColor(255, 179, 25, 255))}, {1.0, QBrush(QColor(255, 179, 25, 255))}}}}},
     {33, {QString("saturn_theme"), {QColor(255, 230, 179, 255), {{0.0, QBrush(QColor(255, 230, 179, 255))}, {0.2, QBrush(QColor(255, 239, 204, 255))}, {0.4, QBrush(QColor(255, 230, 179, 255))}, {0.6, QBrush(QColor(255, 239, 204, 255))}, {0.8, QBrush(QColor(255, 230, 179, 255))}, {1.0, QBrush(QColor(255, 230, 179, 255))}}}}},
     {34, {QString("uranus_theme"), {QColor(153, 204, 255, 255), {{0.0, QBrush(QColor(153, 204, 255, 255))}, {0.2, QBrush(QColor(179, 217, 255, 255))}, {0.4, QBrush(QColor(153, 204, 255, 255))}, {0.6, QBrush(QColor(179, 217, 255, 255))}, {0.8, QBrush(QColor(153, 204, 255, 255))}, {1.0, QBrush(QColor(153, 204, 255, 255))}}}}},
-    {35, {QString("neptune_theme"), {QColor(0, 51, 102, 255), {{0.0, QBrush(QColor(0, 51, 102, 255))}, {0.2, QBrush(QColor(0, 102, 153, 255))}, {0.4, QBrush(QColor(0, 51, 102
-
-
-    // Moon
+    {35, {QString("neptune_theme"), {QColor(0, 51, 102, 255), {{0.0, QBrush(QColor(0, 51, 102, 255))}, {0.2, QBrush(QColor(0, 102, 153, 255))}, {0.4, QBrush(QColor(0, 51, 102, 255))}, {0.6, QBrush(QColor(0, 102, 153, 255))}, {0.8, QBrush(QColor(0, 51, 102, 255))}, {1.0, QBrush(QColor(0, 51, 102, 255))}}}}},
     {36, {QString("phobos_theme"), {QColor(102, 51, 0, 255), {{0.0, QBrush(QColor(102, 51, 0, 255))}, {0.2, QBrush(QColor(102, 51, 0, 255))}, {0.4, QBrush(QColor(102, 51, 0, 255))}, {0.6, QBrush(QColor(102, 51, 0, 255))}, {0.8, QBrush(QColor(102, 51, 0, 255))}, {1.0, QBrush(QColor(102, 51, 0, 255))}}}}}
                                                                                                                                                                                                                                 
   };
