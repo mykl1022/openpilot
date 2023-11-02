@@ -68,7 +68,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {11, {"opal", {QColor(0, 102, 102, 255)}}},
     {12, {"pool", {QColor(255, 85, 85, 255)}}},
     {13, {"desert", {QColor(255, 204, 153, 255)}}},
-    {14, {"icepalace", {QColor(204, 229, 255, 255)}}},
+    {14, {"Brite", {QColor(204, 229, 255, 255)}}},
     {15, {"hauntedforest", {QColor(51, 0, 51, 255)}}},
     {16, {"volcanotrail", {QColor(51, 0, 0, 255)}}},
     {17, {"rainbowbridge", {QColor(255, 0, 0, 255)}}},
