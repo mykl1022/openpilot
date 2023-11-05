@@ -953,9 +953,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint blindspot path
   QLinearGradient bs(0, height(), 0, 0);
   if (blindSpotLeft || blindSpotRight) {
-    bs.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.6));
-    bs.setColorAt(0.5, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.4));
-    bs.setColorAt(1.0, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.2));
+    bs.setColorAt(0.0, QColor::fromHslF(167 / 360., 1.0, 0.50, 0.6));
+    bs.setColorAt(0.5, QColor::fromHslF(167 / 360., 1.0, 0.50, 0.4));
+    bs.setColorAt(1.0, QColor::fromHslF(167 / 360., 1.0, 0.50, 0.2));
   }
 
   painter.setBrush(bs);
@@ -982,13 +982,13 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
       static double hue;
       if ((laneWidth < minLaneWidth) || blindspot) {
         // Make the path red for smaller paths or if there's a car in the blindspot
-        hue = 0;
+        hue = 81;
       } else if (laneWidth >= maxLaneWidth) {
         // Make the path green for larger paths
-        hue = 120;
+        hue = 167;
       } else {
         // Transition the path from red to green based on lane width
-        hue = (120 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
+        hue = (167 * (laneWidth - minLaneWidth)) / (maxLaneWidth - minLaneWidth);
       }
       gradient.setColorAt(0.0, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.6));
       gradient.setColorAt(0.5, QColor::fromHslF(hue / 360., 0.75, 0.50, 0.4));
