@@ -63,7 +63,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {6, {"ocean_theme", {QColor(119, 51, 255)}}},
     {7, {"corn_theme", {QColor(254, 232, 1)}}},
     {8, {"sunset_theme", {QColor(129, 0, 204)}}},
-    {9, {"enchantedforest", {QColor(0, 51, 0, 255)}}},
+    {9, {"cosmic", {QColor(0, 51, 0, 255)}}},
     {10, {"Heat", {QColor(255, 0, 0, 255)}}},
     {11, {"opal", {QColor(0, 102, 102, 255)}}},
     {12, {"pool", {QColor(255, 85, 85, 255)}}},
