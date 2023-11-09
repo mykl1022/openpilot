@@ -240,19 +240,19 @@ ParamController(CurveSensitivity, "CurveSensitivity", "   Curve Detection Sensit
 
 ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock openpilot colors with a custom color scheme.\n\nWant to submit your own color scheme? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int colors = params.getInt("CustomColors");
-  return colors == 0 ? "Stock" : colors == 1 ? "HyLyte" : colors == 2 ? "Aurora" : colors == 3 ? "kirby" : colors == 4 ? "opRnBw" : colors == 5 ? "rnbw" : colors == 6 ? "ocean" : colors == 7 ? "corn" : colors == 8 ? "sunset" : colors == 9 ? "cosmic" : colors == 10 ? "Heat" : colors == 11 ? "opal" : colors == 12 ? "pool" : colors == 13 ? "desert" : colors == 14 ? "Baja" : colors == 15 ? "sunup" : colors == 16 ? "merica" : colors == 17 ? "beach" : colors == 18 ? "golden" : colors == 19 ? "dreamy" : colors == 20 ? "sherbert" : colors == 21 ? "ruins" : colors == 22 ? "crystal" : colors == 23 ? "citylyts" : colors == 24 ? "jungle" : colors == 25 ? "fairy" : colors == 26 ? "chrmprpl" : colors == 27 ? "rust" : colors == 28 ? "mercury" : colors == 29 ? "venus" : colors == 30 ? "earth" : colors == 31 ? "mars" : colors == 32 ? "Jupiter" : colors == 33 ? "Saturn" : colors == 34 ? "Uranus" : colors == 35 ? "Neptune" : colors == 36 ?"phobos" : colors == 37 ? "nebula" : colors == 38 ? "nova" : colors == 39 ? "vortex" : colors == 40 ? "galaxy" : colors == 41 ? "lqdmtl" : colors == 42 ? "silver" : colors == 43 ? "almnm" : "glow";,
+  return colors == 0 ? "Stock" : colors == 1 ? "HyLyte" : colors == 2 ? "Aurora" : colors == 3 ? "kirby" : colors == 4 ? "opRnBw" : colors == 5 ? "rnbw" : colors == 6 ? "ocean" : colors == 7 ? "Solar" : colors == 8 ? "sunset" : colors == 9 ? "cosmic" : colors == 10 ? "Heat" : colors == 11 ? "opal" : colors == 12 ? "pool" : colors == 13 ? "desert" : colors == 14 ? "Baja" : colors == 15 ? "sunup" : colors == 16 ? "merica" : colors == 17 ? "beach" : colors == 18 ? "golden" : colors == 19 ? "dreamy" : colors == 20 ? "sherbert" : colors == 21 ? "ruins" : colors == 22 ? "crystal" : colors == 23 ? "citylyts" : colors == 24 ? "jungle" : colors == 25 ? "fairy" : colors == 26 ? "chrmprpl" : colors == 27 ? "rust" : colors == 28 ? "mercury" : colors == 29 ? "venus" : colors == 30 ? "earth" : colors == 31 ? "mars" : colors == 32 ? "Jupiter" : colors == 33 ? "Saturn" : colors == 34 ? "Uranus" : colors == 35 ? "Neptune" : colors == 36 ?"phobos" : colors == 37 ? "nebula" : colors == 38 ? "nova" : colors == 39 ? "vortex" : colors == 40 ? "galaxy" : colors == 41 ? "lqdmtl" : colors == 42 ? "silver" : colors == 43 ? "almnm" : "glow";,
   return v >= 0 ? v % 45 : 44;
 )
 
 ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilot icons with a custom icon pack.\n\nWant to submit your own icon pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int icons = params.getInt("CustomIcons");
-  return icons == 0 ? "Stock" : icons == 1 ? "HyLyte" : icons == 2 ? "Aurora" : icons == 3 ? "kirby" : icons == 4 ? "opRnBw" : icons == 5 ? "rainbow" : icons == 6 ? "ocean" : "corn";,
+  return icons == 0 ? "Stock" : icons == 1 ? "HyLyte" : icons == 2 ? "Aurora" : icons == 3 ? "kirby" : icons == 4 ? "opRnBw" : icons == 5 ? "rainbow" : icons == 6 ? "ocean" : "Solar";,
   return v >= 0 ? v % 8 : 7;
 )
 
 ParamController(CustomSignals, "CustomSignals", "Signals", "Enable a custom turn signal animation.\n\nWant to submit your own turn signal animation? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int turnSignals = params.getInt("CustomSignals");
-  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "HyLyte" : turnSignals == 2 ? "Aurora" : turnSignals == 3 ? "kirby" : turnSignals == 4 ? "opRnBw" : turnSignals == 5 ? "rainbow" : turnSignals == 6 ? "ocean" : "corn";,
+  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "HyLyte" : turnSignals == 2 ? "Aurora" : turnSignals == 3 ? "kirby" : turnSignals == 4 ? "opRnBw" : turnSignals == 5 ? "rainbow" : turnSignals == 6 ? "ocean" : "Solar";,
   return v >= 0 ? v % 8 : 7;
 )
 

@@ -61,7 +61,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {4, {"eevee_theme", {QColor(168, 98, 47)}}},
     {5, {"rainbow_theme", {QColor(119, 51, 255)}}},
     {6, {"ocean_theme", {QColor(119, 51, 255)}}},
-    {7, {"corn_theme", {QColor(254, 232, 1)}}},
+    {7, {"Solar", {QColor(254, 232, 1)}}},
     {8, {"sunset_theme", {QColor(129, 0, 204)}}},
     {9, {"cosmic", {QColor(0, 51, 0, 255)}}},
     {10, {"Heat", {QColor(255, 0, 0, 255)}}},
