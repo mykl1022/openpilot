@@ -53,9 +53,17 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   themeConfiguration = {
     {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"frog_theme", {QColor(23, 134, 68)}}},
-    {2, {"tesla_theme", {QColor(0, 72, 255)}}},
-    {3, {"stalin_theme", {QColor(255, 0, 0)}}}
+    {1, {"Luna", {QColor(23, 134, 68)}}},
+    {2, {"Aurora", {QColor(0, 72, 255)}}},
+    {3, {"Celest", {QColor(255, 0, 0)}}},
+    {4, {"Earth", {QColor(119, 51, 255)}}},
+    {5, {"Solar", {QColor(254, 232, 1)}}},
+    {6, {"Nova", {QColor(255, 0, 0, 255)}}},
+    {7, {"Cosmo", {QColor(204, 229, 255, 255)}}},
+    {8, {"Prism", {QColor(0, 102, 102, 255)}}},
+    {9, {"Lumos", {QColor(255, 255, 85, 255)}}},
+    {10, {"Galaxy", {QColor(128, 0, 128, 255)}}},
+    {11, {"Nebula", {QColor(51, 0, 51, 255)}}}
   };
 
   for (const auto &[key, themeData] : themeConfiguration) {
