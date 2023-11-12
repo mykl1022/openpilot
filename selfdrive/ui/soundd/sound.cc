@@ -18,9 +18,9 @@ Sound::Sound(QObject *parent) : sm({"controlsState", "microphone"}) {
   // FrogPilot variables
   const std::unordered_map<int, QString> themeConfiguration = {
     {0, "stock"},
-    {1, "frog_theme"},
-    {2, "tesla_theme"},
-    {3, "stalin_theme"}
+    {1, "astro_theme"},
+    {2, "lumos_theme"},
+    {3, "nebula_theme"}
   };
 
   for (const auto &[key, themeName] : themeConfiguration) {
