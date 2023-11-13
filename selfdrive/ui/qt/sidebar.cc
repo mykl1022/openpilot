@@ -53,9 +53,9 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   themeConfiguration = {
     {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"Luna", {QColor(23, 134, 68)}}},
-    {2, {"Aurora", {QColor(0, 72, 255)}}},
-    {3, {"Celest", {QColor(255, 195, 244)}}},
+    {1, {"Luna_theme", {QColor(23, 134, 68)}}},
+    {2, {"Aurora_theme", {QColor(0, 72, 255)}}},
+    {3, {"Celest_theme", {QColor(255, 195, 244)}}},
     {4, {"Earth", {QColor(119, 51, 255)}}},
     {5, {"Solar", {QColor(254, 232, 1)}}},
     {6, {"Nova", {QColor(255, 0, 0, 255)}}},
