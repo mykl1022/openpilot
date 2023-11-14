@@ -63,7 +63,8 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {8, {"Prism", {QColor(0, 102, 102, 255)}}},
     {9, {"Lumos", {QColor(255, 255, 85, 255)}}},
     {10, {"Galaxy", {QColor(128, 0, 128, 255)}}},
-    {11, {"Nebula", {QColor(51, 0, 51, 255)}}}
+    {11, {"Nebula", {QColor(51, 0, 51, 255)}}},
+    {12, {"Neon", {QColor(255, 0, 166, 255)}}}
   };
 
   for (const auto &[key, themeData] : themeConfiguration) {
