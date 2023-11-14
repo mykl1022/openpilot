@@ -228,7 +228,7 @@ def startup_master_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
   if "REPLAY" in os.environ:
     branch = "replay"
 
-  return StartupAlert("Welcome to the new Spacepilot", "Enjoy and Drive Safe!", alert_status=AlertStatus.frogpilot)
+  return StartupAlert("Welcome to the New Spacepilot", "Enjoy and Drive Safe!", alert_status=AlertStatus.frogpilot)
 
 def below_engage_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
   return NoEntryAlert(f"Drive above {get_display_speed(CP.minEnableSpeed, metric)} to engage")
