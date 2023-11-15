@@ -502,7 +502,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
     {12, {QString("Neon"), {QColor(255, 0, 166, 255), {{0.0, QBrush(QColor(255, 0, 166, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.24, QBrush(QColor(0, 234, 255, 255))}, {0.4, QBrush(QColor(0, 234, 255, 255))}, {1.0, QBrush(QColor(0, 234, 255, 255))}}}}},
 
-    {13, {QString("blkHole"), {QColor(0, 0, 0, 255), {{0.0, QBrush(QColor(255, 255, 255, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.24, QBrush(QColor(255, 255, 255, 180))}, {0.4, QBrush(QColor(0, 0, 0, 255))}, {1.0, QBrush(QColor(255, 255, 255, 255))}}}}}
+    {13, {QString("blkHole"), {QColor(0, 0, 0, 255), {{0.0, QBrush(QColor(116, 0, 179, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.24, QBrush(QColor(0, 0, 0, 255))}, {0.4, QBrush(QColor(116, 0, 179, 255))}, {1.0, QBrush(QColor(255, 0, 161, 255))}}}}}
   };
 
   // Initialize the timer for the turn signal animation
