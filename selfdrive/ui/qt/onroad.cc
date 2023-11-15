@@ -500,8 +500,9 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
     {11, {QString("Nebula"), {QColor(102, 0, 153, 255), {{0.0, QBrush(QColor(45, 0, 77, 255))}, {0.2, QBrush(QColor(128, 0, 219, 255))}, {0.3, QBrush(QColor(122, 102, 255, 255))}, {0.4, QBrush(QColor(9, 0, 31, 255))}, {0.6, QBrush(QColor(204, 0, 201, 255))}, {0.7, QBrush(QColor(255, 255, 255, 255))}, {0.8, QBrush(QColor(119, 0, 204, 255))}, {1.0, QBrush(QColor(54, 0, 92, 255))}}}}},
 
-    {12, {QString("Neon"), {QColor(255, 0, 166, 255), {{0.0, QBrush(QColor(255, 0, 166, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.24, QBrush(QColor(0, 234, 255, 255))}, {0.4, QBrush(QColor(0, 234, 255, 255))}, {1.0, QBrush(QColor(0, 234, 255, 255))}}}}}
+    {12, {QString("Neon"), {QColor(255, 0, 166, 255), {{0.0, QBrush(QColor(255, 0, 166, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.24, QBrush(QColor(0, 234, 255, 255))}, {0.4, QBrush(QColor(0, 234, 255, 255))}, {1.0, QBrush(QColor(0, 234, 255, 255))}}}}},
 
+    {13, {QString("blkHole"), {QColor(0, 0, 0, 255), {{0.0, QBrush(QColor(255, 255, 255, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.24, QBrush(QColor(255, 255, 255, 180))}, {0.4, QBrush(QColor(0, 0, 0, 255))}, {1.0, QBrush(QColor(255, 255, 255, 255))}}}}}
   };
 
   // Initialize the timer for the turn signal animation
