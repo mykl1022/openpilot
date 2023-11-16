@@ -478,15 +478,31 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}}},
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
-    {3, {QString("stalin_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}}
+    {1, {QString("Luna"), {QColor(244, 255, 74, 255), {{0.0, QBrush(QColor::fromHslF(64 / 360., 1.0, 0.65, 1.0))}, {0.2, QBrush(QColor::fromHslF(140 / 360., 0.93, 0.59, 1.0))}, {0.4, QBrush(QColor::fromHslF(168 / 360., 1.0, 0.5, 1.0))}, {0.6, QBrush(QColor::fromHslF(64 / 360., 1.0, 0.65, 1.0))}, {0.8, QBrush(QColor::fromHslF(140 / 360., 0.93, 0.59, 1.0))}, {1.0, QBrush(QColor::fromHslF(168 / 360., 1.0, 0.5, 1.0))}}}}},
+
+    {2, {QString("Aurora"), {QColor(129, 0, 204, 255), {{0.0, QBrush(QColor::fromHslF(304 / 360., 1.0, 0.6, 1.0))}, {0.2, QBrush(QColor::fromHslF(190 / 360., 1.0, 0.6, 1.0))}, {0.4, QBrush(QColor::fromHslF(245 / 360., 1.0, 0.4, 1.0))}, {0.6, QBrush(QColor::fromHslF(245 / 360., 1.0, 0.5, 1.0))}, {0.8, QBrush(QColor::fromHslF(262 / 360., 1.0, 0.24, 1.0))}, {1.0, QBrush(QColor::fromHslF(262 / 360., 1.0, 0.24, 1.0))}}}}},
+
+    {3, {QString("Celest"), {QColor(255, 153, 213, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 1.0, 0.9))}, {0.5, QBrush(QColor::fromHslF(330 / 360., 1.0, 0.5, 0.5))}, {1.0, QBrush(QColor::fromHslF(330 / 360., 1.0, 0.5, 0.1))}}}}},
+
+    {4, {QString("Earth"), {QColor(0, 255, 213, 255), {{0.0, QBrush(QColor::fromHslF(191 / 360., 0.91, 0.17, 1.0))}, {0.2, QBrush(QColor::fromHslF(209 / 360., 0.44, 0.15, 1.0))}, {0.4, QBrush(QColor::fromHslF(187 / 360., 0.65, 0.42, 1.0))}, {0.6, QBrush(QColor::fromHslF(182 / 360., 0.43, 0.54, 1.0))}, {0.8, QBrush(QColor::fromHslF(182 / 360., 0.26, 0.77, 1.0))}, {1.0, QBrush(QColor::fromHslF(182 / 360., 0.26, 1.0, 1.0))}}}}},
+
+    {5, {QString("Solar"), {QColor(255, 208, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 0.0, 0.0, 1.0))}, {0.2, QBrush(QColor::fromHslF(34 / 360., 1.0, 0.5, 1.0))}, {0.4, QBrush(QColor::fromHslF(49 / 360., 1.0, 0.5, 1.0))}, {0.6, QBrush(QColor::fromHslF(34 / 360., 1.0, 0.5, 1.0))}, {0.8, QBrush(QColor::fromHslF(49 / 360., 1.0, 0.5, 1.0))}, {1.0, QBrush(QColor::fromHslF(32 / 360., 0.71, 0.96, 1.0))}}}}},
+
+    {6, {QString("Nova"), {QColor(67, 27, 62, 255), {{0.0, QBrush(QColor(254, 245, 40, 255))}, {0.2, QBrush(QColor(185, 59, 65, 255))}, {0.4, QBrush(QColor(67, 27, 62, 255))}, {0.6, QBrush(QColor(254, 245, 40, 255))}, {0.8, QBrush(QColor(185, 59, 65, 255))}, {1.0, QBrush(QColor(67, 27, 62, 255))}}}}},
+
+    {7, {QString("Cosmo"), {QColor(0, 255, 200, 255), {{0.0, QBrush(QColor(118, 199, 199, 255))}, {0.2, QBrush(QColor(0, 255, 200, 255))}, {0.4, QBrush(QColor(255, 255, 0, 255))}, {0.6, QBrush(QColor(36, 242, 253, 255))}, {0.8, QBrush(QColor(0, 161, 206, 255))}, {1.0, QBrush(QColor(230, 255, 0, 255))}}}}},
+
+    {8, {QString("Prism"), {QColor(0, 102, 102, 255), {{0.0, QBrush(QColor(230, 210, 255, 255))}, {0.2, QBrush(QColor(255, 214, 180, 255))}, {0.4, QBrush(QColor(160, 253, 255, 255))}, {0.6, QBrush(QColor(232, 214, 255, 255))}, {0.8, QBrush(QColor(254, 255, 210, 255))}, {1.0, QBrush(QColor(255, 215, 155, 255))}}}}},
+
+    {9, {QString("Lumos"), {QColor(215, 190, 55, 255), {{0.0, QBrush(QColor(255, 255, 149, 255))}, {0.1, QBrush(QColor(236, 196, 64, 255))}, {0.2, QBrush(QColor(221, 172, 23, 255))}, {0.3, QBrush(QColor(236, 196, 64, 255))}, {0.4, QBrush(QColor(255, 250, 138, 255))}, {0.5, QBrush(QColor(255, 250, 138, 255))}, {0.6, QBrush(QColor(236, 196, 64, 255))}, {0.7, QBrush(QColor(221, 172, 23, 255))}, {0.8, QBrush(QColor(255, 215, 0, 255))}, {0.9, QBrush(QColor(255, 255, 149, 255))}, {1.0, QBrush(QColor(255, 255, 149, 255))}}}}},
+
+    {10, {QString("Galaxy"), {QColor(128, 0, 128, 255), {{0.0, QBrush(QColor(128, 0, 128, 255))}, {0.2, QBrush(QColor(255, 0, 255, 255))}, {0.4, QBrush(QColor(0, 255, 255, 255))}, {0.6, QBrush(QColor(0, 255, 0, 255))}, {0.8, QBrush(QColor(255, 255, 0, 255))}, {1.0, QBrush(QColor(255, 0, 0, 255))}}}}},
+
+    {11, {QString("Nebula"), {QColor(102, 0, 153, 255), {{0.0, QBrush(QColor(45, 0, 77, 255))}, {0.2, QBrush(QColor(128, 0, 219, 255))}, {0.3, QBrush(QColor(122, 102, 255, 255))}, {0.4, QBrush(QColor(9, 0, 31, 255))}, {0.6, QBrush(QColor(204, 0, 201, 255))}, {0.7, QBrush(QColor(255, 255, 255, 255))}, {0.8, QBrush(QColor(119, 0, 204, 255))}, {1.0, QBrush(QColor(54, 0, 92, 255))}}}}},
+
+    {12, {QString("Neon"), {QColor(255, 0, 166, 255), {{0.0, QBrush(QColor(255, 0, 166, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.24, QBrush(QColor(0, 234, 255, 255))}, {0.4, QBrush(QColor(0, 234, 255, 255))}, {1.0, QBrush(QColor(0, 234, 255, 255))}}}}},
+
+    {13, {QString("blkHole"), {QColor(0, 0, 0, 255), {{0.0, QBrush(QColor(116, 0, 179, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.24, QBrush(QColor(0, 0, 0, 255))}, {0.4, QBrush(QColor(116, 0, 179, 255))}, {1.0, QBrush(QColor(255, 0, 161, 255))}}}}}
   };
 
   // Initialize the timer for the turn signal animation
