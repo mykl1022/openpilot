@@ -111,10 +111,10 @@ enum PrimeType {
 const QColor bg_colors [] = {
   [STATUS_DISENGAGED] = QColor(0x17, 0x33, 0x49, 0xc8),
   [STATUS_OVERRIDE] = QColor(0x91, 0x9b, 0x95, 0xf1),
-  [STATUS_ENGAGED] = QColor(255, 0, 166, 255),
+  [STATUS_ENGAGED] = QColor(170, 255, 0, 255),
 
   // FrogPilot colors
-  [STATUS_LATERAL_ACTIVE] = QColor(255, 0, 166, 255),
+  [STATUS_LATERAL_ACTIVE] = QColor(170, 255, 0, 255),
 };
 
 static std::map<cereal::ControlsState::AlertStatus, QColor> alert_colors = {
