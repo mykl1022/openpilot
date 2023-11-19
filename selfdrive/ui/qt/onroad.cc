@@ -254,7 +254,7 @@ void OnroadWindow::paintEvent(QPaintEvent *event) {
     // Text declarations
     p.setFont(InterFont(30, QFont::DemiBold));
     p.setRenderHint(QPainter::TextAntialiasing);
-    p.setPen(Qt::white);
+    p.setPen(Qt::black);
 
     // Construct the FPS display string
     QString fpsDisplayString = QString("FPS: %1 (%2) | Min: %3 | Max: %4 | Avg: %5")
@@ -1581,7 +1581,7 @@ void AnnotatedCameraWidget::drawStatusBar(QPainter &p) {
 
   // Configure the text
   p.setFont(InterFont(40, QFont::Bold));
-  p.setPen(Qt::white);
+  p.setPen(Qt::black);
   p.setRenderHint(QPainter::TextAntialiasing);
 
   // Draw the status text with the calculated opacity
