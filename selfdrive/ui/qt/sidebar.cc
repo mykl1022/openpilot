@@ -53,7 +53,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   themeConfiguration = {
     {0, {"stock", {QColor(170, 255, 0)}}},
-    {1, {"dragon_theme", {QColor(23, 134, 68)}}},
+    {1, {"dragon_theme", {QColor(84, 0, 158)}}},
     {2, {"tesla_theme", {QColor(0, 72, 255)}}},
     {3, {"stalin_theme", {QColor(255, 0, 0)}}}
   };

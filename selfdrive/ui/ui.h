@@ -119,9 +119,9 @@ const QColor bg_colors [] = {
 
 static std::map<cereal::ControlsState::AlertStatus, QColor> alert_colors = {
   {cereal::ControlsState::AlertStatus::NORMAL, QColor(0x15, 0x15, 0x15, 0xf1)},
-  {cereal::ControlsState::AlertStatus::USER_PROMPT, QColor(255, 0, 166, 255)},
+  {cereal::ControlsState::AlertStatus::USER_PROMPT, QColor(170, 255, 0, 255)},
   {cereal::ControlsState::AlertStatus::CRITICAL, QColor(0xC9, 0x22, 0x31, 0xf1)},
-  {cereal::ControlsState::AlertStatus::FROGPILOT, QColor(255, 0, 166, 255)},
+  {cereal::ControlsState::AlertStatus::FROGPILOT, QColor(170, 255, 0, 255)},
 };
 
 typedef struct UIScene {
