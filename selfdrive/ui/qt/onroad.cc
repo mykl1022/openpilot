@@ -497,7 +497,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
   themeConfiguration = {
     {1, {QString("stock_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, {0.2, QBrush(QColor(242, 255, 0, 255))}, {0.24, QBrush(QColor(242, 255, 0, 255))}, {0.4, QBrush(QColor(170, 255, 0, 255))}, {1.0, QBrush(QColor(242, 255, 0, 255))}}}}},
     
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(271 / 360., 0.99, 0.27, 1.0))},
+    {2, {QString("tesla_theme"), {QColor(72, 1, 138, 255), {{0.0, QBrush(QColor::fromHslF(271 / 360., 0.99, 0.27, 1.0))},
                                                             {0.3, QBrush(QColor::fromHslF(303 / 360., 1.0, 0.29, 1.0))},
                                                             {0.4, QBrush(QColor::fromHslF(40 / 360., 1.0, 0.79, 1.0))},
                                                             {0.6, QBrush(QColor::fromHslF(303 / 360., 1.0, 0.29, 1.0))},
