@@ -499,7 +499,10 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
     
     {2, {QString("dragon_theme"), {QColor(72, 1, 138, 255), {{0.0, QBrush(QColor::fromHslF(271 / 360., 0.99, 0.27, 1.0))}, {0.3, QBrush(QColor::fromHslF(303 / 360., 1.0, 0.29, 1.0))}, {0.4, QBrush(QColor::fromHslF(40 / 360., 1.0, 0.79, 1.0))}, {0.6, QBrush(QColor::fromHslF(303 / 360., 1.0, 0.29, 1.0))}, {1.0, QBrush(QColor::fromHslF(271 / 360., 0.99, 0.27, 1.0))}}}}},
    
-    {3, {QString("jewel_theme"), {QColor(0, 208, 255, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, {0.2, QBrush(QColor(46, 0, 119, 255))}, {0.4, QBrush(QColor(98, 0, 255, 255))}, {0.6, QBrush(QColor(0, 208, 255, 255))}, {0.8, QBrush(QColor(0, 111, 255, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}
+    {3, {QString("jewel_theme"), {QColor(0, 208, 255, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, {0.2, QBrush(QColor(46, 0, 119, 255))}, {0.4, QBrush(QColor(98, 0, 255, 255))}, {0.6, QBrush(QColor(0, 208, 255, 255))}, {0.8, QBrush(QColor(0, 111, 255, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+  
+    {4, {QString("else_theme"), {QColor(176, 255, 255, 255), {{0.0, QBrush(QColor(211, 248, 255, 255))}, {0.2, QBrush(QColor(176, 255, 255, 255))}, {0.24, QBrush(QColor(228, 219, 255, 255))}, {0.4, QBrush(QColor(176, 171, 255, 255))}, {1.0, QBrush(QColor(126, 190, 255, 255))}}}}}
+  
   };
 
   // Initialize the timer for the turn signal animation

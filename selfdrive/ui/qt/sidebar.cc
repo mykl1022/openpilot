@@ -55,7 +55,8 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {0, {"stock", {QColor(170, 255, 0)}}},
     {1, {"neon_theme", {QColor(170, 255, 0)}}},
     {2, {"dragon_theme", {QColor(72, 1, 138)}}},
-    {3, {"jewel_theme", {QColor(0, 208, 255)}}}
+    {3, {"jewel_theme", {QColor(0, 208, 255)}}},
+    {4, {"elsa_theme", {QColor(176,255,255)}}}
   };
 
   for (const auto &[key, themeData] : themeConfiguration) {
