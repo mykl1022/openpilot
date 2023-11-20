@@ -254,7 +254,7 @@ void OnroadWindow::paintEvent(QPaintEvent *event) {
     // Text declarations
     p.setFont(InterFont(30, QFont::DemiBold));
     p.setRenderHint(QPainter::TextAntialiasing);
-    p.setPen(Qt::black);
+    p.setPen(Qt::white);
 
     // Construct the FPS display string
     QString fpsDisplayString = QString("FPS: %1 (%2) | Min: %3 | Max: %4 | Avg: %5")
