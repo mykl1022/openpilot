@@ -985,8 +985,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.WARNING: Alert(
       "Turn Exceeds Steering Limit",
       "JESUS TAKE THE WHEEL!!",
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.warningSoft, 2.),
+      AlertStatus.userPrompt, AlertSize.none,
+      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.none, 2.),
   },
 
   EventName.greenLight: {
@@ -1013,7 +1013,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.WARNING: Alert(
       "Turning Left",
       "",
-      AlertStatus.normal, AlertSize.small,
+      AlertStatus.normal, AlertSize.none,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
@@ -1021,7 +1021,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.WARNING: Alert(
       "Turning Right",
       "",
-      AlertStatus.normal, AlertSize.small,
+      AlertStatus.normal, AlertSize.none,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
