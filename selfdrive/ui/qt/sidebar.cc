@@ -52,10 +52,21 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
   isFahrenheit = params.getBool("Fahrenheit");
 
   themeConfiguration = {
-    {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"frog_theme", {QColor(23, 134, 68)}}},
-    {2, {"tesla_theme", {QColor(0, 72, 255)}}},
-    {3, {"stalin_theme", {QColor(255, 0, 0)}}}
+    {0, {"stock", {QColor(170, 255, 0)}}},
+    {1, {"lime_theme", {QColor(170, 255, 0)}}},
+    {2, {"dragon_theme", {QColor(72, 1, 138)}}},
+    {3, {"jewel_theme", {QColor(0, 208, 255)}}},
+    {4, {"elsa_theme", {QColor(176,255,255)}}},
+    {5, {"elsa2_theme", {QColor(72, 1, 138)}}},
+    {6, {"jade_theme", {QColor(0, 208, 255)}}},
+    {7, {"Pink_theme", {QColor(255, 0, 200)}}},
+    {8, {"Burple_theme", {QColor(81, 0, 255)}}},
+    {9, {"passion_theme", {QColor(248, 155, 41)}}},
+    {10, {"shadow_theme", {QColor(0,0,0)}}},
+    {11, {"freeze_theme", {QColor(92, 218, 215)}}},
+    {12, {"trippin_theme", {QColor(0, 145, 255)}}},
+    {13, {"rainbow_theme", {QColor(255, 255, 0)}}}
+
   };
 
   for (const auto &[key, themeData] : themeConfiguration) {
