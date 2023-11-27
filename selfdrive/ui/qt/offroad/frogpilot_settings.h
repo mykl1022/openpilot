@@ -251,7 +251,7 @@ ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilo
 
 ParamController(CustomSignals, "CustomSignals", "Signals", "Enable a custom turn signal animation.\n\nWant to submit your own turn signal animation? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int turnSignals = params.getInt("CustomSignals");
-  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "Frog" : "Stalin";,
+  return turnSignals == 0 ? "Stock" : turnSignals == 1 ? "Lime" : "Stalin";,
   return v >= 0 ? v % 4 : 3;
 )
 
