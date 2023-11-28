@@ -408,7 +408,7 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
       (scene.conditional_status == 1 ? QColor(255, 246, 0, 255) :
       (experimental_mode ? QColor(218, 111, 37, 241) :
       (scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)))) :
-      (scene.always_on_lateral_active ? QColor(10, 186, 181, 255) :
+      (scene.always_on_lateral_active ? QColor(0, 255, 247, 255) :
       QColor(0, 0, 0, 166));
 
   if (!scene.show_driver_camera) {
@@ -931,9 +931,10 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) {
-    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.1));
+    const auto &colorMap = themeConfiguration[customColors].second.second;
+    for (const auto &[position, brush] : colorMap) {
+      QColor darkerColor = brush.color().darker(100);
+      pe.setColorAt(position, darkerColor);
   } else if (conditionalStatus == 1 || conditionalStatus == 3) {
     pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
@@ -949,7 +950,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   } else if (customColors != 0) {
     const auto &colorMap = themeConfiguration[customColors].second.second;
     for (const auto &[position, brush] : colorMap) {
-      QColor darkerColor = brush.color().darker(120);
+      QColor darkerColor = brush.color().darker(180);
       pe.setColorAt(position, darkerColor);
     }
   } else {
