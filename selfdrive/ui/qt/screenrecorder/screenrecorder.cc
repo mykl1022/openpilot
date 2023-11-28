@@ -43,7 +43,7 @@ void ScreenRecorder::buttonPressed() {
 
 void ScreenRecorder::applyColor() {
   if (frame % (UI_FREQ / 2) == 0) {
-    recording_color = (frame % UI_FREQ < (UI_FREQ / 2)) ? QColor::fromRgbF(1, 0, 0, 0.6) : QColor::fromRgbF(0, 0, 0, 0.3);
+    recording_color = (frame % UI_FREQ < (UI_FREQ / 2)) ? QColor::fromRgbF(55, 255, 0, 0.6) : QColor::fromRgbF(55, 255, 255, 0.3);
     update();
   }
 }
@@ -51,7 +51,7 @@ void ScreenRecorder::applyColor() {
 void ScreenRecorder::paintEvent(QPaintEvent *event) {
   QPainter p(this);
   QRect rect(45, 45, width() - 90, height() - 90);
-  QColor bgColor = !recording ? recording_color : QColor::fromRgbF(0, 0, 0, 0.3);
+  QColor bgColor = !recording ? recording_color : QColor::fromRgbF(55, 255, 255, 0.3);
 
   p.setRenderHint(QPainter::Antialiasing);
   p.setCompositionMode(QPainter::CompositionMode_SourceOver);
