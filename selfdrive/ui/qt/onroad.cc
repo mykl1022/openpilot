@@ -513,7 +513,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
     {9, {QString("passion_theme"), {QColor(248, 155, 41, 255), {{0.0, QBrush(QColor(255, 15, 123, 255))}, {0.2, QBrush(QColor(251, 107, 70, 255))}, {0.3, QBrush(QColor(254, 44, 106, 255))}, {0.4, QBrush(QColor(253, 72, 90, 255))}, {1.0, QBrush(QColor(248, 155, 41, 255))}}}}},
 
-    {10, {QString("shadow_theme"), {QColor(0, 0, 0, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, {0.2, QBrush(QColor(84, 81, 103, 255))}, {0.3, QBrush(QColor(118, 114, 140, 255))}, {0.4, QBrush(QColor(60, 57, 76, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+    {10, {QString("shadow_theme"), {QColor(0, 0, 0, 155), {{0.0, QBrush(QColor(0, 0, 0, 155))}, {0.2, QBrush(QColor(84, 81, 103, 155))}, {0.3, QBrush(QColor(118, 114, 140, 155))}, {0.4, QBrush(QColor(60, 57, 76, 155))}, {1.0, QBrush(QColor(0, 0, 0, 155))}}}}},
 
     {11, {QString("freeze_theme"), {QColor(92, 218, 215, 255), {{0.0, QBrush(QColor(255, 255, 255, 255))}, {0.2, QBrush(QColor(49, 152, 177, 255))}, {0.3, QBrush(QColor(92, 218, 215, 255))}, {0.4, QBrush(QColor(70, 185, 196, 255))}, {1.0, QBrush(QColor(255, 255, 255, 255))}}}}},
 
