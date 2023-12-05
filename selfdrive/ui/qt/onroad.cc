@@ -509,7 +509,7 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
     {7, {QString("pink_theme"), {QColor(255, 0, 200, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, {0.2, QBrush(QColor(110, 110, 110, 255))}, {0.3, QBrush(QColor(255, 0, 200, 255))}, {0.4, QBrush(QColor(110, 110, 110, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
   
-    {8, {QString("burple_theme"), {QColor(81, 0, 255, 255), {{0.0, QBrush(QColor(68, 0, 255, 255))}, {0.2, QBrush(QColor(81, 0, 255, 255))}, {0.3, QBrush(QColor(123, 0, 255, 255))}, {0.4, QBrush(QColor(98, 0, 255, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+    {8, {QString("burple_theme"), {QColor(81, 0, 255, 255), {{0.0, QBrush(QColor(68, 0, 255, 255))}, {0.2, QBrush(QColor(125, 0, 255, 255))}, {0.3, QBrush(QColor(123, 0, 255, 255))}, {0.4, QBrush(QColor(98, 0, 255, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
 
     {9, {QString("passion_theme"), {QColor(248, 155, 41, 255), {{0.0, QBrush(QColor(255, 15, 123, 255))}, {0.2, QBrush(QColor(251, 107, 70, 255))}, {0.3, QBrush(QColor(254, 44, 106, 255))}, {0.4, QBrush(QColor(253, 72, 90, 255))}, {1.0, QBrush(QColor(248, 155, 41, 255))}}}}},
 
@@ -519,7 +519,21 @@ AnnotatedCameraWidget::AnnotatedCameraWidget(VisionStreamType type, QWidget* par
 
     {12, {QString("trippin_theme"), {QColor(0, 145, 255, 255), {{0.0, QBrush(QColor(0, 255, 111, 255))}, {0.2, QBrush(QColor(131, 76, 207, 255))}, {0.3, QBrush(QColor(0, 145, 255, 255))}, {0.4, QBrush(QColor(166, 123, 224, 255))}, {1.0, QBrush(QColor(102, 36, 192, 255))}}}}},
 
-    {13, {QString("rainbow_theme"), {QColor(255, 255, 0, 255), {{0.0, QBrush(QColor(255, 255, 255, 255))}, {0.1, QBrush(QColor(255, 0, 0, 255))}, {0.2, QBrush(QColor(255, 123, 0, 255))}, {0.3, QBrush(QColor(255, 255, 0, 255))}, {0.4, QBrush(QColor(140, 255, 0, 255))}, {0.5, QBrush(QColor(0, 255, 225, 255))}, {0.6, QBrush(QColor(47, 0, 255, 255))}, {0.7, QBrush(QColor(132, 0, 255, 255))}, {0.8, QBrush(QColor(255, 0, 187, 255))}, {0.9, QBrush(QColor(255, 0, 77, 255))}, {1.0, QBrush(QColor(255, 255, 255, 255))}}}}}
+    {13, {QString("rainbow_theme"), {QColor(255, 255, 0, 255), {{0.0, QBrush(QColor(255, 255, 255, 255))}, {0.1, QBrush(QColor(255, 0, 0, 255))}, {0.2, QBrush(QColor(255, 123, 0, 255))}, {0.3, QBrush(QColor(255, 255, 0, 255))}, {0.4, QBrush(QColor(140, 255, 0, 255))}, {0.5, QBrush(QColor(0, 255, 225, 255))}, {0.6, QBrush(QColor(47, 0, 255, 255))}, {0.7, QBrush(QColor(132, 0, 255, 255))}, {0.8, QBrush(QColor(255, 0, 187, 255))}, {0.9, QBrush(QColor(255, 0, 77, 255))}, {1.0, QBrush(QColor(255, 255, 255, 255))}}}}},
+
+    {14, {QString("ghost_theme"), {QColor(255, 255, 255, 155), {{0.0, QBrush(QColor(255, 255, 255, 155))}, {0.2, QBrush(QColor(199, 199, 199, 155))}, {0.3, QBrush(QColor(128, 128, 128, 155))}, {0.4, QBrush(QColor(199, 199, 199, 155))}, {1.0, QBrush(QColor(255, 255, 255, 155))}}}}},
+
+    {15, {QString("white_theme"), {QColor(255, 255, 255, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, {0.2, QBrush(QColor(110, 110, 110, 255))}, {0.3, QBrush(QColor(255, 255, 255, 255))}, {0.4, QBrush(QColor(110, 110, 110, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+
+    {16, {QString("tiffany_theme"), {QColor(92, 225, 211, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, {0.2, QBrush(QColor(110, 110, 110, 255))}, {0.3, QBrush(QColor(92, 225, 211, 255))}, {0.4, QBrush(QColor(110, 110, 110, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+
+    {17, {QString("green_theme"), {QColor(180, 237, 0, 255), {{0.0, QBrush(QColor(180, 237, 0, 255))}, {0.2, QBrush(QColor(0, 0, 0, 255))}, {0.4, QBrush(QColor(180, 237, 0, 255))}, {0.6, QBrush(QColor(0, 0, 0, 155))}, {1.0, QBrush(QColor(0, 0, 0, 155))}}}}},
+
+    {18, {QString("gold_theme"), {QColor(255, 253, 203, 255), {{0.0, QBrush(QColor(255, 237, 0, 255))}, {0.2, QBrush(QColor(118, 118, 0, 255))}, {0.3, QBrush(QColor(255, 247, 0, 255))}, {0.4, QBrush(QColor(255, 253, 203, 255))}, {0.6, QBrush(QColor(255, 208, 0, 255))}, {1.0, QBrush(QColor(255, 255, 255, 255))}}}}},
+
+    {19, {QString("midnight_theme"), {QColor(118, 44, 255, 255), {{0.0, QBrush(QColor(25, 0, 255, 255))}, {0.2, QBrush(QColor(20, 0, 117, 255))}, {0.3, QBrush(QColor(25, 0, 255, 255))}, {0.4, QBrush(QColor(0, 229, 255, 255))}, {0.6, QBrush(QColor(118, 44, 255, 255))}, {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+
+    {20, {QString("lava_theme"), {QColor(255, 208, 0, 155), {{0.0, QBrush(QColor(122, 0, 0, 155))}, {0.2, QBrush(QColor(250, 142, 0, 155))}, {0.3, QBrush(QColor(255, 208, 0, 155))}, {0.4, QBrush(QColor(255, 0, 0, 155))}, {0.6, QBrush(QColor(250, 142, 0, 155))}, {1.0, QBrush(QColor(27, 0, 0, 155))}}}}}
 
 
     };
