@@ -1239,7 +1239,7 @@ void AnnotatedCameraWidget::updateFrogPilotWidgets(QPainter &p) {
   if (customSignals != scene.custom_signals) {
     customSignals = scene.custom_signals;
 
-    const QString theme_path = QString("../../frogpilot/assets/custom_themes/%1/images").arg(themeConfiguration.find(customSignals) != themeConfiguration.end() ? 
+    const QString theme_path = QString("../frogpilot/assets/custom_themes/%1/images").arg(themeConfiguration.find(customSignals) != themeConfiguration.end() ? 
                                        themeConfiguration[customSignals].first : "stock_theme");
     const QStringList imagePaths = {
       theme_path + "/turn_signal_1.png",
@@ -1272,7 +1272,7 @@ Compass::Compass(QWidget *parent) : QWidget(parent) {
   x = compassSize / 1.5 + 50;
   y = compassSize / 1.5 - 15;
 
-  compassInnerImg = loadPixmap("../../frogpilot/assets/other_images/compass_inner.png", QSize(compassSize / 1.75, compassSize / 1.75));
+  compassInnerImg = loadPixmap("../frogpilot/assets/other_images/compass_inner.png", QSize(compassSize / 1.75, compassSize / 1.75));
 
   initializeStaticElements();
 }
@@ -1477,9 +1477,9 @@ PersonalityButton::PersonalityButton(QWidget *parent) : QPushButton(parent), sce
 
   // Configure the profile vector
   profile_data = {
-    {QPixmap("../../frogpilot/assets/other_images/aggressive.png"), "Aggressive"},
-    {QPixmap("../../frogpilot/assets/other_images/standard.png"), "Standard"},
-    {QPixmap("../../frogpilot/assets/other_images/relaxed.png"), "Relaxed"}
+    {QPixmap("../frogpilot/assets/other_images/aggressive.png"), "Aggressive"},
+    {QPixmap("../frogpilot/assets/other_images/standard.png"), "Standard"},
+    {QPixmap("../frogpilot/assets/other_images/relaxed.png"), "Relaxed"}
   };
 
   // Start the timer as soon as the button is created
