@@ -137,6 +137,7 @@ public:
   void updateState(const UIState &s);
 
   MapSettingsButton *map_settings_btn;
+  MapSettingsButton *map_settings_btn_bottom;
 
 private:
   void drawText(QPainter &p, int x, int y, const QString &text, int alpha = 255);
@@ -206,7 +207,8 @@ private:
   int conditionalStatus;
   int customColors;
   int customSignals;
-  int totalFrames;
+  int totalFrames = 8;
+  QTimer *animationTimer;
   size_t animationFrameIndex;
 
   std::unordered_map<int, std::pair<QString, std::pair<QColor, std::map<double, QBrush>>>> themeConfiguration;
