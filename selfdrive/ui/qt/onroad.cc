@@ -816,9 +816,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint blindspot path
   QLinearGradient bs(0, height(), 0, 0);
   if (blindSpotLeft || blindSpotRight) {
-    bs.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.6));
-    bs.setColorAt(0.5, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.4));
-    bs.setColorAt(1.0, QColor::fromHslF(0 / 360., 0.75, 0.50, 0.2));
+    bs.setColorAt(0.0, QColor::fromHslF(0 / 360., 0.75, 0.0, 0.6));
+    bs.setColorAt(0.5, QColor::fromHslF(0 / 360., 0.75, 0.0, 0.4));
+    bs.setColorAt(1.0, QColor::fromHslF(0 / 360., 0.75, 0.0, 0.2));
   }
 
   painter.setBrush(bs);
@@ -839,17 +839,21 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     constexpr float minLaneWidth = 2.5f;
     constexpr float maxLaneWidth = 3.5f;
 
-    // Set gradient colors based on laneWidth and blindspot
+  // Set gradient colors based on laneWidth and blindspot
     const auto setGradientColors = [](QLinearGradient &gradient, const float laneWidth, const bool blindspot) {
-      // Make the path red for smaller paths or if there's a car in the blindspot and green for larger paths
-      const double hue = (laneWidth < minLaneWidth || blindspot) ? 0.0 : 
-                         (laneWidth >= maxLaneWidth) ? 120.0 : 
-                          120.0 * (laneWidth - minLaneWidth) / (maxLaneWidth - minLaneWidth);
-      const auto hue_ratio = hue / 360.0;
-      gradient.setColorAt(0.0, QColor::fromHslF(hue_ratio, 0.75, 0.50, 0.6));
-      gradient.setColorAt(0.5, QColor::fromHslF(hue_ratio, 0.75, 0.50, 0.4));
-      gradient.setColorAt(1.0, QColor::fromHslF(hue_ratio, 0.75, 0.50, 0.2));
-    };
+  // Use black for the small/blindspot paths
+      const double hue = (laneWidth < minLaneWidth || blindspot) ? 0.0 : 0.0;  
+
+  // Use a deep purple hue for all other paths
+  const double hue = 0.80;
+
+  // Set a fixed hue ratio  
+  const auto hue_ratio = hue / 360.0;
+
+  // Make gradient colors darker   
+  gradient.setColorAt(0.0, QColor::fromHslF(hue_ratio, 1.0, 0.20, 0.8)); 
+  gradient.setColorAt(0.5, QColor::fromHslF(hue_ratio, 1.0, 0.20, 0.6));
+  gradient.setColorAt(1.0, QColor::fromHslF(hue_ratio, 1.0, 0.20, 0.4));
 
     // Paint the lanes
     const auto paintLane = [&](QPainter &painter, const QPolygonF &lane, const float laneWidth, const bool blindspot) {
