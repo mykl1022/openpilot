@@ -1157,7 +1157,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                             {0.3, QBrush(QColor(255, 44, 209, 155))}, 
 							                                             {0.4, QBrush(QColor(255, 148, 241, 100))}, 
 							                                             {0.6, QBrush(QColor(250, 209, 243, 55))}, 
-							                                             {1.0, QBrush(QColor(255, 46, 217, 55))}}}}}
+							                                             {1.0, QBrush(QColor(255, 46, 217, 55))}}}}},
 {3, {QString("stalin_theme"), {QColor(255, 208, 0, 155), {{0.0, QBrush(QColor(122, 0, 0, 255))}, 
 							                                            {0.2, QBrush(QColor(250, 142, 0, 200))}, 
 							                                            {0.3, QBrush(QColor(255, 208, 0, 155))}, 
