@@ -417,7 +417,7 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
       (scene.conditional_status == 1 ? QColor(255, 246, 0, 255) :
       (experimental_mode ? QColor(218, 111, 37, 241) :
       (scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)))) :
-      (scene.always_on_lateral_active ? QColor(10, 186, 181, 255) :
+      (scene.always_on_lateral_active ? QColor(66, 66, 66, 125) :
       QColor(0, 0, 0, 166));
 
   if (!scene.show_driver_camera) {
@@ -783,9 +783,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) {
-    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 1.0, 0.0, 0.5));
+    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0.0, 0.3));
+    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0.0, 0.1));
   } else if (conditionalStatus == 1 || conditionalStatus == 3) {
     pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
@@ -1147,15 +1147,23 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}}},
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
-    {3, {QString("stalin_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}}
+    {1, {QString("frog_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {0.2, QBrush(QColor(242, 255, 0, 200))}, 
+							                                              {0.24, QBrush(QColor(242, 255, 0, 155))}, 
+							                                              {0.4, QBrush(QColor(170, 255, 0, 100))}, 
+							                                              {1.0, QBrush(QColor(242, 255, 0, 55))}}}}},
+{2, {QString("tesla_theme"), {QColor(250, 209, 243, 155), {{0.0, QBrush(QColor(255, 0, 195, 255))}, 
+							                                             {0.2, QBrush(QColor(255, 192, 255, 200))}, 
+							                                             {0.3, QBrush(QColor(255, 44, 209, 155))}, 
+							                                             {0.4, QBrush(QColor(255, 148, 241, 100))}, 
+							                                             {0.6, QBrush(QColor(250, 209, 243, 55))}, 
+							                                             {1.0, QBrush(QColor(255, 46, 217, 55))}}}}},
+{3, {QString("stalin_theme"), {QColor(255, 208, 0, 155), {{0.0, QBrush(QColor(122, 0, 0, 255))}, 
+							                                            {0.2, QBrush(QColor(250, 142, 0, 200))}, 
+							                                            {0.3, QBrush(QColor(255, 208, 0, 155))}, 
+							                                            {0.4, QBrush(QColor(255, 0, 0, 100))}, 
+							                                            {0.6, QBrush(QColor(250, 142, 0, 55))}, 
+							                                            {1.0, QBrush(QColor(27, 0, 0, 55))}}}}}
   };
 
   // Initialize the timer for the turn signal animation
