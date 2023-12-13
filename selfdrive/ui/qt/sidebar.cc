@@ -55,10 +55,10 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   themeConfiguration = {
     {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"frog_theme", {QColor(170, 255, 0)}}},
-    {2, {"tesla_theme", {QColor(250, 209, 243)}}},
-    {3, {"stalin_theme", {QColor(255, 208, 0)}}},
-    {4, {"midnight_theme", {QColor(255, 208, 0)}}}
+    {1, {"lime_theme", {QColor(170, 255, 0)}}},
+    {2, {"pink_theme", {QColor(250, 209, 243)}}},
+    {3, {"sunset_theme", {QColor(255, 208, 0)}}},
+    {4, {"dusk_theme", {QColor(255, 208, 0)}}}
   };
 
   for (const auto &[key, themeData] : themeConfiguration) {
