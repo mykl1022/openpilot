@@ -417,7 +417,7 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
       (scene.conditional_status == 1 ? QColor(255, 246, 0, 255) :
       (experimental_mode ? QColor(218, 111, 37, 241) :
       (scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)))) :
-      (scene.always_on_lateral_active ? QColor(66, 66, 66, 125) :
+      (scene.always_on_lateral_active ? QColor(66, 66, 66, 155) :
       QColor(0, 0, 0, 166));
 
   if (!scene.show_driver_camera) {
