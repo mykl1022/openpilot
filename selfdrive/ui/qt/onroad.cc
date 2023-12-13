@@ -1163,8 +1163,14 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                            {0.3, QBrush(QColor(255, 208, 0, 155))}, 
 							                                            {0.4, QBrush(QColor(255, 0, 0, 100))}, 
 							                                            {0.6, QBrush(QColor(250, 142, 0, 55))}, 
-							                                            {1.0, QBrush(QColor(27, 0, 0, 55))}}}}}
-  };
+							                                            {1.0, QBrush(QColor(27, 0, 0, 55))}}}}},
+{4, {QString("midnight_theme"), {QColor(252, 159, 50, 155), {{0.0, QBrush(QColor(26, 39, 102, 255))}, 
+							                                            {0.2, QBrush(QColor(174, 27, 30, 200))}, 
+							                                            {0.3, QBrush(QColor(252, 159, 50, 155))}, 
+							                                            {0.6, QBrush(QColor(100, 33, 66, 55))}, 
+							                                            {1.0, QBrush(QColor(48, 37, 91, 55))}}}}}
+};
+
 
   // Initialize the timer for the turn signal animation
   animationTimer = new QTimer(this);
