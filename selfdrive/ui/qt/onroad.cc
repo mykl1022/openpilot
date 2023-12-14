@@ -1168,8 +1168,22 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                            {0.2, QBrush(QColor(174, 27, 30, 255))}, 
 							                                            {0.3, QBrush(QColor(252, 159, 50, 255))}, 
 							                                            {0.6, QBrush(QColor(100, 33, 66, 255))}, 
-							                                            {1.0, QBrush(QColor(48, 37, 91, 255))}}}}}
-  };
+							                                            {1.0, QBrush(QColor(48, 37, 91, 255))}}}}},
+{5, {QString("myrtle_theme"), {QColor(90, 0, 169, 155), {{0.1, QBrush(QColor(104, 227, 249, 255))}, 
+							                                            {0.27, QBrush(QColor(0, 0, 0, 255))}, 
+							                                            {0.4, QBrush(QColor(255, 53, 235, 255))}, 
+							                                            {0.6, QBrush(QColor(90, 0, 169, 255))}, 
+							                                            {1.0, QBrush(QColor(0, 140, 255, 255))}}}}},
+{6, {QString("luster_theme"), {QColor(255, 247, 0, 155), {{0.0, QBrush(QColor(115, 0, 255, 255))}, 
+							                                            {0.2, QBrush(QColor(253, 168, 233, 255))}, 
+							                                            {0.3, QBrush(QColor(255, 221, 0, 255))}, 
+							                                            {0.4, QBrush(QColor(255, 241, 203, 255))},
+                                                          {0.5, QBrush(QColor(255, 180, 238, 255))},
+                                                          {0.65, QBrush(QColor(255, 247, 0, 255))},
+                                                          {0.8, QBrush(QColor(255, 240, 163, 255))}, 
+							                                            {1.0, QBrush(QColor(255, 175, 244, 255))}}}}}
+
+};
 
   // Initialize the timer for the turn signal animation
   animationTimer = new QTimer(this);
