@@ -1188,7 +1188,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 {8, {QString("pencil_theme"), {QColor(0, 0, 0, 155), {{0.1, QBrush(QColor(255, 164, 255, 255))}, 
 							                                             {0.2, QBrush(QColor(24, 24, 24, 255))}, 
 							                                             {0.25, QBrush(QColor(0, 0, 0, 255))},
-                                                           {0.3, QBrush(Qcolor(34, 34, 34, 255))}, 
+                                                           {0.3, QBrush(QColor(34, 34, 34, 255))}, 
                                                            {0.35, QBrush(QColor(255, 211, 78, 255))}}}}}
 };
 
