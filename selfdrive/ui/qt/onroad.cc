@@ -1174,7 +1174,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                            {0.4, QBrush(QColor(255, 53, 235, 255))}, 
 							                                            {0.6, QBrush(QColor(90, 0, 169, 255))}, 
 							                                            {1.0, QBrush(QColor(0, 140, 255, 255))}}}}},
-{6, {QString("luster_theme"), {QColor(255, 247, 0, 155), {{0.0, QBrush(QColor(115, 0, 255, 255))}, 
+{6, {QString("luster_theme"), {QColor(115, 0, 255, 155), {{0.0, QBrush(QColor(115, 0, 255, 255))}, 
 							                                            {0.2, QBrush(QColor(253, 168, 233, 255))}, 
 							                                            {0.3, QBrush(QColor(255, 221, 0, 255))}, 
 							                                            {0.4, QBrush(QColor(255, 241, 203, 255))},
@@ -1182,13 +1182,14 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                           {0.65, QBrush(QColor(255, 247, 0, 255))},
                                                           {0.8, QBrush(QColor(255, 240, 163, 255))}, 
 							                                            {1.0, QBrush(QColor(255, 175, 244, 255))}}}}},
-{7, {QString("comic_theme"), {QColor(255, 255, 255, 155), {{0.1, QBrush(QColor(255, 255, 255, 255))}, 
-							                                             {0.27, QBrush(QColor(0, 0, 0, 255))}, 
-							                                             {0.4, QBrush(QColor(255, 255, 255, 255))}}}}},
-{8, {QString("pencil_theme"), {QColor(255, 211, 78, 155), {{0.05, QBrush(QColor(255, 164, 255, 255))}, 
-							                                             {0.17, QBrush(QColor(24, 24, 24, 255))}, 
-							                                             {0.34, QBrush(QColor(255, 211, 78, 255))}, 
-                                                           {0.45, QBrush(QColor(0, 0, 0, 255))}}}}}
+{7, {QString("comic_theme"), {QColor(255, 255, 255, 155), {{0.2, QBrush(QColor(255, 255, 255, 255))}, 
+							                                             {0.25, QBrush(QColor(0, 0, 0, 255))}, 
+							                                             {0.26 QBrush(QColor(255, 255, 255, 255))}}}}},
+{8, {QString("pencil_theme"), {QColor(0, 0, 0, 155), {{0.1, QBrush(QColor(255, 164, 255, 255))}, 
+							                                             {0.2, QBrush(QColor(24, 24, 24, 255))}, 
+							                                             {0.25, QBrush(QColor(0, 0, 0, 255))},
+                                                           {0.3, QBrush(Qcolor(34, 34, 34, 255))}, 
+                                                           {0.35, QBrush(QColor(255, 211, 78, 255))}}}}}
 };
 
   // Initialize the timer for the turn signal animation
