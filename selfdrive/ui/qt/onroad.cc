@@ -1145,7 +1145,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
     showSLCOffset = true;
   }
 
-   // Custom themes configuration
+  // Custom themes configuration
   themeConfiguration = {
     {1, {QString("frog_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
 							                                              {0.2, QBrush(QColor(242, 255, 0, 255))}, 
@@ -1181,8 +1181,14 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                           {0.5, QBrush(QColor(255, 180, 238, 255))},
                                                           {0.65, QBrush(QColor(255, 247, 0, 255))},
                                                           {0.8, QBrush(QColor(255, 240, 163, 255))}, 
-							                                            {1.0, QBrush(QColor(255, 175, 244, 255))}}}}}
-
+							                                            {1.0, QBrush(QColor(255, 175, 244, 255))}}}}},
+{7, {QString("comic_theme"), {QColor(255, 255, 255, 155), {{0.1, QBrush(QColor(255, 255, 255, 255))}, 
+							                                             {0.27, QBrush(QColor(0, 0, 0, 255))}, 
+							                                             {0.4, QBrush(QColor(255, 255, 255, 255))}}}}},
+{8, {QString("pencil_theme"), {QColor(255, 211, 78, 155), {{0.05, QBrush(QColor(255, 164, 255, 255))}, 
+							                                             {0.17, QBrush(QColor(24, 24, 24, 255))}, 
+							                                             {0.34, QBrush(QColor(255, 211, 78, 255))}, 
+                                                           {0.45, QBrush(QColor(0, 0, 0, 255))}}}}}
 };
 
   // Initialize the timer for the turn signal animation
