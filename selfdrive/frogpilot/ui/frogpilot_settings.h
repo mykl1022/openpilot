@@ -231,8 +231,8 @@ ParamController(CurveSensitivity, "CurveSensitivity", "   Curve Detection Sensit
 
 ParamController(CustomColors, "CustomColors", "Colors ", "Replace the stock openpilot colors with a custom color scheme.\n\nWant to submit your own color scheme? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",
   const int colors = params.getInt("CustomColors");
-  return colors == 0 ? "Stock" : colors == 1 ? "Frog" : colors == 2 ? "Tesla" : colors == 3 ? "Stalin" : colors == 4 ? "Dusk" : colors == 5 ? "myrtle" : colors == 6 ? "Luster" : colors == 7 ? "Comic" : "Pencil";,
-  return v >= 0 ? v % 9 : 8;
+  return colors == 0 ? "Stock" : colors == 1 ? "Frog" : colors == 2 ? "Tesla" : colors == 3 ? "Stalin" : colors == 4 ? "Dusk" : colors == 5 ? "myrtle" : colors == 6 ? "Luster" : colors == 7 ? "Comic" : colors == 8 ? "Pencil" : colors ==9 ? "Freeze" : colors == 10 ? "Night" : "Gold";,
+  return v >= 0 ? v % 12 : 11;
 )
 
 ParamController(CustomIcons, "CustomIcons", "Icons", "Replace the stock openpilot icons with a custom icon pack.\n\nWant to submit your own icon pack? Post it in the 'feature-request' channel on the FrogPilot Discord!", "../assets/offroad/icon_blank.png",

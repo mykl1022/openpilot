@@ -62,7 +62,10 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {5, {"myrtle_theme", {QColor(90, 0, 169)}}},
     {6, {"luster_theme", {QColor(255, 247, 0)}}},
     {7, {"comic_theme", {QColor(255, 255, 255)}}},
-    {8, {"pencil_theme", {QColor(0, 0, 0)}}}
+    {8, {"pencil_theme", {QColor(0, 0, 0)}}},
+    {9, {"freeze_theme", {QColor(92, 218, 215)}}},
+    {10, {"midnight_theme", {QColor(118, 44, 255)}}},
+    {11, {"gold_theme", {QColor(255, 253, 203)}}}
   };
   for (const auto &[key, themeData] : themeConfiguration) {
     const QString &themeName = themeData.first;
