@@ -1138,18 +1138,71 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
     showSLCOffset = true;
   }
 
-  // Custom themes configuration
+ // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(0 / 360., 0.71, 0.31, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(100 / 360., 0.71, 0.31, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(245 / 360., 0.71, 0.31, 0.1))}}}}},
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
-    {3, {QString("stalin_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}}
-  };
+    {1, {QString("frog_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {0.2, QBrush(QColor(242, 255, 0, 255))}, 
+							                                              {0.24, QBrush(QColor(242, 255, 0, 255))}, 
+							                                              {0.4, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {1.0, QBrush(QColor(242, 255, 0, 255))}}}}},
+{2, {QString("tesla_theme"), {QColor(250, 209, 243, 155), {{0.0, QBrush(QColor(255, 0, 195, 255))}, 
+							                                             {0.2, QBrush(QColor(255, 192, 255, 255))}, 
+							                                             {0.3, QBrush(QColor(255, 44, 209, 255))}, 
+							                                             {0.4, QBrush(QColor(255, 148, 241, 255))}, 
+							                                             {0.6, QBrush(QColor(250, 209, 243, 255))}, 
+							                                             {1.0, QBrush(QColor(255, 46, 217, 255))}}}}},
+{3, {QString("stalin_theme"), {QColor(255, 208, 0, 155), {{0.0, QBrush(QColor(122, 0, 0, 255))}, 
+							                                            {0.2, QBrush(QColor(250, 142, 0, 255))}, 
+							                                            {0.3, QBrush(QColor(255, 208, 0, 255))}, 
+							                                            {0.4, QBrush(QColor(255, 0, 0, 255))}, 
+							                                            {0.6, QBrush(QColor(250, 142, 0, 255))}, 
+							                                            {1.0, QBrush(QColor(27, 0, 0, 255))}}}}},
+{4, {QString("dusk_theme"), {QColor(252, 159, 50, 155), {{0.0, QBrush(QColor(26, 39, 102, 255))}, 
+							                                            {0.2, QBrush(QColor(174, 27, 30, 255))}, 
+							                                            {0.3, QBrush(QColor(252, 159, 50, 255))}, 
+							                                            {0.6, QBrush(QColor(100, 33, 66, 255))}, 
+							                                            {1.0, QBrush(QColor(48, 37, 91, 255))}}}}},
+{5, {QString("myrtle_theme"), {QColor(90, 0, 169, 155), {{0.1, QBrush(QColor(104, 227, 249, 255))}, 
+							                                            {0.27, QBrush(QColor(0, 0, 0, 255))}, 
+							                                            {0.4, QBrush(QColor(255, 53, 235, 255))}, 
+							                                            {0.6, QBrush(QColor(90, 0, 169, 255))}, 
+							                                            {1.0, QBrush(QColor(0, 140, 255, 255))}}}}},
+{6, {QString("luster_theme"), {QColor(115, 0, 255, 155), {{0.0, QBrush(QColor(115, 0, 255, 255))}, 
+							                                            {0.2, QBrush(QColor(253, 168, 233, 255))}, 
+							                                            {0.3, QBrush(QColor(255, 221, 0, 255))}, 
+							                                            {0.4, QBrush(QColor(255, 241, 203, 255))},
+                                                          {0.5, QBrush(QColor(255, 180, 238, 255))},
+                                                          {0.65, QBrush(QColor(255, 247, 0, 255))},
+                                                          {0.8, QBrush(QColor(255, 240, 163, 255))}, 
+							                                            {1.0, QBrush(QColor(255, 175, 244, 255))}}}}},
+{7, {QString("comic_theme"), {QColor(255, 255, 255, 155), {{0.2, QBrush(QColor(255, 255, 255, 255))},  
+							                                             {0.26, QBrush(QColor(255, 255, 255, 255))}}}}},
+{8, {QString("pencil_theme"), {QColor(0, 0, 0, 155), {{0.1, QBrush(QColor(255, 164, 255, 255))}, 
+							                                             {0.15, QBrush(QColor(24, 24, 24, 255))}, 
+							                                             {0.2, QBrush(QColor(0, 0, 0, 255))}, 
+                                                           {0.35, QBrush(QColor(255, 211, 78, 255))}}}}},
+
+{9, {QString("freeze_theme"), {QColor(92, 218, 215, 255), {{0.0, QBrush(QColor(255, 255, 255, 255))}, 
+                                                           {0.2, QBrush(QColor(49, 152, 177, 255))}, 
+                                                           {0.3, QBrush(QColor(92, 218, 215, 255))},
+                                                           {0.4, QBrush(QColor(70, 185, 196, 255))},
+                                                           {1.0, QBrush(QColor(255, 255, 255, 255))}}}}},
+
+{10, {QString("midnight_theme"), {QColor(118, 44, 255, 255), {{0.0, QBrush(QColor(25, 0, 255, 255))},
+                                                              {0.2, QBrush(QColor(20, 0, 117, 255))},
+                                                              {0.3, QBrush(QColor(25, 0, 255, 255))},
+                                                              {0.4, QBrush(QColor(0, 229, 255, 255))},
+                                                              {0.6, QBrush(QColor(118, 44, 255, 255))},
+                                                              {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+
+{11, {QString("gold_theme"), {QColor(255, 253, 203, 255), {{0.0, QBrush(QColor(255, 237, 0, 255))},
+                                                           {0.2, QBrush(QColor(118, 118, 0, 255))},
+                                                           {0.3, QBrush(QColor(255, 247, 0, 255))},
+                                                           {0.4, QBrush(QColor(255, 253, 203, 255))},
+                                                           {0.6, QBrush(QColor(255, 208, 0, 255))},
+                                                           {1.0, QBrush(QColor(255, 255, 255, 255))}}}}}
+
+};
 
   // Initialize the timer for the turn signal animation
   animationTimer = new QTimer(this);
