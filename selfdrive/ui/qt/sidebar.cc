@@ -55,12 +55,20 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   themeConfiguration = {
     {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"frog_theme", {QColor(23, 134, 68)}}},
-    {2, {"tesla_theme", {QColor(0, 72, 255)}}},
-    {3, {"stalin_theme", {QColor(255, 0, 0)}}}
+    {1, {"frog_theme", {QColor(170, 255, 0)}}},
+    {2, {"tesla_theme", {QColor(250, 209, 243)}}},
+    {3, {"stalin_theme", {QColor(255, 208, 0)}}},
+    {4, {"dusk_theme", {QColor(255, 208, 0)}}},
+    {5, {"myrtle_theme", {QColor(90, 0, 169)}}},
+    {6, {"luster_theme", {QColor(255, 247, 0)}}},
+    {7, {"comic_theme", {QColor(255, 255, 255)}}},
+    {8, {"pencil_theme", {QColor(0, 0, 0)}}},
+    {9, {"freeze_theme", {QColor(92, 218, 215)}}},
+    {10, {"midnight_theme", {QColor(118, 44, 255)}}},
+    {11, {"gold_theme", {QColor(255, 253, 203)}}}
   };
-
-  for (const auto &[key, themeData] : themeConfiguration) {
+  
+    for (const auto &[key, themeData] : themeConfiguration) {
     const QString &themeName = themeData.first;
     const QString base = themeName == "stock" ? "../assets/images" : QString("../frogpilot/assets/custom_themes/%1/images").arg(themeName);
     std::vector<QString> paths = {base + "/button_home.png", base + "/button_flag.png", base + "/button_settings.png"};
