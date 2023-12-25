@@ -783,9 +783,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) {
-    pe.setColorAt(0.0, QColor::fromHslF(0 / 360., 1.0, 0, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(0 / 360., 1.0, 0, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(0 / 360., 1.0, 0, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 1.0, 0.0, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 1.0, 0.0, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 1.0, 0.0 , 0.1));
   } else if (conditionalStatus == 1 || conditionalStatus == 3) {
     pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
@@ -1213,7 +1213,16 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                            {0.3, QBrush(QColor(255, 247, 0, 255))},
                                                            {0.4, QBrush(QColor(255, 253, 203, 255))},
                                                            {0.6, QBrush(QColor(255, 208, 0, 255))},
-                                                           {1.0, QBrush(QColor(255, 255, 255, 255))}}}}}
+                                                           {1.0, QBrush(QColor(255, 255, 255, 255))}}}}},
+
+{12, {QString("jade_theme"), {QColor(179, 141, 64, 255), {{0.0, QBrush(QColor(3, 30, 27, 255))},
+                                                          {0.23, QBrush(QColor(10, 90, 80, 255))},
+                                                          {0.28, QBrush(QColor(179, 141, 64, 255))},
+                                                          {0.29, QBrush(QColor(255, 255, 255, 255))},
+                                                          {0.32, QBrush(QColor(179, 141, 64, 255))},
+							                                            {0.35, QBrush(QColor(13, 73, 66, 255))},
+                                                          {0.50, QBrush(QColor(14, 132, 118, 255))},
+                                                          {1.0, QBrush(QColor(0, 44, 39, 255))}}}}}                                                           
 
 };
 

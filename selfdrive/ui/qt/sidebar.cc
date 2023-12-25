@@ -65,7 +65,8 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {8, {"dawn_theme", {QColor(239, 116, 92)}}},
     {9, {"freeze_theme", {QColor(92, 218, 215)}}},
     {10, {"midnight_theme", {QColor(118, 44, 255)}}},
-    {11, {"gold_theme", {QColor(255, 253, 203)}}}
+    {11, {"gold_theme", {QColor(255, 253, 203)}}},
+    {12, {"jade_theme", {QColor(179, 141, 64)}}}
   };
   
     for (const auto &[key, themeData] : themeConfiguration) {
