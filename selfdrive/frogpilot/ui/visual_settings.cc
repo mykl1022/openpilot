@@ -58,7 +58,7 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : ListWidge
       });
       toggle = customThemeToggle;
     } else if (param == "CustomColors" || param == "CustomIcons" || param == "CustomSignals" || param == "CustomSounds") {
-      toggle = new ParamValueControl(param, title, desc, icon, 0, 11, {{0, "Stock"}, {1, "Frog"}, {2, "Tesla"}, {3, "Stalin"}, {4, "Dusk"}, {5, "Hs&Hrs"}, {6, "Lust"}, {7, "Comic"}, {8, "Dawn"}, {9, "Freeze"}, {10, "Night"}, {11, "Gold"}}, this);
+      toggle = new ParamValueControl(param, title, desc, icon, 0, 12, {{0, "Stock"}, {1, "Frog"}, {2, "Tesla"}, {3, "Stalin"}, {4, "Dusk"}, {5, "Hs&Hrs"}, {6, "Lust"}, {7, "Comic"}, {8, "Dawn"}, {9, "Freeze"}, {10, "Night"}, {11, "Gold"}, {11, "Jade"}}, this);
 
     } else if (param == "CameraView") {
       toggle = new ParamValueControl(param, title, desc, icon, 0, 3, {{0, "Auto"}, {1, "Standard"}, {2, "Wide"}, {3, "Driver"}}, this);
