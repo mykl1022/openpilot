@@ -1224,11 +1224,17 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                           {0.50, QBrush(QColor(14, 132, 118, 255))},
                                                           {1.0, QBrush(QColor(0, 44, 39, 255))}}}}},
 
-  {13, {QString("baja_theme"), {QColor(44, 234, 163, 255), {{0.0, QBrush(QColor(124, 254, 240, 255))}, 
+{13, {QString("baja_theme"), {QColor(44, 234, 163, 255), {{0.0, QBrush(QColor(124, 254, 240, 255))}, 
                                                            {0.2, QBrush(QColor(107, 255, 184, 255))}, 
                                                            {0.3, QBrush(QColor(44, 234, 163, 255))},
                                                            {0.4, QBrush(QColor(40, 150, 90, 255))},
-                                                           {1.0, QBrush(QColor(42, 96, 65, 255))}}}}}                                                                                                                   
+                                                           {1.0, QBrush(QColor(42, 96, 65, 255))}}}}},
+                                                          
+{14, {QString("torch_theme"), {QColor(255, 238, 50, 255), {{0.0, QBrush(QColor(214, 214, 214, 255))}, 
+                                                           {0.2, QBrush(QColor(255, 238, 50, 255))}, 
+                                                           {0.3, QBrush(QColor(255, 209, 0, 255))},
+                                                           {0.4, QBrush(QColor(32, 32, 32, 255))},
+                                                           {1.0, QBrush(QColor(51, 53, 51, 255))}}}}}                                                                                                                   
 
 };
 
