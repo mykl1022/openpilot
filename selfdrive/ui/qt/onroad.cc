@@ -1140,20 +1140,20 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 
  // Custom themes configuration
   themeConfiguration = {
-{1, {QString("frog_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
+{1, {QString("lime_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
 							                                              {0.2, QBrush(QColor(242, 255, 0, 255))}, 
 							                                              {0.24, QBrush(QColor(242, 255, 0, 255))}, 
 							                                              {0.4, QBrush(QColor(170, 255, 0, 255))}, 
 							                                              {1.0, QBrush(QColor(242, 255, 0, 255))}}}}},
 
-{2, {QString("tesla_theme"), {QColor(250, 209, 243, 155), {{0.0, QBrush(QColor(255, 140, 215, 255))}, 
+{2, {QString("kirby_theme"), {QColor(250, 209, 243, 155), {{0.0, QBrush(QColor(255, 140, 215, 255))}, 
 							                                             {0.2, QBrush(QColor(255, 208, 242, 255))}, 
 							                                             {0.3, QBrush(QColor(255, 181, 230, 255))}, 
 							                                             {0.4, QBrush(QColor(253, 218, 242, 255))}, 
 							                                             {0.6, QBrush(QColor(255, 183, 233, 255))}, 
 							                                             {1.0, QBrush(QColor(255, 220, 246, 255))}}}}},
 
-{3, {QString("stalin_theme"), {QColor(255, 208, 0, 155), {{0.0, QBrush(QColor(122, 0, 0, 255))}, 
+{3, {QString("blaze_theme"), {QColor(255, 208, 0, 155), {{0.0, QBrush(QColor(122, 0, 0, 255))}, 
 							                                            {0.2, QBrush(QColor(250, 142, 0, 255))}, 
 							                                            {0.3, QBrush(QColor(255, 208, 0, 255))}, 
 							                                            {0.4, QBrush(QColor(255, 0, 0, 255))}, 
@@ -1236,7 +1236,15 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                            {0.4, QBrush(QColor(255, 238, 0, 255))},
                                                            {0.45, QBrush(QColor(0, 0, 0, 255))},
                                                            {0.6, QBrush(QColor(57, 65, 17, 255))},
-                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}                                                                                                                   
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+
+{15, {QString("blood_theme"), {QColor(171, 0, 0, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, 
+                                                           {0.2, QBrush(QColor(98, 0, 0, 255))}, 
+                                                           {0.3, QBrush(QColor(171, 0, 0, 255))},
+                                                           {0.4, QBrush(QColor(133, 0, 0, 255))},
+                                                           {0.5, QBrush(QColor(165, 45, 45, 255))}, 
+                                                           {0.6, QBrush(QColor(115, 0, 0, 255))},
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}                                                                                                                                                                              
 
 };
 
