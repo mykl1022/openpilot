@@ -59,7 +59,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {2, {"kirby_theme", {QColor(250, 209, 243)}}},
     {3, {"blaze_theme", {QColor(255, 208, 0)}}},
     {4, {"dusk_theme", {QColor(255, 208, 0)}}},
-    {5, {"myrtle_theme", {QColor(90, 0, 169)}}},
+    {5, {"hs&hrs_theme", {QColor(90, 0, 169)}}},
     {6, {"luster_theme", {QColor(255, 247, 0)}}},
     {7, {"comic_theme", {QColor(255, 255, 255)}}},
     {8, {"dawn_theme", {QColor(239, 116, 92)}}},
