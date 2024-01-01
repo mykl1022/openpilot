@@ -1244,7 +1244,15 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                            {0.4, QBrush(QColor(133, 0, 0, 255))},
                                                            {0.5, QBrush(QColor(165, 45, 45, 255))}, 
                                                            {0.6, QBrush(QColor(115, 0, 0, 255))},
-                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}                                                                                                                                                                              
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+
+{16, {QString("bumble_theme"), {QColor(230, 255, 0, 255), {{0.0, QBrush(QColor(230, 255, 0, 255))}, 
+                                                           {0.2, QBrush(QColor(0, 0, 0, 255))}, 
+                                                           {0.33, QBrush(QColor(230, 255, 0, 255))},
+                                                           {0.4, QBrush(QColor(0, 0, 0, 255))},
+                                                           {0.45, QBrush(QColor(230, 255, 0, 255))}, 
+                                                           {0.48, QBrush(QColor(230, 255, 0, 255))},
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}                                                                                                                                                                                                                                        
 
 };
 
