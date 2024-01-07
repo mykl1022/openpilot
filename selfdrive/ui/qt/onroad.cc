@@ -1253,7 +1253,15 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                            {0.4, QBrush(QColor(0, 0, 0, 255))},
                                                            {0.45, QBrush(QColor(230, 255, 0, 255))}, 
                                                            {0.48, QBrush(QColor(230, 255, 0, 255))},
-                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}                                                                                                                                                                                                                                        
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+
+{17, {QString("purp_theme"), {QColor(98, 0, 255, 255), {{0.0, QBrush(QColor(115, 0, 255, 255))}, 
+                                                           {0.2, QBrush(QColor(53, 0, 73, 255))}, 
+                                                           {0.25, QBrush(QColor(98, 0, 255, 255))},
+                                                           {0.3, QBrush(QColor(49, 0, 91, 255))},
+                                                           {0.4, QBrush(QColor(102, 0, 255, 255))}, 
+                                                           {0.6, QBrush(QColor(67, 0, 154, 255))},
+                                                           {1.0, QBrush(QColor(34, 0, 66, 255))}}}}}                                                                                                                                                                                                                                                                                                 
 
 };
 
