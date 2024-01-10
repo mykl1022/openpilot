@@ -69,7 +69,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {12, {"jade_theme", {QColor(179, 141, 64)}}},
     {13, {"baja_theme", {QColor(44, 234, 163)}}},
     {14, {"torch_theme", {QColor(255, 238, 50)}}},
-    {15, {"blood_theme", {QColor(255, 238, 50)}}},
+    {15, {"blood_theme", {QColor(153, 0, 0)}}},
     {16, {"bumble_theme", {QColor(255, 238, 50)}}},
     {17, {"purp_theme", {QColor(98, 0, 255)}}}
   };
