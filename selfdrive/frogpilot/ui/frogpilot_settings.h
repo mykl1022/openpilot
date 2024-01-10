@@ -13,7 +13,7 @@ static const QString buttonStyle = R"(
     height: 100px;
     padding: 0 20 0 20;
     margin: 15px;
-    color: #E4E4E4;
+    color: #000;
     background-color: #393939;
   }
   QPushButton:pressed {
