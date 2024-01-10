@@ -363,13 +363,23 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : experimental_mode(fals
   // Custom steering wheel images
   wheelImages = {
     {0, loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size})},
-    {1, loadPixmap("../frogpilot/assets/wheel_images/astro.png", {img_size, img_size})},
-    {2, loadPixmap("../frogpilot/assets/wheel_images/baja.png", {img_size, img_size})},
-    {3, loadPixmap("../frogpilot/assets/wheel_images/blood.png", {img_size, img_size})},
-    {4, loadPixmap("../frogpilot/assets/wheel_images/rocket.png", {img_size, img_size})},
-    {5, loadPixmap("../frogpilot/assets/wheel_images/gold.png", {img_size, img_size})},
-    {6, loadPixmap("../frogpilot/assets/wheel_images/comic.png", {img_size, img_size})},
-    {7, loadPixmap("../frogpilot/assets/wheel_images/kirby.png", {img_size, img_size})}
+    {1, loadPixmap("../frogpilot/assets/wheel_images/lime.png", {img_size, img_size})},
+    {2, loadPixmap("../frogpilot/assets/wheel_images/kirby.png", {img_size, img_size})},
+    {3, loadPixmap("../frogpilot/assets/wheel_images/blaze.png", {img_size, img_size})},
+    {4, loadPixmap("../frogpilot/assets/wheel_images/dusk.png", {img_size, img_size})},
+    {5, loadPixmap("../frogpilot/assets/wheel_images/hs&hrs.png", {img_size, img_size})},
+    {6, loadPixmap("../frogpilot/assets/wheel_images/astro.png", {img_size, img_size})},
+    {7, loadPixmap("../frogpilot/assets/wheel_images/comic.png", {img_size, img_size})},
+    {8, loadPixmap("../frogpilot/assets/wheel_images/dawn.png", {img_size, img_size})},
+    {9, loadPixmap("../frogpilot/assets/wheel_images/freeze.png", {img_size, img_size})},
+    {10, loadPixmap("../frogpilot/assets/wheel_images/midnight.png", {img_size, img_size})},
+    {11, loadPixmap("../frogpilot/assets/wheel_images/gold.png", {img_size, img_size})},
+    {12, loadPixmap("../frogpilot/assets/wheel_images/jade.png", {img_size, img_size})},
+    {13, loadPixmap("../frogpilot/assets/wheel_images/baja.png", {img_size, img_size})},
+    {14, loadPixmap("../frogpilot/assets/wheel_images/torch.png", {img_size, img_size})},
+    {15, loadPixmap("../frogpilot/assets/wheel_images/blood.png", {img_size, img_size})},
+    {16, loadPixmap("../frogpilot/assets/wheel_images/bumble.png", {img_size, img_size})},
+    {17, loadPixmap("../frogpilot/assets/wheel_images/purp.png", {img_size, img_size})}
   };
 }
 
