@@ -104,7 +104,7 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : ListWidge
       }
 
     } else if (param == "WheelIcon") {
-      std::map<int, QString> steeringWheelLabels = {{0, "Stock"}, {1, "Astro"}, {2, "Baja"}, {3, "Blood"}, {4, "Rocket"}, {5, "Gold"}, {6, "Comic"}, {7, "Kirby"}};
+      std::map<int, QString> steeringWheelLabels = {{0, "Stock"}, {1, "Lime"}, {2, "Kirby"}, {3, "Blaze"}, {4, "Dusk"}, {5, "Hs&Hrs"}, {6, "Astro"}, {7, "Comic"}, {8, "Dawn"}, {9, "Freeze"}, {10, "Midnight"}, {11, "Gold"}, {12, "Jade"}, {13, "Baja"}, {14, "Torch"}, {15, "Blood"}, {16, "Bumble"}, {17, "Purp"}, {18, "Mario"}};
       toggle = new ParamValueControl(param, title, desc, icon, 0, 6, steeringWheelLabels, this);
     } else {
       toggle = new ParamControl(param, title, desc, icon, this);
