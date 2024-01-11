@@ -379,7 +379,8 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : experimental_mode(fals
     {14, loadPixmap("../frogpilot/assets/wheel_images/torch.png", {img_size, img_size})},
     {15, loadPixmap("../frogpilot/assets/wheel_images/blood.png", {img_size, img_size})},
     {16, loadPixmap("../frogpilot/assets/wheel_images/bumble.png", {img_size, img_size})},
-    {17, loadPixmap("../frogpilot/assets/wheel_images/purp.png", {img_size, img_size})}
+    {17, loadPixmap("../frogpilot/assets/wheel_images/purp.png", {img_size, img_size})},
+    {18, loadPixmap("../frogpilot/assets/wheel_images/mario.png", {img_size, img_size})}
   };
 }
 
@@ -1271,7 +1272,17 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                            {0.3, QBrush(QColor(49, 0, 91, 255))},
                                                            {0.4, QBrush(QColor(102, 0, 255, 255))}, 
                                                            {0.6, QBrush(QColor(67, 0, 154, 255))},
-                                                           {1.0, QBrush(QColor(34, 0, 66, 255))}}}}}                                                                                                                                                                                                                                                                                                 
+                                                           {1.0, QBrush(QColor(34, 0, 66, 255))}}}}},
+
+{18, {QString("mario_theme"), {QColor(255, 255, 255, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, 
+                                                           {0.1, QBrush(QColor(255, 0, 0, 255))}, 
+                                                           {0.2, QBrush(QColor(255, 0, 212, 255))},
+                                                           {0.3, QBrush(QColor(102, 0, 255, 255))},
+                                                           {0.4, QBrush(QColor(0, 229, 255, 255))}, 
+                                                           {0.5, QBrush(QColor(47, 255, 0, 255))},
+                                                           {0.6, QBrush(QColor(251, 255, 0, 255))},
+							                                             {0.7, QBrush(QColor(255, 0, 0, 255))},
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}                                                                                                                                                                                                                                                                                                                                                           
 
 };
 

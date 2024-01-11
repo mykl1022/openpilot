@@ -71,7 +71,8 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {14, {"torch_theme", {QColor(255, 238, 50)}}},
     {15, {"blood_theme", {QColor(153, 0, 0)}}},
     {16, {"bumble_theme", {QColor(255, 238, 50)}}},
-    {17, {"purp_theme", {QColor(98, 0, 255)}}}
+    {17, {"purp_theme", {QColor(98, 0, 255)}}},
+    {18, {"mario_theme", {QColor(255, 255, 255)}}}
   };
   
     for (const auto &[key, themeData] : themeConfiguration) {

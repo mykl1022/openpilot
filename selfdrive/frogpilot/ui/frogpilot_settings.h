@@ -78,7 +78,7 @@ protected:
     btn.setStyleSheet(R"(
       QPushButton {
         background-color: #393939;
-        color: #E4E4E4;
+        color: #000;
         border-radius: 50px;
         font-size: 50px;
         font-weight: 500;
@@ -86,7 +86,7 @@ protected:
       }
       QPushButton:pressed {
         background-color: #4a4a4a;
-        color: #E4E4E4;
+        color: #000;
       }
     )");
     btn.setText(text);

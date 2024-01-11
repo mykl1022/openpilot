@@ -74,7 +74,7 @@ InputDialog::InputDialog(const QString &title, QWidget *parent, const QString &s
     QPushButton {
       font-size: 48px;
       border-radius: 10px;
-      color: #E4E4E4;
+      color: #000;
       background-color: #333333;
     }
     QPushButton:pressed {
