@@ -427,9 +427,9 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
 
   const QColor background_color = wheelIcon && !isDown() && engageable ?
       (scene.conditional_status == 1 ? QColor(255, 246, 0, 255) :
-      (experimental_mode ? QColor(218, 111, 37, 241) :
+      (experimental_mode ? QColor(125, 255, 26, 255) :
       (scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)))) :
-      (scene.always_on_lateral_active ? QColor(10, 186, 181, 255) :
+      (scene.always_on_lateral_active ? QColor(125, 255, 26, 166) :
       QColor(0, 0, 0, 166));
 
   if (!scene.show_driver_camera) {
