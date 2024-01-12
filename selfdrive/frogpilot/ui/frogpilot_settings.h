@@ -14,7 +14,7 @@ static const QString buttonStyle = R"(
     padding: 0 20 0 20;
     margin: 15px;
     color: #000;
-    background-color: #393939;
+    background-color: #999;
   }
   QPushButton:pressed {
     background-color: #4a4a4a;
@@ -63,7 +63,7 @@ protected:
   ParamValueControlOld(const QString &name, const QString &description, const QString &iconPath)
     : AbstractControl(name, description, iconPath) {
     label.setAlignment(Qt::AlignVCenter | Qt::AlignRight);
-    label.setStyleSheet("color: #e0e879");
+    label.setStyleSheet("color: #7bff61");
     label.setFixedWidth(170);
 
     setupButton(btnMinus, "-", -1);
@@ -77,7 +77,7 @@ protected:
   void setupButton(QPushButton &btn, const QString &text, int delta) {
     btn.setStyleSheet(R"(
       QPushButton {
-        background-color: #393939;
+        background-color: #999;
         color: #000;
         border-radius: 50px;
         font-size: 50px;

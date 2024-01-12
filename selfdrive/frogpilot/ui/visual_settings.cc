@@ -58,7 +58,7 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : ListWidge
       });
       toggle = customThemeToggle;
     } else if (param == "CustomColors" || param == "CustomIcons" || param == "CustomSignals" || param == "CustomSounds") {
-      toggle = new ParamValueControl(param, title, desc, icon, 0, 18, {{0, "Stock"}, {1, "Lime"}, {2, "Kirby"}, {3, "Blaze"}, {4, "Dusk"}, {5, "Hs&Hrs"}, {6, "Opal"}, {7, "Comic"}, {8, "Dawn"}, {9, "Freeze"}, {10, "Midnight"}, {11, "Gold"}, {12, "Jade"}, {13, "Baja"}, {14, "Torch"}, {15, "Blood"}, {16, "Bumble"}, {17, "Purp"}, {18, "Mario"}}, this);
+      toggle = new ParamValueControl(param, title, desc, icon, 0, 19, {{0, "Stock"}, {1, "Lime"}, {2, "Kirby"}, {3, "Blaze"}, {4, "Dusk"}, {5, "Hs&Hrs"}, {6, "Opal"}, {7, "Comic"}, {8, "Dawn"}, {9, "Freeze"}, {10, "Midnight"}, {11, "Gold"}, {12, "Jade"}, {13, "Baja"}, {14, "Torch"}, {15, "Blood"}, {16, "Bumble"}, {17, "Purp"}, {18, "Mario"}, {19, "Ghost"}}, this);
 
     } else if (param == "CameraView") {
       toggle = new ParamValueControl(param, title, desc, icon, 0, 3, {{0, "Auto"}, {1, "Standard"}, {2, "Wide"}, {3, "Driver"}}, this);
@@ -104,8 +104,8 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : ListWidge
       }
 
     } else if (param == "WheelIcon") {
-      std::map<int, QString> steeringWheelLabels = {{0, "Stock"}, {1, "Lime"}, {2, "Kirby"}, {3, "Blaze"}, {4, "Dusk"}, {5, "Hs&Hrs"}, {6, "Astro"}, {7, "Comic"}, {8, "Dawn"}, {9, "Freeze"}, {10, "Midnight"}, {11, "Gold"}, {12, "Jade"}, {13, "Baja"}, {14, "Torch"}, {15, "Blood"}, {16, "Bumble"}, {17, "Purp"}, {18, "Mario"}};
-      toggle = new ParamValueControl(param, title, desc, icon, 0, 18, steeringWheelLabels, this);
+      std::map<int, QString> steeringWheelLabels = {{0, "Stock"}, {1, "Lime"}, {2, "Kirby"}, {3, "Blaze"}, {4, "Dusk"}, {5, "Hs&Hrs"}, {6, "Astro"}, {7, "Comic"}, {8, "Dawn"}, {9, "Freeze"}, {10, "Midnight"}, {11, "Gold"}, {12, "Jade"}, {13, "Baja"}, {14, "Torch"}, {15, "Blood"}, {16, "Bumble"}, {17, "Purp"}, {18, "Mario"}, {19, "Ghost"}};
+      toggle = new ParamValueControl(param, title, desc, icon, 0, 19, steeringWheelLabels, this);
     } else {
       toggle = new ParamControl(param, title, desc, icon, this);
     }

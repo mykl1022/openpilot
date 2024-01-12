@@ -380,7 +380,8 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : experimental_mode(fals
     {15, loadPixmap("../frogpilot/assets/wheel_images/blood.png", {img_size, img_size})},
     {16, loadPixmap("../frogpilot/assets/wheel_images/bumble.png", {img_size, img_size})},
     {17, loadPixmap("../frogpilot/assets/wheel_images/purp.png", {img_size, img_size})},
-    {18, loadPixmap("../frogpilot/assets/wheel_images/mario.png", {img_size, img_size})}
+    {18, loadPixmap("../frogpilot/assets/wheel_images/mario.png", {img_size, img_size})},
+    {19, loadPixmap("../frogpilot/assets/wheel_images/ghost.png", {img_size, img_size})}
   };
 }
 
@@ -1282,7 +1283,12 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                            {0.3, QBrush(QColor(47, 255, 0, 255))},
                                                            {0.35, QBrush(QColor(251, 255, 0, 255))},
 							                                             {0.4, QBrush(QColor(255, 0, 0, 255))},
-                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}                                                                                                                                                                                                                                                                                                                                                           
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+
+{19, {QString("ghost_theme"), {QColor(165, 165, 165, 40), {{0.3, QBrush(QColor(0, 0, 0, 40))}, 
+                                                           {0.4, QBrush(QColor(165, 165, 165, 40))},
+                                                           {0.6, QBrush(QColor(0, 0, 0, 40))},
+                                                           {0.95, QBrush(QColor(255, 255, 255, 40))}}}}}                                                                                                                                                                                                                                                                                                                                                                                                                     
 
 };
 
