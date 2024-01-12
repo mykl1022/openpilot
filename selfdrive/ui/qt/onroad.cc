@@ -1275,20 +1275,22 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                            {0.6, QBrush(QColor(67, 0, 154, 255))},
                                                            {1.0, QBrush(QColor(34, 0, 66, 255))}}}}},
 
-{18, {QString("mario_theme"), {QColor(255, 255, 255, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, 
-                                                           {0.1, QBrush(QColor(255, 0, 0, 255))}, 
-                                                           {0.15, QBrush(QColor(255, 0, 212, 255))},
-                                                           {0.2, QBrush(QColor(102, 0, 255, 255))},
-                                                           {0.25, QBrush(QColor(0, 229, 255, 255))}, 
-                                                           {0.3, QBrush(QColor(47, 255, 0, 255))},
-                                                           {0.35, QBrush(QColor(251, 255, 0, 255))},
-							                                             {0.4, QBrush(QColor(255, 0, 0, 255))},
-                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
-
-{19, {QString("ghost_theme"), {QColor(165, 165, 165, 40), {{0.3, QBrush(QColor(0, 0, 0, 40))}, 
-                                                           {0.4, QBrush(QColor(165, 165, 165, 40))},
-                                                           {0.6, QBrush(QColor(0, 0, 0, 40))},
-                                                           {0.95, QBrush(QColor(255, 255, 255, 40))}}}}}                                                                                                                                                                                                                                                                                                                                                                                                                     
+{18, {QString("mario_theme"), {QColor(255, 255, 255, 255), {{0.1, QBrush(QColor(0, 0, 0, 255))}, 
+                                                           {0.15, QBrush(QColor(255, 0, 0, 255))}, 
+                                                           {0.2, QBrush(QColor(255, 0, 212, 255))},
+                                                           {0.25, QBrush(QColor(102, 0, 255, 255))},
+                                                           {0.3, QBrush(QColor(0, 229, 255, 255))}, 
+                                                           {0.35, QBrush(QColor(47, 255, 0, 255))},
+                                                           {0.4, QBrush(QColor(251, 255, 0, 255))},
+							                                              {0.45, QBrush(QColor(255, 0, 0, 255))},
+                                                           {0.55, QBrush(QColor(255, 0, 0, 255))}, 
+                                                           {0.6, QBrush(QColor(255, 0, 212, 255))},
+                                                           {0.65, QBrush(QColor(102, 0, 255, 255))},
+                                                           {0.7, QBrush(QColor(0, 229, 255, 255))}, 
+                                                           {0.75, QBrush(QColor(47, 255, 0, 255))},
+                                                           {0.8, QBrush(QColor(251, 255, 0, 255))},
+                                                           {0.85, QBrush(QColor(0, 0, 0, 255))},
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}                                                                                                                                                                                                                                                                                                                                                           
 
 };
 
