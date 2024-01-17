@@ -359,7 +359,7 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : experimental_mode(fals
     {3, loadPixmap("../frogpilot/assets/wheel_images/frog.png", {img_size, img_size})},
     {4, loadPixmap("../frogpilot/assets/wheel_images/rocket.png", {img_size, img_size})},
     {5, loadPixmap("../frogpilot/assets/wheel_images/hyundai.png", {img_size, img_size})},
-    {6, loadPixmap("../frogpilot/assets/wheel_images/stalin.png", {img_size, img_size})}
+    {6, loadPixmap("../frogpilot/assets/wheel_images/blood.png", {img_size, img_size})}
   };
 }
 
@@ -1131,17 +1131,17 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
+    {1, {QString("lime_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
 							                                              {0.2, QBrush(QColor(242, 255, 0, 255))}, 
 							                                              {0.24, QBrush(QColor(242, 255, 0, 255))}, 
 							                                              {0.4, QBrush(QColor(170, 255, 0, 255))}, 
 							                                              {1.0, QBrush(QColor(242, 255, 0, 255))}}}}},
-    {2, {QString("tesla_theme"), {QColor(44, 234, 163, 255), {{0.0, QBrush(QColor(124, 254, 240, 255))}, 
+    {2, {QString("baja_theme"), {QColor(44, 234, 163, 255), {{0.0, QBrush(QColor(124, 254, 240, 255))}, 
                                                            {0.2, QBrush(QColor(107, 255, 184, 255))}, 
                                                            {0.3, QBrush(QColor(44, 234, 163, 255))},
                                                            {0.4, QBrush(QColor(40, 150, 90, 255))},
                                                            {1.0, QBrush(QColor(42, 96, 65, 255))}}}}},
-    {3, {QString("stalin_theme"), {QColor(171, 0, 0, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, 
+    {3, {QString("blood_theme"), {QColor(171, 0, 0, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, 
                                                             {0.2, QBrush(QColor(98, 0, 0, 255))}, 
                                                             {0.3, QBrush(QColor(171, 0, 0, 255))},
                                                             {0.4, QBrush(QColor(133, 0, 0, 255))},
