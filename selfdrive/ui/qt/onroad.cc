@@ -774,9 +774,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) {
-    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.0, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.0, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.0, 0.1));
   } else if (conditionalStatus == 1 || conditionalStatus == 3) {
     pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
@@ -792,7 +792,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   } else if (customColors != 0) {
     const auto &colorMap = themeConfiguration[customColors].second.second;
     for (const auto &[position, brush] : colorMap) {
-      QColor darkerColor = brush.color().darker(120);
+      QColor darkerColor = brush.color().darker(200);
       pe.setColorAt(position, darkerColor);
     }
   } else {
