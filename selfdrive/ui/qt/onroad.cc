@@ -404,10 +404,10 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
   engage_img = wheelImages[wheelIcon];
   QPixmap img = wheelIcon ? engage_img : (experimental_mode ? experimental_img : engage_img);
 
-  const QColor background_color = scene.always_on_lateral_active ? QColor(10, 186, 181, 255) :
+  const QColor background_color = scene.always_on_lateral_active ? QColor(18, 5, 46, 255) :
     (wheelIcon && !isDown() && engageable ?
     (scene.conditional_status == 1 ? QColor(255, 246, 0, 255) :
-    (experimental_mode ? QColor(218, 111, 37, 241) :
+    (experimental_mode ? QColor(170, 255, 0, 241) :
     (scene.navigate_on_openpilot ? QColor(49, 161, 238, 255) : QColor(0, 0, 0, 166)))) :
     QColor(0, 0, 0, 166));
 
@@ -782,9 +782,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
     pe.setColorAt(1.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.1));
   } else if (experimentalMode) {
-    pe.setColorAt(0.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(25 / 360., 0.71, 0.50, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(80 / 360., 0.5, 1.0, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(80 / 360., 0.5, 1.0, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(80 / 360., 0.5, 1.0, 0.1));
   } else if (scene.navigate_on_openpilot) {
     pe.setColorAt(0.0, QColor::fromHslF(205 / 360., 0.85, 0.56, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(205 / 360., 0.85, 0.56, 0.5));
