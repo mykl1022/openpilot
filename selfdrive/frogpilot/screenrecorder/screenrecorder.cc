@@ -55,7 +55,7 @@ void ScreenRecorder::paintEvent(QPaintEvent *event) {
   p.drawEllipse(outerRect);
 
   QRect middleRect = fullRect.marginsRemoved(QMargins(outerRedWidth, outerRedWidth, outerRedWidth, outerRedWidth));
-  p.setBrush(QColor::fromRgbF(1, 0, 0, 1));
+  p.setBrush(QColor::fromRgbF(0, 1, 0.9, 1));
   p.drawEllipse(middleRect);
 }
 
