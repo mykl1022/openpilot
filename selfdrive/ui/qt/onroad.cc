@@ -1131,15 +1131,23 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}}},
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
-    {3, {QString("stalin_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}}
+    {1, {QString("frog_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {0.2, QBrush(QColor(242, 255, 0, 255))}, 
+							                                              {0.24, QBrush(QColor(242, 255, 0, 255))}, 
+							                                              {0.4, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {1.0, QBrush(QColor(242, 255, 0, 255))}}}}},
+    {2, {QString("tesla_theme"), {QColor(44, 234, 163, 255), {{0.0, QBrush(QColor(124, 254, 240, 255))}, 
+                                                           {0.2, QBrush(QColor(107, 255, 184, 255))}, 
+                                                           {0.3, QBrush(QColor(44, 234, 163, 255))},
+                                                           {0.4, QBrush(QColor(40, 150, 90, 255))},
+                                                           {1.0, QBrush(QColor(42, 96, 65, 255))}}}}},
+    {3, {QString("stalin_theme"), {QColor(171, 0, 0, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, 
+                                                            {0.2, QBrush(QColor(98, 0, 0, 255))}, 
+                                                            {0.3, QBrush(QColor(171, 0, 0, 255))},
+                                                            {0.4, QBrush(QColor(133, 0, 0, 255))},
+                                                            {0.5, QBrush(QColor(165, 45, 45, 255))}, 
+                                                            {0.6, QBrush(QColor(115, 0, 0, 255))},
+                                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}
   };
 
   // Initialize the timer for the turn signal animation
