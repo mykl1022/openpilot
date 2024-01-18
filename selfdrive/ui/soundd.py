@@ -175,9 +175,9 @@ class Soundd:
 
     theme_configuration = {
       0: "stock",
-      1: "frog_theme",
-      2: "tesla_theme",
-      3: "stalin_theme"
+      1: "lime_theme",
+      2: "baja_theme",
+      3: "blood_theme"
     }
 
     theme_name = theme_configuration.get(custom_sounds, "stock")
