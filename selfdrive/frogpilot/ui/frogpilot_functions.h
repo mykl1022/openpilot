@@ -84,8 +84,8 @@ public:
         font-weight: 500;
         height:100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
-        background-color: #393939;
+        color: #000;
+        background-color: #999;
       }
       QPushButton:pressed {
         background-color: #4a4a4a;
@@ -94,7 +94,7 @@ public:
         background-color: #33Ab4C;
       }
       QPushButton:disabled {
-        color: #33E4E4E4;
+        color: #33000;
       }
     )";
 
@@ -195,8 +195,8 @@ public:
         font-weight: 500;
         height:100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
-        background-color: #393939;
+        color: #000;
+        background-color: #999;
       }
       QPushButton:pressed {
         background-color: #4a4a4a;
@@ -205,7 +205,7 @@ public:
         background-color: #33Ab4C;
       }
       QPushButton:disabled {
-        color: #33E4E4E4;
+        color: #33000;
       }
     )";
 
@@ -351,8 +351,8 @@ private:
         font-weight: 500;
         height: 100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
-        background-color: #393939;
+        color: #000;
+        background-color: #999;
       }
       QPushButton:pressed {
         background-color: #4a4a4a;
@@ -401,8 +401,8 @@ public:
             font-weight: 500;
             height:100px;
             padding: 0 25 0 25;
-            color: #E4E4E4;
-            background-color: #393939;
+            color: #000;
+            background-color: #999;
           }
           QPushButton:pressed {
             background-color: #4a4a4a;
@@ -411,7 +411,7 @@ public:
             background-color: #33Ab4C;
           }
           QPushButton:disabled {
-            color: #33E4E4E4;
+            color: #33000;
           }
         )";
 
@@ -531,8 +531,8 @@ private:
         font-weight: 500;
         height: 100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
-        background-color: #393939;
+        color: #000;
+        background-color: #999;
       }
       QPushButton:pressed {
         background-color: #4a4a4a;
