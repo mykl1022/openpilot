@@ -67,7 +67,7 @@ AbstractAlert::AbstractAlert(bool hasRebootBtn, QWidget *parent) : QFrame(parent
     }
     QFrame {
       border-radius: 30px;
-      background-color: #999;
+      background-color: #7f0;
     }
     QPushButton {
       color: black;

@@ -389,10 +389,10 @@ SelectMaps::SelectMaps(QWidget *parent) : QWidget(parent) {
       border-width: 0;
       border-radius: 30px;
       color: #dddddd;
-      background-color: #999;
+      background-color: #7f0;
     }
     QPushButton:pressed {
-      background-color: #4a4a4a;
+      background-color: #aaa;
     }
   )");
 }
@@ -414,7 +414,7 @@ QString SelectMaps::normalButtonStyle = R"(
   border-width: 0;
   border-radius: 30px;
   color: #dddddd;
-  background-color: #999;
+  background-color: #7f0;
 )";
 
 QFrame *SelectMaps::horizontalLine(QWidget *parent) const {
@@ -503,10 +503,10 @@ Primeless::Primeless(QWidget *parent) : QWidget(parent) {
       border-width: 0;
       border-radius: 30px;
       color: #dddddd;
-      background-color: #999;
+      background-color: #7f0;
     }
     QPushButton:pressed {
-      background-color: #4a4a4a;
+      background-color: #aaa;
     }
   )");
 }

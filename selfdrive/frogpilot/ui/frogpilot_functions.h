@@ -85,10 +85,10 @@ public:
         height:100px;
         padding: 0 25 0 25;
         color: #000;
-        background-color: #999;
+        background-color: #7f0;
       }
       QPushButton:pressed {
-        background-color: #4a4a4a;
+        background-color: #aaa;
       }
       QPushButton:checked:enabled {
         background-color: #33Ab4C;
@@ -196,10 +196,10 @@ public:
         height:100px;
         padding: 0 25 0 25;
         color: #000;
-        background-color: #999;
+        background-color: #7f0;
       }
       QPushButton:pressed {
-        background-color: #4a4a4a;
+        background-color: #aaa;
       }
       QPushButton:checked:enabled {
         background-color: #33Ab4C;
@@ -352,10 +352,10 @@ private:
         height: 100px;
         padding: 0 25 0 25;
         color: #000;
-        background-color: #999;
+        background-color: #7f0;
       }
       QPushButton:pressed {
-        background-color: #4a4a4a;
+        background-color: #aaa;
       }
     )");
     return button;
@@ -402,10 +402,10 @@ public:
             height:100px;
             padding: 0 25 0 25;
             color: #000;
-            background-color: #999;
+            background-color: #7f0;
           }
           QPushButton:pressed {
-            background-color: #4a4a4a;
+            background-color: #aaa;
           }
           QPushButton:checked:enabled {
             background-color: #33Ab4C;
@@ -532,10 +532,10 @@ private:
         height: 100px;
         padding: 0 25 0 25;
         color: #000;
-        background-color: #999;
+        background-color: #7f0;
       }
       QPushButton:pressed {
-        background-color: #4a4a4a;
+        background-color: #aaa;
       }
     )");
     return button;

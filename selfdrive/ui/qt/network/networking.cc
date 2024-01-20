@@ -63,10 +63,10 @@ Networking::Networking(QWidget* parent, bool show_advanced) : QFrame(parent) {
       border-width: 0;
       border-radius: 30px;
       color: #dddddd;
-      background-color: #999;
+      background-color: #7f0;
     }
     #back_btn:pressed, #advanced_btn:pressed {
-      background-color:  #4a4a4a;
+      background-color:  #aaa;
     }
   )");
   main_layout->setCurrentWidget(wifiScreen);
