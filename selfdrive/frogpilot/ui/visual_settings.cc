@@ -53,7 +53,7 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : FrogPilot
       });
       toggle = customThemeToggle;
     } else if (param == "CustomColors" || param == "CustomIcons" || param == "CustomSignals" || param == "CustomSounds") {
-      std::vector<QString> themeOptions{tr("Stock"), tr("Frog"), tr("Tesla"), tr("Stalin")};
+      std::vector<QString> themeOptions{tr("Stock"), tr("Frog"), tr("Tesla"), tr("Stalin"), tr("kirby")};
       FrogPilotButtonParamControl *themeSelection = new FrogPilotButtonParamControl(param, title, desc, icon, themeOptions);
       toggle = themeSelection;
 
@@ -106,8 +106,8 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : FrogPilot
     } else if (param == "WheelIcon") {
       std::vector<QString> wheelToggles{tr("RotatingWheel")};
       std::vector<QString> wheelToggleNames{tr("Rotating")};
-      std::map<int, QString> steeringWheelLabels = {{0, "Stock"}, {1, "Lexus"}, {2, "Toyota"}, {3, "Frog"}, {4, "Rocket"}, {5, "Hyundai"}, {6, "Stalin"}};
-      toggle = new FrogPilotParamValueToggleControl(param, title, desc, icon, 0, 6, steeringWheelLabels, this, true, "", 1, wheelToggles, wheelToggleNames);
+      std::map<int, QString> steeringWheelLabels = {{0, "Stock"}, {1, "Lexus"}, {2, "Toyota"}, {3, "Frog"}, {4, "Rocket"}, {5, "Hyundai"}, {6, "Stalin"}, {7, "Kirby"}};
+      toggle = new FrogPilotParamValueToggleControl(param, title, desc, icon, 0, 7, steeringWheelLabels, this, true, "", 1, wheelToggles, wheelToggleNames);
 
     } else {
       toggle = new ParamControl(param, title, desc, icon, this);

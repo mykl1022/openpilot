@@ -1147,7 +1147,13 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                             {0.4, QBrush(QColor(133, 0, 0, 255))},
                                                             {0.5, QBrush(QColor(165, 45, 45, 255))}, 
                                                             {0.6, QBrush(QColor(115, 0, 0, 255))},
-                                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}
+                                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+    {4, {QString("kirby_theme"), {QColor(250, 209, 243, 155), {{0.0, QBrush(QColor(255, 140, 215, 255))}, 
+							                                                 {0.2, QBrush(QColor(255, 208, 242, 255))}, 
+							                                                 {0.3, QBrush(QColor(255, 181, 230, 255))}, 
+							                                                 {0.4, QBrush(QColor(253, 218, 242, 255))}, 
+							                                                 {0.6, QBrush(QColor(255, 183, 233, 255))}, 
+							                                                 {1.0, QBrush(QColor(255, 220, 246, 255))}}}}},                                                        
   };
 
   // Initialize the timer for the turn signal animation
