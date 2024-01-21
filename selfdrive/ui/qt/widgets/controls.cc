@@ -72,14 +72,14 @@ ButtonControl::ButtonControl(const QString &title, const QString &text, const QS
       border-radius: 50px;
       font-size: 35px;
       font-weight: 500;
-      color: #E4E4E4;
-      background-color: #393939;
+      color: #000;
+      background-color: #999;
     }
     QPushButton:pressed {
       background-color: #4a4a4a;
     }
     QPushButton:disabled {
-      color: #33E4E4E4;
+      color: #6200ff;
     }
   )");
   btn.setFixedSize(250, 100);
