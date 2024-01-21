@@ -91,7 +91,7 @@ public:
         background-color: #aaa;
       }
       QPushButton:checked:enabled {
-        background-color: #33Ab4C;
+        background-color: 7f0;
       }
       QPushButton:disabled {
         color: #33000;
@@ -202,7 +202,7 @@ public:
         background-color: #aaa;
       }
       QPushButton:checked:enabled {
-        background-color: #33Ab4C;
+        background-color: 7f0;
       }
       QPushButton:disabled {
         color: #33000;
@@ -408,7 +408,7 @@ public:
             background-color: #aaa;
           }
           QPushButton:checked:enabled {
-            background-color: #33Ab4C;
+            background-color: 7f0;
           }
           QPushButton:disabled {
             color: #33000;

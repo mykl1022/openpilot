@@ -389,7 +389,7 @@ SelectMaps::SelectMaps(QWidget *parent) : QWidget(parent) {
       border-width: 0;
       border-radius: 30px;
       color: #dddddd;
-      background-color: #7f0;
+      background-color: 7b00ff;
     }
     QPushButton:pressed {
       background-color: #aaa;
@@ -404,7 +404,7 @@ QString SelectMaps::activeButtonStyle = R"(
   border-width: 0;
   border-radius: 30px;
   color: #dddddd;
-  background-color: #33Ab4C;
+  background-color: 7f0;
 )";
 
 QString SelectMaps::normalButtonStyle = R"(
@@ -414,7 +414,7 @@ QString SelectMaps::normalButtonStyle = R"(
   border-width: 0;
   border-radius: 30px;
   color: #dddddd;
-  background-color: #7f0;
+  background-color: 7b00ff;
 )";
 
 QFrame *SelectMaps::horizontalLine(QWidget *parent) const {
@@ -503,7 +503,7 @@ Primeless::Primeless(QWidget *parent) : QWidget(parent) {
       border-width: 0;
       border-radius: 30px;
       color: #dddddd;
-      background-color: #7f0;
+      background-color: 7b00ff;
     }
     QPushButton:pressed {
       background-color: #aaa;

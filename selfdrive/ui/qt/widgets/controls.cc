@@ -73,7 +73,7 @@ ButtonControl::ButtonControl(const QString &title, const QString &text, const QS
       font-size: 35px;
       font-weight: 500;
       color: #000;
-      background-color: #7f0;
+      background-color: 7b00ff;
     }
     QPushButton:pressed {
       background-color: #aaa;
