@@ -377,7 +377,10 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : experimental_mode(fals
     {4, loadPixmap("../frogpilot/assets/wheel_images/rocket.png", {img_size, img_size})},
     {5, loadPixmap("../frogpilot/assets/wheel_images/hyundai.png", {img_size, img_size})},
     {6, loadPixmap("../frogpilot/assets/wheel_images/stalin.png", {img_size, img_size})},
-    {7, loadPixmap("../frogpilot/assets/wheel_images/firefox.png", {img_size, img_size})}
+    {7, loadPixmap("../frogpilot/assets/wheel_images/kirby.png", {img_size, img_size})},
+    {8, loadPixmap("../frogpilot/assets/wheel_images/blaze.png", {img_size, img_size})},
+    {9, loadPixmap("../frogpilot/assets/wheel_images/baja.png", {img_size, img_size})},
+    {10, loadPixmap("../frogpilot/assets/wheel_images/purp.png", {img_size, img_size})}
   };
 }
 
@@ -1150,15 +1153,49 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}}},
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
-    {3, {QString("stalin_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}}
+    {1, {QString("frog_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {0.2, QBrush(QColor(242, 255, 0, 255))}, 
+							                                              {0.24, QBrush(QColor(242, 255, 0, 255))}, 
+							                                              {0.4, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {1.0, QBrush(QColor(242, 255, 0, 255))}}}}},
+    {2, {QString("tesla_theme"), {QColor(118, 44, 255, 255), {{0.0, QBrush(QColor(25, 0, 255, 255))},
+                                                              {0.2, QBrush(QColor(20, 0, 117, 255))},
+                                                              {0.3, QBrush(QColor(25, 0, 255, 255))},
+                                                              {0.4, QBrush(QColor(0, 229, 255, 255))},
+                                                              {0.6, QBrush(QColor(118, 44, 255, 255))},
+                                                              {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+    {3, {QString("stalin_theme"), {QColor(171, 0, 0, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, 
+                                                           {0.2, QBrush(QColor(98, 0, 0, 255))}, 
+                                                           {0.3, QBrush(QColor(171, 0, 0, 255))},
+                                                           {0.4, QBrush(QColor(133, 0, 0, 255))},
+                                                           {0.5, QBrush(QColor(165, 45, 45, 255))}, 
+                                                           {0.6, QBrush(QColor(115, 0, 0, 255))},
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+    {4, {QString("kirby_theme"), {QColor(250, 209, 243, 155), {{0.0, QBrush(QColor(255, 140, 215, 255))}, 
+							                                             {0.2, QBrush(QColor(255, 208, 242, 255))}, 
+							                                             {0.3, QBrush(QColor(255, 181, 230, 255))}, 
+							                                             {0.4, QBrush(QColor(253, 218, 242, 255))}, 
+							                                             {0.6, QBrush(QColor(255, 183, 233, 255))}, 
+							                                             {1.0, QBrush(QColor(255, 220, 246, 255))}}}}},
+    {5, {QString("blaze_theme"), {QColor(255, 208, 0, 155), {{0.0, QBrush(QColor(122, 0, 0, 255))}, 
+							                                            {0.2, QBrush(QColor(250, 142, 0, 255))}, 
+							                                            {0.3, QBrush(QColor(255, 208, 0, 255))}, 
+							                                            {0.4, QBrush(QColor(255, 0, 0, 255))}, 
+							                                            {0.6, QBrush(QColor(250, 142, 0, 255))}, 
+							                                            {1.0, QBrush(QColor(27, 0, 0, 255))}}}}},
+    {7, {QString("baja_theme"), {QColor(44, 234, 163, 255), {{0.0, QBrush(QColor(124, 254, 240, 255))}, 
+                                                           {0.2, QBrush(QColor(107, 255, 184, 255))}, 
+                                                           {0.3, QBrush(QColor(44, 234, 163, 255))},
+                                                           {0.4, QBrush(QColor(40, 150, 90, 255))},
+                                                           {1.0, QBrush(QColor(42, 96, 65, 255))}}}}},
+    {8, {QString("purp_theme"), {QColor(98, 0, 255, 255), {{0.0, QBrush(QColor(115, 0, 255, 255))}, 
+                                                           {0.2, QBrush(QColor(53, 0, 73, 255))}, 
+                                                           {0.25, QBrush(QColor(98, 0, 255, 255))},
+                                                           {0.3, QBrush(QColor(49, 0, 91, 255))},
+                                                           {0.4, QBrush(QColor(102, 0, 255, 255))}, 
+                                                           {0.6, QBrush(QColor(67, 0, 154, 255))},
+                                                           {1.0, QBrush(QColor(34, 0, 66, 255))}}}}}                                                                                                                                                                                                                           
+                                                           
   };
 
   // Initialize the timer for the turn signal animation
