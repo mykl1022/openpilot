@@ -802,9 +802,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateral) {
-    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.0, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.0, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.0, 0.1));
   } else if (conditionalStatus == 1 || conditionalStatus == 3) {
     pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
@@ -1150,15 +1150,24 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 
   // Custom themes configuration
   themeConfiguration = {
-    {1, {QString("frog_theme"), {QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}}},
-    {2, {QString("tesla_theme"), {QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}}},
-    {3, {QString("stalin_theme"), {QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
-                                                            {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
-                                                            {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}}
+    {1, {QString("frog_theme"), {QColor(170, 255, 0, 255), {{0.0, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {0.2, QBrush(QColor(242, 255, 0, 255))}, 
+							                                              {0.24, QBrush(QColor(242, 255, 0, 255))}, 
+							                                              {0.4, QBrush(QColor(170, 255, 0, 255))}, 
+							                                              {1.0, QBrush(QColor(242, 255, 0, 255))}}}}},
+    {2, {QString("tesla_theme"), {QColor(118, 44, 255, 255), {{0.0, QBrush(QColor(25, 0, 255, 255))},
+                                                              {0.2, QBrush(QColor(20, 0, 117, 255))},
+                                                              {0.3, QBrush(QColor(25, 0, 255, 255))},
+                                                              {0.4, QBrush(QColor(0, 229, 255, 255))},
+                                                              {0.6, QBrush(QColor(118, 44, 255, 255))},
+                                                              {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+    {3, {QString("stalin_theme"), {QColor(171, 0, 0, 255), {{0.0, QBrush(QColor(0, 0, 0, 255))}, 
+                                                           {0.2, QBrush(QColor(98, 0, 0, 255))}, 
+                                                           {0.3, QBrush(QColor(171, 0, 0, 255))},
+                                                           {0.4, QBrush(QColor(133, 0, 0, 255))},
+                                                           {0.5, QBrush(QColor(165, 45, 45, 255))}, 
+                                                           {0.6, QBrush(QColor(115, 0, 0, 255))},
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}
   };
 
   // Initialize the timer for the turn signal animation
