@@ -231,7 +231,7 @@ def startup_master_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
   if "REPLAY" in os.environ:
     branch = "replay"
 
-  return StartupAlert("Hippity hoppity this is my property", "so I do what I want 🐸", alert_status=AlertStatus.frogpilot)
+  return StartupAlert("Welcome to MyPilot", alert_status=AlertStatus.frogpilot)
 
 def below_engage_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int) -> Alert:
   return NoEntryAlert(f"Drive above {get_display_speed(CP.minEnableSpeed, metric)} to engage")
@@ -272,7 +272,7 @@ def torque_nn_load_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
       Priority.LOW, VisualAlert.none, AudibleAlert.prompt, 6.0)
   else:
     return Alert(
-      "NNFF Torque Controller loaded",
+      "NNFF loaded",
       model_name,
       AlertStatus.frogpilot, AlertSize.mid,
       Priority.LOW, VisualAlert.none, AudibleAlert.engage, 5.0)
@@ -523,7 +523,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.WARNING: Alert(
       "Steer Left to Start Lane Change Once Safe",
       "",
-      AlertStatus.normal, AlertSize.small,
+      AlertStatus.normal, AlertSize.none,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
@@ -531,7 +531,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.WARNING: Alert(
       "Steer Right to Start Lane Change Once Safe",
       "",
-      AlertStatus.normal, AlertSize.small,
+      AlertStatus.normal, AlertSize.none,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
@@ -988,8 +988,8 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.WARNING: Alert(
       "Turn Exceeds Steering Limit",
       "JESUS TAKE THE WHEEL!!",
-      AlertStatus.userPrompt, AlertSize.mid,
-      Priority.LOW, VisualAlert.steerRequired, AudibleAlert.warningSoft, 2.),
+      AlertStatus.userPrompt, AlertSize.none,
+      Priority.LOW, VisualAlert.none, AudibleAlert.none, 2.),
   },
 
   FrogPilotEventName.greenLight: {
@@ -1016,7 +1016,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.WARNING: Alert(
       "Turning Left",
       "",
-      AlertStatus.normal, AlertSize.small,
+      AlertStatus.normal, AlertSize.none,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
@@ -1024,7 +1024,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
     ET.WARNING: Alert(
       "Turning Right",
       "",
-      AlertStatus.normal, AlertSize.small,
+      AlertStatus.normal, AlertSize.none,
       Priority.LOW, VisualAlert.none, AudibleAlert.none, .1, alert_rate=0.75),
   },
 
