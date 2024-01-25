@@ -820,7 +820,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   } else if (customColors != 0) {
     const auto &colorMap = themeConfiguration[customColors].second.second;
     for (const auto &[position, brush] : colorMap) {
-      QColor darkerColor = brush.color().darker(120);
+      QColor darkerColor = brush.color().darker(20);
       pe.setColorAt(position, darkerColor);
     }
   } else {
@@ -1166,7 +1166,20 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                            {0.4, QBrush(QColor(133, 0, 0, 255))},
                                                            {0.5, QBrush(QColor(165, 45, 45, 255))}, 
                                                            {0.6, QBrush(QColor(115, 0, 0, 255))},
-                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}}
+                                                           {1.0, QBrush(QColor(0, 0, 0, 255))}}}}},
+   {4, {QString("comic_theme"), {QColor(255, 255, 255, 155), {{0.0, QBrush(QColor(255, 255, 255, 255))}, 
+							                                            {0.2, QBrush(QColor(171, 171, 171, 255))}, 
+							                                            {0.3, QBrush(QColor(255, 255, 255, 255))}, 
+							                                            {0.4, QBrush(QColor(225, 225, 225, 255))}, 
+							                                            {0.6, QBrush(QColor(255, 255, 255, 255))}, 
+							                                            {1.0, QBrush(QColor(255, 255, 255, 255))}}}}},
+    {5, {QString("purp_theme"), {QColor(98, 0, 255, 255), {{0.0, QBrush(QColor(115, 0, 255, 255))}, 
+                                                           {0.2, QBrush(QColor(53, 0, 73, 255))}, 
+                                                           {0.25, QBrush(QColor(98, 0, 255, 255))},
+                                                           {0.3, QBrush(QColor(49, 0, 91, 255))},
+                                                           {0.4, QBrush(QColor(102, 0, 255, 255))}, 
+                                                           {0.6, QBrush(QColor(67, 0, 154, 255))},
+                                                           {1.0, QBrush(QColor(34, 0, 66, 255))}}}}}                                                                                                              
   };
 
   // Initialize the timer for the turn signal animation

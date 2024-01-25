@@ -54,7 +54,9 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {0, {"stock", {QColor(255, 255, 255)}}},
     {1, {"frog_theme", {QColor(170, 255, 0)}}},
     {2, {"tesla_theme", {QColor(44, 234, 163)}}},
-    {3, {"stalin_theme", {QColor(255, 238, 50)}}}
+    {3, {"stalin_theme", {QColor(255, 238, 50)}}},
+    {4, {"comic_theme", {QColor(255, 255, 255)}}},
+    {5, {"purp_theme", {QColor(98, 0, 255)}}}
   };
 
   for (auto &[key, themeData] : themeConfiguration) {
