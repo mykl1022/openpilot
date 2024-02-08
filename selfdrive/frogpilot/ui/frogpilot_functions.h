@@ -84,7 +84,7 @@ public:
         font-weight: 500;
         height:100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
+        color: #000;
         background-color: #393939;
       }
       QPushButton:pressed {
@@ -195,7 +195,7 @@ public:
         font-weight: 500;
         height:100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
+        color: #000;
         background-color: #393939;
       }
       QPushButton:pressed {
@@ -352,7 +352,7 @@ private:
         font-weight: 500;
         height: 100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
+        color: #000;
         background-color: #393939;
       }
       QPushButton:pressed {
@@ -466,7 +466,7 @@ private:
         font-weight: 500;
         height: 100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
+        color: #000;
         background-color: #393939;
       }
       QPushButton:pressed {
@@ -516,7 +516,7 @@ public:
             font-weight: 500;
             height:100px;
             padding: 0 25 0 25;
-            color: #E4E4E4;
+            color: #000;
             background-color: #393939;
           }
           QPushButton:pressed {
@@ -647,7 +647,7 @@ private:
         font-weight: 500;
         height: 100px;
         padding: 0 25 0 25;
-        color: #E4E4E4;
+        color: #000;
         background-color: #393939;
       }
       QPushButton:pressed {

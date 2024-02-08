@@ -46,7 +46,7 @@ void ScreenRecorder::paintEvent(QPaintEvent *event) {
   p.setRenderHint(QPainter::Antialiasing);
 
   QRect fullRect(0, 0, 192 / 2, 192 / 2);
-  QColor outerColor = recording ? recording_color : QColor::fromRgbF(1, 1, 1, 1);
+  QColor outerColor = recording ? recording_color : QColor::fromRgbF(170, 255, 0, 255);
   int outerRedWidth = fullRect.width() * 0.05;
 
   QRect outerRect = fullRect;
@@ -55,7 +55,7 @@ void ScreenRecorder::paintEvent(QPaintEvent *event) {
   p.drawEllipse(outerRect);
 
   QRect middleRect = fullRect.marginsRemoved(QMargins(outerRedWidth, outerRedWidth, outerRedWidth, outerRedWidth));
-  p.setBrush(QColor::fromRgbF(0, 1, 0.9, 1));
+  p.setBrush(QColor::fromRgbF(98, 0, 255, 255));
   p.drawEllipse(middleRect);
 }
 

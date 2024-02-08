@@ -172,7 +172,7 @@ private:
   const QString buttonStyle = R"(
     QPushButton {
       border-radius: 50px; font-size: 40px; font-weight: 500;
-      height: 100px; padding: 0 25 0 25; color: #E4E4E4;
+      height: 100px; padding: 0 25 0 25; color: #000;
       background-color: #393939;
     }
     QPushButton:pressed, QPushButton:checked {

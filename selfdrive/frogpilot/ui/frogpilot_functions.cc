@@ -26,7 +26,7 @@ FrogPilotButtonIconControl::FrogPilotButtonIconControl(const QString &title, con
       border-radius: 50px;
       font-size: 35px;
       font-weight: 500;
-      color: #E4E4E4;
+      color: #000;
       background-color: #393939;
     }
     QPushButton:pressed {

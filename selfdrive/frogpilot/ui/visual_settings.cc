@@ -60,7 +60,7 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : FrogPilot
       });
       toggle = customThemeToggle;
     } else if (param == "CustomColors" || param == "CustomIcons" || param == "CustomSignals" || param == "CustomSounds") {
-      std::vector<QString> themeOptions{tr("Stock"), tr("Frog"), tr("Tesla"), tr("Stalin"), tr("Dusk"), tr("Hs&Hrs"), tr("Luster"), tr("Comic"), tr("Dawn"), tr("Freeze"), tr("Midnight"), tr("Gold"), tr("Jade"), tr("Baja"), tr("Torch"), tr("Blood"), tr("Bumble"), tr("Purp"), tr("Mario"), tr("Ghost")};
+      std::vector<QString> themeOptions{tr("Stock"), tr("Frog"), tr("Tesla"), tr("Stalin"), tr("Dusk"), tr("Hs&Hrs"), tr("Opal"), tr("Comic"), tr("Dawn"), tr("Freeze"), tr("Midnight"), tr("Gold"), tr("Jade"), tr("Baja"), tr("Torch"), tr("Blood"), tr("Bumble"), tr("Purp"), tr("Mario"), tr("Ghost")};
       FrogPilotButtonParamControl *themeSelection = new FrogPilotButtonParamControl(param, title, desc, icon, themeOptions);
       toggle = themeSelection;
 
@@ -126,8 +126,8 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : FrogPilot
     } else if (param == "WheelIcon") {
       std::vector<QString> wheelToggles{"RotatingWheel"};
       std::vector<QString> wheelToggleNames{tr("Rotating")};
-      std::map<int, QString> steeringWheelLabels = {{0, "Stock"}, {1, "Lexus"}, {2, "Toyota"}, {3, "Frog"}, {4, "Rocket"}, {5, "Hyundai"}, {6, "Stalin"}};
-      toggle = new FrogPilotParamValueToggleControl(param, title, desc, icon, 0, 6, steeringWheelLabels, this, true, "", 1, wheelToggles, wheelToggleNames);
+      std::map<int, QString> steeringWheelLabels = {{0, "Stock"}, {1, "Frog"}, {2, "Tesla"}, {3, "Stalin"}, {4, "Dusk"}, {5, "Hs&Hrs"}, {6, "Opal"}, {7, "Comic"}, {8, "Dawn"}, {9, "Freeze"}, {10, "Midnight"}, {11, "Gold"}, {12, "Jade"}, {13, "Baja"}, {14, "Torch"}, {15, "Blood"}, {16, "Bumble"}, {17, "Purp"}, {18, "Mario"}, {19, "Ghost"}};
+      toggle = new FrogPilotParamValueToggleControl(param, title, desc, icon, 0, 19, steeringWheelLabels, this, true, "", 1, wheelToggles, wheelToggleNames);
 
     } else {
       toggle = new ParamControl(param, title, desc, icon, this);

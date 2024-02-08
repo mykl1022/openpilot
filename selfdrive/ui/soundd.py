@@ -179,12 +179,27 @@ class Soundd:
 
     theme_configuration = {
       0: "stock",
-      1: "frog_theme",
-      2: "tesla_theme",
-      3: "stalin_theme",
-      4: "comic_theme",
-      5: "purp_theme"
-    }
+    1: "frog_theme",
+    2: "tesla_theme",
+    3: "stalin_theme",
+    4: "dusk_theme",
+    5: "hs&hrs_theme",
+    6: "opal_theme",
+    7: "comic_theme",
+    8: "dawn_theme",
+    9: "freeze_theme",
+    10: "midnight_theme",
+    11: "gold_theme",
+    12: "jade_theme",
+    13: "baja_theme",
+    14: "torch_theme",
+    15: "blood_theme",
+    16: "bumble_theme",
+    17: "purp_theme",
+    18: "mario_theme",
+    19: "ghost_theme"
+  }
+
 
     theme_name = theme_configuration.get(custom_sounds, "stock")
     self.sound_directory = (f"{BASEDIR}/selfdrive/frogpilot/assets/custom_themes/{theme_name}/sounds/" if custom_sounds else f"{BASEDIR}/selfdrive/assets/sounds/")
