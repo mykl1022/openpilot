@@ -384,12 +384,13 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : experimental_mode(fals
     {11, loadPixmap("../frogpilot/assets/wheel_images/gold.png", {img_size, img_size})},
     {12, loadPixmap("../frogpilot/assets/wheel_images/jade.png", {img_size, img_size})},
     {13, loadPixmap("../frogpilot/assets/wheel_images/baja.png", {img_size, img_size})},
-    {14, loadPixmap("../frogpilot/assets/wheel_images/torcg.png", {img_size, img_size})},
+    {14, loadPixmap("../frogpilot/assets/wheel_images/torch.png", {img_size, img_size})},
     {15, loadPixmap("../frogpilot/assets/wheel_images/blood.png", {img_size, img_size})},
     {16, loadPixmap("../frogpilot/assets/wheel_images/bumble.png", {img_size, img_size})},
     {17, loadPixmap("../frogpilot/assets/wheel_images/purp.png", {img_size, img_size})},
     {18, loadPixmap("../frogpilot/assets/wheel_images/mario.png", {img_size, img_size})},
-    {19, loadPixmap("../frogpilot/assets/wheel_images/ghost.png", {img_size, img_size})}
+    {19, loadPixmap("../frogpilot/assets/wheel_images/ghost.png", {img_size, img_size})},
+    {20, loadPixmap("../frogpilot/assets/wheel_images/rocket.png", {img_size, img_size})}
   };
 }
 
