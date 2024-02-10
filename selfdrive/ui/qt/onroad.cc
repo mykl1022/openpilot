@@ -429,7 +429,7 @@ void ExperimentalButton::updateState(const UIState &s, bool leadInfo) {
     static int rotationDegree = 0;
     rotationDegree = (rotationDegree + 36) % 360;
     steeringAngleDeg = rotationDegree;
-    wheelIcon = 7;
+    wheelIcon = 1;
     update();
   // Update the icon so the steering wheel rotates in real time
   } else if (rotatingWheel && steeringAngleDeg != scene.steering_angle_deg) {
