@@ -64,7 +64,7 @@ Networking::Networking(QWidget* parent, bool show_advanced) : QFrame(parent) {
       border-width: 0;
       border-radius: 30px;
       color: #dddddd;
-      background-color: #393939;
+      background-color: #999;
     }
     #back_btn:pressed, #advanced_btn:pressed {
       background-color:  #4a4a4a;

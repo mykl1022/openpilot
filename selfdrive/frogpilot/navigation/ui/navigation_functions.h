@@ -173,13 +173,13 @@ private:
     QPushButton {
       border-radius: 50px; font-size: 40px; font-weight: 500;
       height: 100px; padding: 0 25 0 25; color: #000;
-      background-color: #393939;
+      background-color: #999;
     }
     QPushButton:pressed, QPushButton:checked {
       background-color: #4a4a4a;
     }
     QPushButton:checked:enabled {
-      background-color: #33Ab4C;
+      background-color: #af0;
     }
     QPushButton:disabled {
       color: #33E4E4E4;
