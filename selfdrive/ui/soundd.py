@@ -197,7 +197,8 @@ class Soundd:
     16: "bumble_theme",
     17: "purp_theme",
     18: "mario_theme",
-    19: "ghost_theme"
+    19: "ghost_theme",
+    20: "new_theme"
   }
 
 

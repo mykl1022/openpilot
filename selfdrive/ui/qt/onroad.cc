@@ -1302,7 +1302,13 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
    {19, {QString("ghost_theme"), {QColor(165, 165, 165, 40), {{0.3, QBrush(QColor(0, 0, 0, 90))}, 
                                                            {0.4, QBrush(QColor(165, 165, 165, 90))},
                                                            {0.6, QBrush(QColor(0, 0, 0, 90))},
-                                                           {0.95, QBrush(QColor(255, 255, 255, 90))}}}}}                                                                                                                                                                                                                                                                                                                                                                                                                      
+                                                           {0.95, QBrush(QColor(255, 255, 255, 90))}}}}},
+   
+   {20, {QString("new_theme"), {QColor(90, 0, 169, 155), {{0.1, QBrush(QColor(80, 150, 50, 255))}, 
+							                                            {0.27, QBrush(QColor(0, 0, 0, 255))}, 
+							                                            {0.4, QBrush(QColor(55, 153, 35, 255))}, 
+							                                            {0.6, QBrush(QColor(90, 0, 169, 255))}, 
+							                                            {1.0, QBrush(QColor(0, 140, 255, 255))}}}}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
                                                                                                               
   };
 
