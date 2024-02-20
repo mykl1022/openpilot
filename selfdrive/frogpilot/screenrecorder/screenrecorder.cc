@@ -36,7 +36,7 @@ ScreenRecorder::~ScreenRecorder() {
 
 void ScreenRecorder::applyColor() {
   if (frame % (UI_FREQ / 2) == 0) {
-    recording_color = (frame % UI_FREQ < (UI_FREQ / 2)) ? QColor::fromRgbF(0.67, 1, 0, 1) : QColor::fromRgbF(0, 0, 0, 1);
+    recording_color = (frame % UI_FREQ < (UI_FREQ / 2)) ? QColor::fromRgbF(0.67, 1, 0, 1) : QColor::fromRgbF(0.4, 0, 1, 1);
     update();
   }
 }
