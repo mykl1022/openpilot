@@ -1154,7 +1154,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                           {0.5, QBrush(QColor(255, 219, 147, 255))},
                                                           {0.65, QBrush(QColor(221, 190, 123, 255))},
                                                           {0.8, QBrush(QColor(154, 133, 77, 255))},
-                                                          {1.0, QBrush(QColor(83, 73, 29, 255))}}}}},
+                                                          {1.0, QBrush(QColor(83, 73, 29, 255))}}}},
     {5, {"jupiter_theme", 4, QColor(0, 0, 0, 155), {{0.0, QBrush(QColor(235, 243, 246, 255))}, 
 							                                            {0.2, QBrush(QColor(227, 220, 203, 255))}, 
 							                                            {0.3, QBrush(QColor(216, 202, 157, 255))}, 
@@ -1162,7 +1162,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                           {0.5, QBrush(QColor(201, 144, 57, 255))},
                                                           {0.65, QBrush(QColor(235, 243, 246, 255))},
                                                           {0.8, QBrush(QColor(216, 202, 157, 255))}, 
-							                                            {1.0, QBrush(QColor(244, 201, 168, 255))}}}}                                                  
+							                                            {1.0, QBrush(QColor(244, 201, 168, 255))}}}}                                                 
   };
 
   // Initialize the timer for the turn signal animation
