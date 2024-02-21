@@ -101,7 +101,7 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(SettingsWindow *parent) : FrogPilot
       });
       toggle = customThemeToggle;
     } else if (customThemeKeys.find(param) != customThemeKeys.end()) {
-      std::vector<QString> themeOptions{tr("Stock"), tr("Frog"), tr("Tesla"), tr("Stalin")};
+      std::vector<QString> themeOptions{tr("Stock"), tr("Frog"), tr("Tesla"), tr("Stalin"), tr("mercury"), tr("jupiter")};
       FrogPilotButtonParamControl *themeSelection = new FrogPilotButtonParamControl(param, title, desc, icon, themeOptions);
       toggle = themeSelection;
 
