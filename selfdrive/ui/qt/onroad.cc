@@ -1155,9 +1155,14 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
                                                      {0.65, QBrush(QColor::fromHslF(41 / 360., 0.59, 0.67, 1.0))},
                                                      {0.8, QBrush(QColor::fromHslF(44 / 360., 0.33, 0.45, 1.0))},
                                                      {1.0, QBrush(QColor::fromHslF(49 / 360., 0.48, 0.22, 1.0))}}}},
-    {5, {"jupiter_theme", 6, QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.9))},
-                                                      {0.5, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.5))},
-                                                      {1.0, QBrush(QColor::fromHslF(0 / 360., 1.0, 0.5, 0.1))}}}}                                                  
+    {5, {"jupiter_theme", 6, QColor(255, 0, 0, 255), {{0.0, QBrush(QColor::fromHslF(196 / 360., 0.38, 0.94, 1.0))},
+                                                      {0.2, QBrush(QColor::fromHslF(43 / 360., 0.3, 0.84, 1.0))},
+                                                      {0.3, QBrush(QColor::fromHslF(46 / 360., 0.43, 0.73, 1.0))},
+                                                      {0.4, QBrush(QColor::fromHslF(21 / 360., 0.15, 0.59, 1.0))},
+                                                      {0.5, QBrush(QColor::fromHslF(36 / 360., 0.57, 0.51, 1.0))},
+                                                      {0.65, QBrush(QColor::fromHslF(196 / 360., 0.38, 0.94, 1.0))},
+                                                      {0.8, QBrush(QColor::fromHslF(43 / 360., 0.3, 0.84, 1.0))},
+                                                      {1.0, QBrush(QColor::fromHslF(46 / 360., 0.43, 0.73, 1.0))}}}}                                                  
   };
 
   // Initialize the timer for the turn signal animation
