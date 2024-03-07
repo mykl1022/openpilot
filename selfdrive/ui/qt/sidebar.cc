@@ -51,9 +51,26 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   themeConfiguration = {
     {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"frog_theme", {QColor(23, 134, 68)}}},
-    {2, {"tesla_theme", {QColor(0, 72, 255)}}},
-    {3, {"stalin_theme", {QColor(255, 0, 0)}}}
+    {1, {"frog_theme", {QColor(170, 255, 0)}}},
+    {2, {"tesla_theme", {QColor(250, 209, 243)}}},
+    {3, {"stalin_theme", {QColor(255, 208, 0)}}},
+    {4, {"dusk_theme", {QColor(255, 208, 0)}}},
+    {5, {"hs&hrs_theme", {QColor(90, 0, 169)}}},
+    {6, {"opal_theme", {QColor(255, 247, 0)}}},
+    {7, {"comic_theme", {QColor(255, 255, 255)}}},
+    {8, {"dawn_theme", {QColor(239, 116, 92)}}},
+    {9, {"freeze_theme", {QColor(92, 218, 215)}}},
+    {10, {"midnight_theme", {QColor(118, 44, 255)}}},
+    {11, {"gold_theme", {QColor(255, 253, 203)}}},
+    {12, {"jade_theme", {QColor(179, 141, 64)}}},
+    {13, {"baja_theme", {QColor(44, 234, 163)}}},
+    {14, {"torch_theme", {QColor(255, 238, 50)}}},
+    {15, {"blood_theme", {QColor(255, 238, 50)}}},
+    {16, {"bumble_theme", {QColor(255, 238, 50)}}},
+    {17, {"purp_theme", {QColor(98, 0, 255)}}},
+    {18, {"mario_theme", {QColor(255, 255, 255)}}},
+    {19, {"ghost_theme", {QColor(165, 165, 165)}}},
+    {20, {"new_theme", {QColor(165, 165, 165)}}}
   };
 
   for (auto &[key, themeData] : themeConfiguration) {
