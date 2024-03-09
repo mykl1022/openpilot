@@ -216,7 +216,7 @@ class Soundd:
       0: "stock",
     1: "frog_theme",
     2: "tesla_theme",
-    3: "stalin_theme",
+    3: "kirby_theme",
     4: "dusk_theme",
     5: "hs&hrs_theme",
     6: "opal_theme",
