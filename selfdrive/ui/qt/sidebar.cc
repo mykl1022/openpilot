@@ -70,7 +70,8 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {17, {"purp_theme", {QColor(98, 0, 255)}}},
     {18, {"mario_theme", {QColor(255, 255, 255)}}},
     {19, {"ghost_theme", {QColor(165, 165, 165)}}},
-    {20, {"new_theme", {QColor(165, 165, 165)}}}
+    {20, {"new_theme", {QColor(165, 165, 165)}}},
+    {21, {"new2_theme", {QColor(37, 0, 51)}}}
   };
 
   for (auto &[key, themeData] : themeConfiguration) {

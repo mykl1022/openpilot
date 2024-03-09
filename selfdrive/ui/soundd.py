@@ -233,7 +233,8 @@ class Soundd:
     17: "purp_theme",
     18: "mario_theme",
     19: "ghost_theme",
-    20: "new_theme"
+    20: "new_theme",
+    21: "new2_theme"
     }
 
     theme_name = theme_configuration.get(custom_sounds, "stock")
