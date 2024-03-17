@@ -564,7 +564,7 @@ EVENTS: Dict[int, Dict[str, Union[Alert, AlertCallbackType]]] = {
       "Take Control",
       "Turn Exceeds Steering Limit",
       AlertStatus.userPrompt, AlertSize.none,
-      Priority.LOW, VisualAlert.none, AudibleAlert.promptRepeat, 2.),
+      Priority.LOW, VisualAlert.none, AudibleAlert.none, 2.),
   },
 
   # Thrown when the fan is driven at >50% but is not rotating
