@@ -1244,9 +1244,9 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
   main_layout->addLayout(bottom_layout);
 
   themeConfiguration = {
-    {1, {"frog_theme", QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.9))},
-                                                  {0.5, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.5))},
-                                                  {1.0, QBrush(QColor::fromHslF(144 / 360., 0.71, 0.31, 0.1))}}}},
+    {1, {"frog_theme", QColor(23, 134, 68, 242), {{0.0, QBrush(QColor::fromHslF(81 / 360., 1.0, 0.5, 0.9))},
+                                                  {0.5, QBrush(QColor::fromHslF(81 / 360., 1.0, 0.5, 0.5))},
+                                                  {1.0, QBrush(QColor::fromHslF(81 / 360., 1.0, 0.0, 0.1))}}}},
     {2, {"tesla_theme", QColor(0, 72, 255, 255), {{0.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.9))},
                                                   {0.5, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.5))},
                                                   {1.0, QBrush(QColor::fromHslF(223 / 360., 1.0, 0.5, 0.1))}}}},
