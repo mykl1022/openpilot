@@ -919,7 +919,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   if (alwaysOnLateralActive) {
     pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.0, 0.38, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.0, 0.38, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.0, 0.38, 0.1));
+    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.1));
   } else if (conditionalStatus == 1 || conditionalStatus == 3 || conditionalStatus == 5) {
     pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
@@ -1251,9 +1251,9 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
 {2, {"tesla_theme", QColor(0, 255, 208, 155), {{0.0, QBrush(QColor(101, 0, 110, 255))},
 							                                            {0.1, QBrush(QColor(255, 0, 0, 255))},
-												    {0.2, QBrush(QColor(255, 242, 0, 255))},
+												                                  {0.2, QBrush(QColor(255, 242, 0, 255))},
 							                                            {0.3, QBrush(QColor(0, 255, 208, 255))},
-												    {0.4, QBrush(QColor(0, 178, 255, 255))},
+												                                  {0.4, QBrush(QColor(0, 178, 255, 255))},
 							                                            {0.5, QBrush(QColor(89, 0, 255, 255))},
 							                                            {1.0, QBrush(QColor(255, 0, 0, 255))}}}},
 {3, {"stalin_theme", QColor(90, 0, 169, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
@@ -1351,7 +1351,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 												    {0.35, QBrush(QColor(88, 0, 0, 255))},
 							                                            {0.5, QBrush(QColor(0, 0, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-};
+ };
 
   holidayThemeConfiguration = {
     {1, {"april_fools", QColor(255, 165, 0, 255), {{0.0, QBrush(QColor::fromHslF(39 / 360., 1.0, 0.5, 0.9))},
