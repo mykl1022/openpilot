@@ -917,9 +917,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // Paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateralActive) {
-    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 0.38, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.0, 0.38, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.0, 0.38, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.0, 0.38, 0.1));
   } else if (conditionalStatus == 1 || conditionalStatus == 3 || conditionalStatus == 5) {
     pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
@@ -939,7 +939,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   } else if (currentHolidayTheme != 0) {
     const auto &colorMap = std::get<2>(holidayThemeConfiguration[currentHolidayTheme]);
     for (const auto &[position, brush] : colorMap) {
-      QColor darkerColor = brush.color().darker(120);
+      QColor darkerColor = brush.color().darker(20);
       pe.setColorAt(position, darkerColor);
     }
   } else if (customColors != 0) {
@@ -1244,75 +1244,75 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
   main_layout->addLayout(bottom_layout);
 
   themeConfiguration = {
-    {1, {"frog_theme", 4, QColor(255, 255, 16, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
+{1, {"frog_theme", QColor(255, 255, 16, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.27, QBrush(QColor(145, 255, 0, 255))},
 							                                            {0.4, QBrush(QColor(255, 255, 16, 255))},
 							                                            {0.6, QBrush(QColor(145, 255, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{2, {"tesla_theme", 4, QColor(0, 255, 208, 155), {{0.0, QBrush(QColor(101, 0, 110, 255))},
+{2, {"tesla_theme", QColor(0, 255, 208, 155), {{0.0, QBrush(QColor(101, 0, 110, 255))},
 							                                            {0.1, QBrush(QColor(255, 0, 0, 255))},
 												    {0.2, QBrush(QColor(255, 242, 0, 255))},
 							                                            {0.3, QBrush(QColor(0, 255, 208, 255))},
 												    {0.4, QBrush(QColor(0, 178, 255, 255))},
 							                                            {0.5, QBrush(QColor(89, 0, 255, 255))},
 							                                            {1.0, QBrush(QColor(255, 0, 0, 255))}}}},
-{3, {"stalin_theme", 4, QColor(90, 0, 169, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
+{3, {"stalin_theme", QColor(90, 0, 169, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.27, QBrush(QColor(255, 89, 0, 255))},
 							                                            {0.4, QBrush(QColor(255, 255, 16, 255))},
 							                                            {0.6, QBrush(QColor(155, 0, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{4, {"icenana_theme", 4, QColor(0, 247, 255, 155), {{0.1, QBrush(QColor(0, 247, 255, 255))},
+{4, {"icenana_theme", QColor(0, 247, 255, 155), {{0.1, QBrush(QColor(0, 247, 255, 255))},
 							                                            {0.27, QBrush(QColor(234, 255, 0, 255))},
 							                                            {0.4, QBrush(QColor(0, 247, 255, 255))},
 							                                            {0.6, QBrush(QColor(234, 255, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 247, 255, 255))}}}},
-{5, {"joker_theme", 4, QColor(174, 255, 0, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
+{5, {"joker_theme", QColor(174, 255, 0, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.27, QBrush(QColor(82, 0, 133, 255))},
 							                                            {0.4, QBrush(QColor(174, 255, 0, 255))},
 							                                            {0.6, QBrush(QColor(82, 0, 133, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{6, {"night_theme", 4, QColor(0, 255, 212, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
+{6, {"night_theme", QColor(0, 255, 212, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.27, QBrush(QColor(18, 0, 133, 255))},
 							                                            {0.4, QBrush(QColor(0, 255, 212, 255))},
 							                                            {0.6, QBrush(QColor(18, 0, 133, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{7, {"love_theme", 4, QColor(255, 0, 0, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
+{7, {"love_theme", QColor(255, 0, 0, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.27, QBrush(QColor(255, 0, 195, 255))},
 							                                            {0.4, QBrush(QColor(255, 0, 0, 255))},
 							                                            {0.6, QBrush(QColor(255, 0, 195, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{8, {"duck_theme", 4, QColor(255, 189, 34, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
+{8, {"duck_theme", QColor(255, 189, 34, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.27, QBrush(QColor(255, 189, 34, 255))},
 							                                            {0.4, QBrush(QColor(255, 255, 255, 255))},
 							                                            {0.6, QBrush(QColor(64, 255, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{9, {"heat_theme", 4, QColor(255, 255, 16, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
+{9, {"heat_theme", QColor(255, 255, 16, 155), {{0.1, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.27, QBrush(QColor(255, 89, 0, 255))},
 							                                            {0.4, QBrush(QColor(255, 255, 16, 255))},
 							                                            {0.6, QBrush(QColor(155, 0, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{10, {"blackhole_theme", 4, QColor(48, 0, 90, 155), {{0.1, QBrush(QColor(48, 0, 90, 255))},
+{10, {"blackhole_theme", QColor(48, 0, 90, 155), {{0.1, QBrush(QColor(48, 0, 90, 255))},
 							                                            {0.2, QBrush(QColor(170, 0, 255, 255))},
 												    {0.3, QBrush(QColor(2, 0, 96, 255))},
 							                                            {0.4, QBrush(QColor(0, 0, 0, 255))},
 												    {0.5, QBrush(QColor(2, 0, 96, 255))},
 							                                            {0.6, QBrush(QColor(170, 0, 255, 255))},
 							                                            {1.0, QBrush(QColor(48, 0, 90, 255))}}}},
-{11, {"desert_theme", 4, QColor(48, 0, 90, 155), {{0.0, QBrush(QColor(0, 0, 0, 255))},
+{11, {"desert_theme", QColor(48, 0, 90, 155), {{0.0, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.1, QBrush(QColor(132, 0, 0, 255))},
 												    {0.2, QBrush(QColor(255, 179, 0, 255))},
 							                                            {0.3, QBrush(QColor(255, 255, 255, 255))},
 												    {0.4, QBrush(QColor(255, 179, 0, 255))},
 							                                            {0.5, QBrush(QColor(132, 0, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{12, {"bigcat_theme", 4, QColor(255, 132, 0, 155), {{0.0, QBrush(QColor(0, 0, 0, 255))},
+{12, {"bigcat_theme", QColor(255, 132, 0, 155), {{0.0, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.1, QBrush(QColor(255, 132, 0, 255))},
 												    {0.2, QBrush(QColor(255, 77, 0, 255))},
 							                                            {0.3, QBrush(QColor(0, 0, 0, 255))},
 												    {0.4, QBrush(QColor(255, 179, 0, 255))},
 							                                            {0.5, QBrush(QColor(0, 0, 0, 255))},
 							                                            {1.0, QBrush(QColor(255, 132, 0, 255))}}}},
-{13, {"donut_theme", 4, QColor(255, 170, 229, 155), {{0.0, QBrush(QColor(255, 219, 147, 255))},
+{13, {"donut_theme", QColor(255, 170, 229, 155), {{0.0, QBrush(QColor(255, 219, 147, 255))},
 							                                            {0.1, QBrush(QColor(179, 141, 64, 255))},
 												    {0.2, QBrush(QColor(71, 46, 0, 255))},
 							                                            {0.3, QBrush(QColor(255, 0, 230, 255))},
@@ -1320,7 +1320,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                            {0.5, QBrush(QColor(255, 0, 157, 255))},
 												    {0.6, QBrush(QColor(0, 0, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{14, {"la_theme", 4, QColor(255, 247, 0, 155), {{0.0, QBrush(QColor(100, 0, 177, 255))},
+{14, {"la_theme", QColor(255, 247, 0, 155), {{0.0, QBrush(QColor(100, 0, 177, 255))},
 							                                            {0.1, QBrush(QColor(255, 247, 0, 255))},
 												    {0.2, QBrush(QColor(59, 0, 105, 255))},
 							                                            {0.3, QBrush(QColor(132, 0, 255, 255))},
@@ -1328,7 +1328,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                            {0.5, QBrush(QColor(255, 247, 0, 255))},
  												    {0.7, QBrush(QColor(54, 0, 95, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{15, {"ctncandy_theme", 4, QColor(154, 84, 188, 155), {{0.0, QBrush(QColor(104, 227, 249, 255))},
+{15, {"ctncandy_theme", QColor(154, 84, 188, 155), {{0.0, QBrush(QColor(104, 227, 249, 255))},
 							                                            {0.1, QBrush(QColor(203, 46, 187, 255))},
 												    {0.2, QBrush(QColor(74, 167, 225, 255))},
 							                                            {0.3, QBrush(QColor(154, 84, 188, 255))},
@@ -1336,7 +1336,7 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                            {0.5, QBrush(QColor(199, 87, 172, 255))},
  												    {0.7, QBrush(QColor(79, 78, 215, 255))},
 							                                            {1.0, QBrush(QColor(79, 78, 215, 255))}}}},
-{16, {"sunburst_theme", 4, QColor(55, 0, 106, 155), {{0.0, QBrush(QColor(100, 0, 177, 255))},
+{16, {"sunburst_theme", QColor(55, 0, 106, 155), {{0.0, QBrush(QColor(100, 0, 177, 255))},
 							                                            {0.1, QBrush(QColor(59, 0, 105, 255))},
 												    {0.2, QBrush(QColor(255, 247, 64, 255))},
 							                                            {0.3, QBrush(QColor(206, 206, 0, 255))},
@@ -1344,14 +1344,14 @@ void AnnotatedCameraWidget::initializeFrogPilotWidgets() {
 							                                            {0.5, QBrush(QColor(55, 0, 106, 255))},
  												    {0.7, QBrush(QColor(54, 0, 95, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-{17, {"nighttrider_theme", 4, QColor(88, 0, 0, 155), {{0.0, QBrush(QColor(0, 0, 0, 255))},
+{17, {"nighttrider_theme", QColor(88, 0, 0, 155), {{0.0, QBrush(QColor(0, 0, 0, 255))},
 							                                            {0.1, QBrush(QColor(0, 0, 0, 255))},
 												    {0.25, QBrush(QColor(88, 0, 0, 255))},
 							                                            {0.3, QBrush(QColor(255, 0, 0, 255))},
 												    {0.35, QBrush(QColor(88, 0, 0, 255))},
 							                                            {0.5, QBrush(QColor(0, 0, 0, 255))},
 							                                            {1.0, QBrush(QColor(0, 0, 0, 255))}}}},
-  };
+};
 
   holidayThemeConfiguration = {
     {1, {"april_fools", QColor(255, 165, 0, 255), {{0.0, QBrush(QColor::fromHslF(39 / 360., 1.0, 0.5, 0.9))},
