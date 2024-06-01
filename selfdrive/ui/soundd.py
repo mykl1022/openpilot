@@ -232,7 +232,7 @@ class Soundd:
       2: "tesla_theme",
       3: "stalin_theme",
       4: "icenana_theme",
-      5: "joker_theme",
+      5: "kirby_theme",
       6: "night_theme",
       7: "love_theme",
       8: "duck_theme",

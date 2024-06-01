@@ -80,7 +80,7 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
     {2, {"tesla_theme", {QColor(0, 212, 255)}}},
     {3, {"stalin_theme", {QColor(255, 0, 0)}}},
     {4, {"icenana_theme", {QColor(0, 247, 255)}}},
-    {5, {"joker_theme", {QColor(174, 255, 0)}}},
+    {5, {"kirby_theme", {QColor(174, 255, 0)}}},
     {6, {"night_theme", {QColor(0, 255, 212)}}},
     {7, {"love_theme", {QColor(255, 0, 0)}}},
     {8, {"duck_theme", {QColor(255, 189, 34)}}},
