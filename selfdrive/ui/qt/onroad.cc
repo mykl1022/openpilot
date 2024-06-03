@@ -945,7 +945,7 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   } else if (customColors != 0) {
     const auto &colorMap = std::get<2>(themeConfiguration[customColors]);
     for (const auto &[position, brush] : colorMap) {
-      QColor darkerColor = brush.color().darker(20);
+      QColor darkerColor = brush.color().darker(60);
       pe.setColorAt(position, darkerColor);
     }
   } else {
