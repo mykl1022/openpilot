@@ -418,7 +418,7 @@ ExperimentalButton::ExperimentalButton(QWidget *parent) : experimental_mode(fals
     {0, loadPixmap("../assets/img_chffr_wheel.png", {img_size, img_size})},
     {1, loadPixmap("../frogpilot/assets/wheel_images/lexus.png", {img_size, img_size})},
     {2, loadPixmap("../frogpilot/assets/wheel_images/toyota.png", {img_size, img_size})},
-    {3, loadPixmap("../frogpilot/assets/wheel_images/frog.png", {img_size, img_size})},
+    {3, loadPixmap("../frogpilot/assets/wheel_images/kirby.png", {img_size, img_size})},
     {4, loadPixmap("../frogpilot/assets/wheel_images/rocket.png", {img_size, img_size})},
     {5, loadPixmap("../frogpilot/assets/wheel_images/hyundai.png", {img_size, img_size})},
     {6, loadPixmap("../frogpilot/assets/wheel_images/stalin.png", {img_size, img_size})},
