@@ -506,7 +506,7 @@ void ExperimentalButton::paintEvent(QPaintEvent *event) {
   QMovie *gif = wheelImagesGif[wheelIconGif];
 
   QColor background_color = wheelIcon != 0 && !isDown() && engageable ?
-    (scene.always_on_lateral_active ? QColor(10, 186, 181, 255) :
+    (scene.always_on_lateral_active ? QColor(79, 10, 184, 255) :
     (scene.conditional_status == 1 || scene.conditional_status == 3 || scene.conditional_status == 5 ? QColor(255, 246, 0, 255) :
     (experimental_mode ? QColor(218, 111, 37, 241) :
     (scene.traffic_mode_active ? QColor(201, 34, 49, 255) :
@@ -917,9 +917,9 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   // Paint path edges
   QLinearGradient pe(0, height(), 0, 0);
   if (alwaysOnLateralActive) {
-    pe.setColorAt(0.0, QColor::fromHslF(178 / 360., 0.90, 0.0, 1.0));
-    pe.setColorAt(0.5, QColor::fromHslF(178 / 360., 0.90, 0.5, 0.5));
-    pe.setColorAt(1.0, QColor::fromHslF(178 / 360., 0.90, 1.0, 0.1));
+    pe.setColorAt(0.0, QColor::fromHslF(263 / 360., 0.90, 0.0, 1.0));
+    pe.setColorAt(0.5, QColor::fromHslF(263 / 360., 0.90, 0.5, 0.5));
+    pe.setColorAt(1.0, QColor::fromHslF(263 / 360., 0.90, 1.0, 0.1));
   } else if (conditionalStatus == 1 || conditionalStatus == 3 || conditionalStatus == 5) {
     pe.setColorAt(0.0, QColor::fromHslF(58 / 360., 1.00, 0.50, 1.0));
     pe.setColorAt(0.5, QColor::fromHslF(58 / 360., 1.00, 0.50, 0.5));
