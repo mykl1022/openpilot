@@ -249,7 +249,21 @@ class Soundd:
       0: "stock_theme",
       1: "frog_theme",
       2: "tesla_theme",
-      3: "stalin_theme"
+      3: "stalin_theme",
+      4: "icenana_theme",
+      5: "joker_theme",
+      6: "night_theme",
+      7: "love_theme",
+      8: "duck_theme",
+      9: "heat_theme",
+      10: "blackhole_theme",
+      11: "desert_theme",
+      12: "bigcat_theme",
+      13: "donut_theme",
+      14: "la_theme",
+      15: "ctncandy_theme",
+      16: "sunburst_theme",
+      17: "nightrider_theme"
     }
 
     if self.frogpilot_toggles.current_holiday_theme != 0:
