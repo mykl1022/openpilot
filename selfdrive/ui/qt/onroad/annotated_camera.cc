@@ -513,12 +513,12 @@ void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s, c
   } else if (currentHolidayTheme != 0) {
     const std::map<double, QBrush> &colorMap = std::get<2>(holidayThemeConfiguration[currentHolidayTheme]);
     for (const std::pair<double, QBrush> &entry : colorMap) {
-      pe.setColorAt(entry.first, entry.second.color().darker(120));
+      pe.setColorAt(entry.first, entry.second.color().darker(20));
     }
   } else if (customColors != 0) {
     const std::map<double, QBrush> &colorMap = std::get<2>(themeConfiguration[customColors]);
     for (const std::pair<double, QBrush> &entry : colorMap) {
-      pe.setColorAt(entry.first, entry.second.color().darker(120));
+      pe.setColorAt(entry.first, entry.second.color().darker(60));
     }
   } else {
     pe.setColorAt(0.0, QColor::fromHslF(148 / 360., 0.94, 0.51, 1.0));
