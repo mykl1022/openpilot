@@ -70,9 +70,23 @@ Sidebar::Sidebar(QWidget *parent) : QFrame(parent), onroad(false), flag_pressed(
 
   themeConfiguration = {
     {0, {"stock", {QColor(255, 255, 255)}}},
-    {1, {"frog_theme", {QColor(23, 134, 68)}}},
-    {2, {"tesla_theme", {QColor(0, 72, 255)}}},
-    {3, {"stalin_theme", {QColor(255, 0, 0)}}}
+    {1, {"frog_theme", {QColor(255, 255, 16)}}},
+    {2, {"tesla_theme", {QColor(0, 212, 255)}}},
+    {3, {"stalin_theme", {QColor(255, 0, 0)}}},
+    {4, {"icenana_theme", {QColor(0, 247, 255)}}},
+    {5, {"kirby_theme", {QColor(174, 255, 0)}}},
+    {6, {"night_theme", {QColor(0, 255, 212)}}},
+    {7, {"love_theme", {QColor(255, 0, 0)}}},
+    {8, {"duck_theme", {QColor(255, 189, 34)}}},
+    {9, {"heat_theme", {QColor(255, 255, 16)}}},
+    {10, {"blackhole_theme", {QColor(48, 0, 90)}}},
+    {11, {"desert_theme", {QColor(255, 179, 0)}}},
+    {12, {"bigcat_theme", {QColor(255, 132, 0)}}},
+    {13, {"donut_theme", {QColor(255, 170, 229)}}},
+    {14, {"la_theme", {QColor(255, 247, 0)}}},
+    {15, {"ctncandy_theme", {QColor(255, 247, 0)}}},
+    {16, {"sunburst_theme", {QColor(55, 0, 106)}}},
+    {17, {"nightrider_theme", {QColor(88, 0, 0)}}}
   };
 
   for (auto &[key, themeData] : themeConfiguration) {
