@@ -12,15 +12,15 @@
     "alpha": 242
   },
   "Path": {
-    "red": 23,
-    "green": 134,
-    "blue": 68,
+    "red": 176,
+    "green": 227,
+    "blue": 89,
     "alpha": 242
   },
   "PathEdge": {
-    "red": 18,
-    "green": 107,
-    "blue": 54,
+    "red": 0,
+    "green": 0,
+    "blue": 0,
     "alpha": 242
   },
   "RoadEdges": {
