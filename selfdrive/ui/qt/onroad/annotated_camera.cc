@@ -315,7 +315,7 @@ void AnnotatedCameraWidget::updateFrameMat() {
       .translate(-intrinsic_matrix.v[2], -intrinsic_matrix.v[5]);
 }
 
-void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s, float v_ego) {
+void AnnotatedCameraWidget::drawLaneLines(QPainter &painter, const UIState *s) {
   painter.save();
 
   const UIScene &scene = s->scene;
