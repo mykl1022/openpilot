@@ -167,6 +167,7 @@ typedef struct UIScene {
   bool onroad_distance_button;
   bool parked;
   bool pedals_on_ui;
+  bool rainbow_path;
   bool radarless_model;
   bool random_events;
   bool red_light;

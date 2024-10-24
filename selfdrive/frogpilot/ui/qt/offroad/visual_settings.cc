@@ -6,6 +6,7 @@ FrogPilotVisualsPanel::FrogPilotVisualsPanel(FrogPilotSettingsWindow *parent) : 
     {"Compass", tr("Compass"), tr("A compass in the onroad UI to show the current driving direction."), ""},
     {"DynamicPathWidth", tr("Dynamic Path Width"), tr("Automatically adjust the width of the driving path display based on the current engagement state:\n\nFully engaged = 100%\nAlways On Lateral Active = 75%\nFully disengaged = 50%"), ""},
     {"PedalsOnUI", tr("Gas/Brake Pedal Indicators"), tr("Pedal indicators in the onroad UI that change opacity based on the pressure applied."), ""},
+    {"RainbowPath", tr("Rainbow Path"), tr("Show Rainbow Path on the Onroad UI."), ""},
     {"CustomPaths", tr("Paths"), tr("Projected acceleration path, detected lanes, and vehicles in the blind spot."), ""},
     {"RoadNameUI", tr("Road Name"), tr("The current road name is displayed at the bottom of the screen using data from 'OpenStreetMap'."), ""},
     {"RotatingWheel", tr("Rotating Steering Wheel"), tr("The steering wheel in the onroad UI rotates along with your steering wheel movements."), ""},

@@ -19,8 +19,8 @@ private:
   void updateCarToggles();
 
   std::set<QString> customOnroadUIKeys = {
-    "Compass", "CustomPaths", "DynamicPathWidth",
-    "PedalsOnUI", "RoadNameUI", "RotatingWheel"
+    "Compass", "CustomPaths", "PedalsOnUI",
+    "RainbowPath", "RoadNameUI", "RotatingWheel"
   };
 
   std::set<QString> qolKeys = {
