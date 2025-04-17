@@ -12,9 +12,9 @@
     "alpha": 255
   },
   "Path": {
-    "red": 48,
-    "green": 255,
-    "blue": 156,
+    "red": 248,
+    "green": 176,
+    "blue": 255,
     "alpha": 255
   },
   "PathEdge": {
