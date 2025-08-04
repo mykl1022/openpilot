@@ -6,39 +6,39 @@
     "alpha": 255
   },
   "LeadMarker": {
-    "red": 23,
-    "green": 130,
-    "blue": 59,
+    "red": 53,
+    "green": 0,
+    "blue": 139,
     "alpha": 255
   },
   "Path": {
-    "red": 23,
-    "green": 130,
-    "blue": 59,
+    "red": 255,
+    "green": 160,
+    "blue": 242,
     "alpha": 255
   },
   "PathEdge": {
-    "red": 28,
-    "green": 156,
-    "blue": 84,
+    "red": 53,
+    "green": 0,
+    "blue": 139,
     "alpha": 255
   },
   "Sidebar1": {
-    "red": 23,
-    "green": 130,
-    "blue": 59,
+    "red": 3,
+    "green": 0,
+    "blue": 255,
     "alpha": 255
   },
   "Sidebar2": {
-    "red": 54,
-    "green": 133,
-    "blue": 192,
+    "red": 255,
+    "green": 160,
+    "blue": 242,
     "alpha": 255
   },
   "Sidebar3": {
-    "red": 194,
-    "green": 17,
-    "blue": 17,
+    "red": 53,
+    "green": 0,
+    "blue": 139,
     "alpha": 255
   }
 }
